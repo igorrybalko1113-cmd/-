@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF" id="metaTheme">
+<title>ТМХ · НЭВЗ — Справочник нового сотрудника</title>
+<style>
+/* ================= ТОКЕНЫ И ТЕМЫ ================= */
+:root{
+  --light-blue:#68C1ED;
+  --dark-blue:#2A5294;
+  --grey:#8A96A1;
+  --bg:#F2F5F9;
+  --card:#FFFFFF;
+  --card-2:#F5F8FC;
+  --text:#111111;
+  --text-2:#55636F;
+  --muted:#8A96A1;
+  --accent:#2A5294;
+  --accent-soft:rgba(104,193,237,.16);
+  --separator:rgba(138,150,161,.26);
+  --shadow:0 8px 28px rgba(42,82,148,.12);
+  --shadow-sm:0 2px 12px rgba(42,82,148,.08);
+  --grad:linear-gradient(135deg,#68C1ED 0%,#2A5294 100%);
+  --green:#34C759;
+  --green-bg:rgba(52,199,89,.14);
+  --red:#FF3B30;
+  --red-bg:rgba(255,59,48,.12);
+  --amber:#FF9F0A;
+  --amber-bg:rgba(255,159,10,.14);
+  --tabbar:rgba(255,255,255,.78);
+  --header:rgba(255,255,255,.82);
+  --mark:#FFEFA8;
+  --mark-text:#5A4300;
+  --chip-bg:#FFFFFF;
+  --input-bg:rgba(138,150,161,.14);
+}
+[data-theme="dark"]{
+  --light-blue:#7ED0F7;
+  --dark-blue:#5B8FD9;
+  --grey:#8C96A0;
+  --bg:#0D1117;
+  --card:#1C2128;
+  --card-2:#232A33;
+  --text:#E8EEF5;
+  --text-2:#A9B6C2;
+  --muted:#8C96A0;
+  --accent:#7ED0F7;
+  --accent-soft:rgba(126,208,247,.14);
+  --separator:rgba(255,255,255,.10);
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --shadow-sm:0 2px 12px rgba(0,0,0,.35);
+  --grad:linear-gradient(135deg,#5BC0F0 0%,#3A6CB8 100%);
+  --green:#30D158;
+  --green-bg:rgba(48,209,88,.16);
+  --red:#FF453A;
+  --red-bg:rgba(255,69,58,.16);
+  --amber:#FFD60A;
+  --amber-bg:rgba(255,214,10,.14);
+  --tabbar:rgba(20,25,32,.78);
+  --header:rgba(13,17,23,.80);
+  --mark:rgba(255,214,10,.30);
+  --mark-text:#FFE9A3;
+  --chip-bg:#1C2128;
+  --input-bg:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Brutal Type',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-weight:400;
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{margin:0;font-weight:800;letter-spacing:-.02em}
+button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit}
+input{font-family:inherit}
+mark{background:var(--mark);color:var(--mark-text);border-radius:4px;padding:0 2px}
+::selection{background:var(--light-blue);color:#fff}
+
+/* ================= ШАПКА ================= */
+.app-header{
+  position:sticky;top:0;z-index:60;
+  background:var(--header);
+  -webkit-backdrop-filter:saturate(180%) blur(16px);
+  backdrop-filter:saturate(180%) blur(16px);
+  border-bottom:1px solid var(--separator);
+  overflow:hidden;
+}
+.wave-pattern{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.55}
+.header-inner{
+  position:relative;max-width:900px;margin:0 auto;
+  padding:14px 16px 14px;display:flex;align-items:center;gap:12px;
+}
+.logo-mark{flex:0 0 auto;filter:drop-shadow(0 4px 10px rgba(42,82,148,.28))}
+.brand-text{min-width:0;flex:1}
+.brand-title{
+  font-size:24px;font-weight:800;line-height:1.05;color:var(--accent);
+  letter-spacing:.04em;
+}
+.brand-sub{
+  font-size:12.5px;font-weight:500;color:var(--grey);
+  margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.theme-toggle{
+  flex:0 0 auto;width:46px;height:46px;border-radius:50%;
+  background:var(--card);border:1px solid var(--separator);
+  box-shadow:var(--shadow-sm);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1),background .3s;
+  position:relative;overflow:hidden;
+}
+.theme-toggle:active{transform:scale(.9)}
+.theme-toggle svg{width:22px;height:22px;transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .3s}
+.theme-toggle .ico-moon{position:absolute;transform:translateY(140%) rotate(-40deg);opacity:0;color:var(--light-blue)}
+.theme-toggle .ico-sun{color:var(--amber)}
+[data-theme="dark"] .theme-toggle .ico-moon{transform:translateY(0) rotate(0);opacity:1}
+[data-theme="dark"] .theme-toggle .ico-sun{transform:translateY(-140%) rotate(40deg);opacity:0}
+
+/* ================= КОНТЕЙНЕР ================= */
+main{max-width:900px;margin:0 auto;padding:16px 14px calc(96px + env(safe-area-inset-bottom));position:relative}
+.panel{display:none}
+.panel.active{display:block;animation:panelIn .38s cubic-bezier(.2,.8,.2,1)}
+@keyframes panelIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.page-title{font-size:30px;font-weight:800;letter-spacing:-.03em;margin:4px 2px 2px}
+.page-sub{font-size:14px;color:var(--muted);margin:0 2px 16px;font-weight:500}
+
+/* ================= ПОИСК (iOS) ================= */
+.searchbar{
+  display:flex;align-items:center;gap:8px;
+  background:var(--input-bg);
+  border-radius:14px;padding:0 12px;height:48px;
+  margin-bottom:12px;border:1px solid transparent;
+  transition:border-color .2s,background .2s;
+}
+.searchbar:focus-within{border-color:var(--light-blue);background:var(--card)}
+.searchbar svg{width:19px;height:19px;color:var(--muted);flex:0 0 auto}
+.searchbar input{
+  flex:1;min-width:0;border:0;background:none;outline:none;
+  font-size:16px;font-weight:500;color:var(--text);height:100%;
+}
+.searchbar input::placeholder{color:var(--muted);font-weight:500}
+.search-clear{
+  width:24px;height:24px;border-radius:50%;background:var(--muted);
+  color:#fff;display:none;align-items:center;justify-content:center;flex:0 0 auto;
+  font-size:14px;line-height:1;transition:transform .15s;
+}
+.search-clear.show{display:flex}
+.search-clear:active{transform:scale(.85)}
+
+/* ================= ЧИПСЫ ================= */
+.chips-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.chips{
+  display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;
+  scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;flex:1;
+}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;height:38px;padding:0 16px;border-radius:19px;
+  background:var(--chip-bg);border:1px solid var(--separator);
+  color:var(--text-2);font-size:14px;font-weight:600;white-space:nowrap;
+  box-shadow:var(--shadow-sm);transition:transform .15s,color .2s,background .2s;
+}
+.chip:active{transform:scale(.94)}
+.chip.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(42,82,148,.30)}
+.expand-all{
+  flex:0 0 auto;height:38px;padding:0 14px;border-radius:19px;
+  border:1px solid var(--separator);background:var(--card);color:var(--accent);
+  font-size:13px;font-weight:700;box-shadow:var(--shadow-sm);transition:transform .15s;
+}
+.expand-all:active{transform:scale(.94)}
+.search-meta{font-size:13px;color:var(--muted);font-weight:600;margin:0 4px 12px}
+
+/* ================= КАРТОЧКИ-АККОРДЕОНЫ ================= */
+.acc{
+  background:var(--card);border-radius:16px;box-shadow:var(--shadow-sm);
+  margin-bottom:12px;overflow:hidden;border:1px solid var(--separator);
+  transition:box-shadow .25s,transform .25s;
+}
+.acc.open{box-shadow:var(--shadow)}
+.acc-head{
+  width:100%;display:flex;align-items:center;gap:12px;
+  padding:14px 16px;min-height:64px;text-align:left;transition:background .2s;
+}
+.acc-head:active{background:var(--card-2)}
+.acc-icon{
+  flex:0 0 auto;width:42px;height:42px;border-radius:13px;
+  background:var(--accent-soft);color:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+}
+.acc-icon svg{width:22px;height:22px}
+.acc-head-text{flex:1;min-width:0}
+.acc-title{font-size:17px;font-weight:700;line-height:1.25;color:var(--text)}
+.acc-cat{
+  display:inline-block;margin-top:5px;font-size:11.5px;font-weight:700;
+  color:var(--accent);background:var(--accent-soft);
+  padding:2px 9px;border-radius:9px;letter-spacing:.01em;
+}
+.acc-right{flex:0 0 auto;display:flex;align-items:center;gap:8px}
+.acc-count{font-size:12.5px;font-weight:700;color:var(--muted)}
+.chev{width:16px;height:16px;color:var(--muted);transition:transform .35s cubic-bezier(.34,1.2,.64,1)}
+.acc.open .chev{transform:rotate(90deg);color:var(--accent)}
+.acc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s cubic-bezier(.3,.9,.3,1)}
+.acc.open .acc-body{grid-template-rows:1fr}
+.acc-body>div{overflow:hidden}
+.acc-inner{padding:2px 16px 18px;border-top:1px solid var(--separator)}
+
+.item{padding-top:16px}
+.item-title{font-size:15.5px;font-weight:700;color:var(--text);margin-bottom:7px;display:flex;align-items:center;gap:8px}
+.item-title::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--light-blue);flex:0 0 auto}
+.item-text{margin:0 0 8px;color:var(--text-2);font-size:14.8px;line-height:1.55;font-weight:400}
+.item-list{margin:0;padding:0;list-style:none}
+.item-list li{
+  position:relative;padding-left:20px;margin-bottom:8px;
+  color:var(--text-2);font-size:14.8px;line-height:1.5;
+}
+.item-list li::before{
+  content:"";position:absolute;left:4px;top:8px;width:7px;height:7px;border-radius:2px;
+  background:var(--grad);
+}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:9px;margin:4px 0 4px}
+.stat{background:var(--card-2);border-radius:13px;padding:11px 10px;border:1px solid var(--separator)}
+.stat-num{font-size:21px;font-weight:800;letter-spacing:-.03em;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
+.stat-lbl{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:3px;line-height:1.3}
+.kv-list{margin:2px 0 0}
+.kv{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--separator)}
+.kv:last-child{border-bottom:0}
+.kv-k{flex:0 0 42%;font-size:14px;font-weight:700;color:var(--text);line-height:1.4}
+.kv-v{flex:1;font-size:14px;color:var(--text-2);line-height:1.45;font-weight:500}
+.steps{margin:2px 0 0;padding:0;list-style:none;counter-reset:st}
+.steps li{
+  position:relative;padding:0 0 12px 40px;counter-increment:st;
+  font-size:14.6px;color:var(--text-2);line-height:1.5;
+}
+.steps li::before{
+  content:counter(st);position:absolute;left:0;top:-1px;
+  width:28px;height:28px;border-radius:9px;background:var(--grad);
+  color:#fff;font-size:13.5px;font-weight:800;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 10px rgba(42,82,148,.28);
+}
+.note{
+  margin-top:10px;padding:12px 14px;border-radius:13px;
+  font-size:14.2px;line-height:1.5;font-weight:500;
+  background:var(--accent-soft);border-left:4px solid var(--light-blue);color:var(--text);
+}
+.note.warn{background:var(--red-bg);border-left-color:var(--red);font-weight:700}
+.note.tip{background:var(--green-bg);border-left-color:var(--green)}
+.note.brand{background:var(--grad);border-left:0;color:#fff;font-weight:800;font-size:15px;letter-spacing:.01em}
+.empty{
+  text-align:center;padding:52px 20px;background:var(--card);border-radius:16px;
+  border:1px dashed var(--separator);box-shadow:var(--shadow-sm);
+}
+.empty svg{width:52px;height:52px;color:var(--muted);margin-bottom:12px}
+.empty h3{font-size:18px;margin-bottom:6px}
+.empty p{color:var(--muted);font-size:14px;margin:0;font-weight:500}
+.foot{margin:22px 4px 0;text-align:center;font-size:12px;color:var(--muted);font-weight:500}
+
+/* ================= ВИКТОРИНА ================= */
+.quiz-card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:22px 18px;border:1px solid var(--separator)}
+.quiz-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.q-counter{font-size:13.5px;font-weight:700;color:var(--muted);letter-spacing:.01em}
+.q-score{font-size:13px;font-weight:800;color:var(--accent);background:var(--accent-soft);padding:5px 11px;border-radius:12px}
+.progress-track{height:8px;border-radius:5px;background:var(--input-bg);overflow:hidden;margin-bottom:20px}
+.progress-fill{height:100%;border-radius:5px;background:var(--grad);width:0;transition:width .5s cubic-bezier(.3,.9,.3,1)}
+.q-text{font-size:20px;font-weight:700;line-height:1.35;letter-spacing:-.02em;margin-bottom:18px}
+.answers{display:flex;flex-direction:column;gap:10px}
+.answer{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  min-height:56px;padding:13px 14px;border-radius:15px;
+  background:var(--card-2);border:1.6px solid var(--separator);
+  font-size:15.5px;font-weight:600;color:var(--text);line-height:1.35;
+  transition:transform .14s,border-color .22s,background .22s,opacity .22s;
+}
+.answer:active:not(.locked){transform:scale(.975);border-color:var(--light-blue)}
+.answer .letter{
+  flex:0 0 auto;width:30px;height:30px;border-radius:10px;
+  background:var(--card);border:1px solid var(--separator);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;color:var(--accent);transition:all .22s;
+}
+.answer.correct{background:var(--green-bg);border-color:var(--green);color:var(--text)}
+.answer.correct .letter{background:var(--green);border-color:var(--green);color:#fff}
+.answer.wrong{background:var(--red-bg);border-color:var(--red);color:var(--text)}
+.answer.wrong .letter{background:var(--red);border-color:var(--red);color:#fff}
+.answer.dim{opacity:.45}
+.answer.locked{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.answer.wrong{animation:shake .4s}
+.explain{margin-top:16px;border-radius:15px;padding:15px;animation:slideUp .38s cubic-bezier(.2,.8,.2,1)}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.explain.ok{background:var(--green-bg);border:1px solid rgba(52,199,89,.35)}
+.explain.bad{background:var(--red-bg);border:1px solid rgba(255,59,48,.32)}
+.explain-head{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;margin-bottom:6px}
+.explain.ok .explain-head{color:var(--green)}
+.explain.bad .explain-head{color:var(--red)}
+.explain-head svg{width:20px;height:20px}
+.explain-text{font-size:14.3px;line-height:1.55;color:var(--text-2);font-weight:500;margin:0}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;min-height:52px;border-radius:15px;
+  font-size:16.5px;font-weight:700;letter-spacing:-.01em;
+  transition:transform .15s,box-shadow .2s,opacity .2s;
+}
+.btn:active{transform:scale(.975)}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 24px rgba(42,82,148,.30)}
+.btn-ghost{background:var(--card-2);color:var(--accent);border:1px solid var(--separator)}
+.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(255,59,48,.3)}
+.btn.mt{margin-top:14px}
+.start-hero{text-align:center;padding:8px 4px 4px}
+.start-emoji{width:84px;height:84px;border-radius:26px;background:var(--grad);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 14px 30px rgba(42,82,148,.32)}
+.start-emoji svg{width:44px;height:44px;color:#fff}
+.start-hero h2{font-size:24px;margin-bottom:8px;letter-spacing:-.03em}
+.start-hero p{color:var(--text-2);font-size:15px;margin:0 auto 18px;max-width:420px;line-height:1.55;font-weight:500}
+.feature-list{display:flex;flex-direction:column;gap:9px;margin:0 0 18px;text-align:left}
+.feature{display:flex;gap:11px;align-items:flex-start;background:var(--card-2);border:1px solid var(--separator);border-radius:13px;padding:11px 13px}
+.feature svg{width:20px;height:20px;color:var(--accent);flex:0 0 auto;margin-top:1px}
+.feature span{font-size:14px;color:var(--text-2);font-weight:500;line-height:1.45}
+.feature b{color:var(--text);font-weight:700}
+
+.result-wrap{text-align:center;padding:6px 2px}
+.ring-wrap{position:relative;width:180px;height:180px;margin:0 auto 14px}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{stroke:var(--input-bg)}
+.ring-fg{stroke:url(#ringGrad);stroke-linecap:round;transition:stroke-dashoffset 1.1s cubic-bezier(.3,.9,.3,1)}
+.ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ring-sub{font-size:12.5px;color:var(--muted);font-weight:700;margin-top:4px}
+.result-msg{font-size:17px;font-weight:700;margin:6px 0 4px}
+.result-note{font-size:14.5px;color:var(--text-2);margin:0 auto 18px;max-width:400px;line-height:1.5;font-weight:500}
+.result-pills{display:flex;gap:9px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.pill{background:var(--card-2);border:1px solid var(--separator);border-radius:13px;padding:10px 15px;min-width:104px}
+.pill b{display:block;font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--accent)}
+.pill span{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+
+/* ================= СТАТИСТИКА ================= */
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.metric{background:var(--card);border-radius:16px;padding:15px 12px;box-shadow:var(--shadow-sm);border:1px solid var(--separator);text-align:center}
+.metric-val{font-size:26px;font-weight:800;letter-spacing:-.03em;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
+.metric-lbl{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:5px;text-transform:uppercase;letter-spacing:.03em;line-height:1.3}
+.chart-card{background:var(--card);border-radius:18px;padding:18px 14px 14px;box-shadow:var(--shadow-sm);border:1px solid var(--separator);margin-bottom:14px}
+.chart-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:16px;padding:0 4px}
+.chart-head h3{font-size:16.5px;font-weight:700}
+.chart-head span{font-size:12px;color:var(--muted);font-weight:600}
+.chart{display:flex;align-items:flex-end;gap:7px;height:196px;padding:0 2px}
+.bar-col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;height:100%;gap:6px}
+.bar-val{font-size:11px;font-weight:800;color:var(--accent);letter-spacing:-.01em;height:14px;line-height:14px}
+.bar-track{flex:1;width:100%;background:var(--card-2);border-radius:9px;position:relative;overflow:hidden;border:1px solid var(--separator)}
+.bar-fill{position:absolute;left:0;bottom:0;width:100%;height:0;border-radius:8px;background:var(--grad);transition:height .9s cubic-bezier(.3,.9,.3,1)}
+.bar-date{font-size:9.5px;color:var(--muted);font-weight:700;text-align:center;line-height:1.25;height:24px}
+.avg-line{position:absolute;left:0;right:0;border-top:1.6px dashed var(--light-blue);opacity:.75;pointer-events:none}
+.hist{background:var(--card);border-radius:18px;box-shadow:var(--shadow-sm);border:1px solid var(--separator);overflow:hidden;margin-bottom:14px}
+.hist-head{padding:14px 16px;font-size:16px;font-weight:700;border-bottom:1px solid var(--separator)}
+.hist-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--separator)}
+.hist-row:last-child{border-bottom:0}
+.hist-num{width:28px;height:28px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.hist-info{flex:1;min-width:0}
+.hist-date{font-size:14px;font-weight:600;color:var(--text)}
+.hist-mini{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
+.hist-pct{font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--accent)}
+.hist-bar{height:5px;border-radius:3px;background:var(--input-bg);overflow:hidden;margin-top:6px}
+.hist-bar i{display:block;height:100%;background:var(--grad);border-radius:3px}
+
+/* ================= TAB BAR (iOS) ================= */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  background:var(--tabbar);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid var(--separator);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.tabbar-inner{max-width:900px;margin:0 auto;display:flex}
+.tab{
+  flex:1;min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.01em;
+  transition:color .2s,transform .16s;
+}
+.tab svg{width:25px;height:25px;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.tab:active{transform:scale(.93)}
+.tab.active{color:var(--accent)}
+.tab.active svg{transform:translateY(-1px) scale(1.06)}
+
+@media (max-width:560px){
+  .page-title{font-size:26px}
+  .brand-title{font-size:21px}
+  .brand-sub{font-size:11.5px}
+  .kv{flex-direction:column;gap:3px}
+  .kv-k{flex:none;font-size:13.5px}
+  .metric-grid{grid-template-columns:repeat(3,1fr);gap:7px}
+  .metric{padding:12px 6px}
+  .metric-val{font-size:21px}
+  .metric-lbl{font-size:10px}
+  .q-text{font-size:18.5px}
+  .bar-date{font-size:8.5px}
+  .stats-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <svg class="wave-pattern" viewBox="0 0 1200 130" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,72 C120,116 240,28 360,72 C480,116 600,28 720,72 C840,116 960,28 1080,72 C1140,94 1170,84 1200,66" fill="none" stroke="#68C1ED" stroke-width="2" opacity=".38"/>
+    <path d="M0,94 C120,138 240,50 360,94 C480,138 600,50 720,94 C840,138 960,50 1080,94 C1140,116 1170,106 1200,88" fill="none" stroke="#2A5294" stroke-width="2" opacity=".18"/>
+    <path d="M0,48 C120,92 240,4 360,48 C480,92 600,4 720,48 C840,92 960,4 1080,48 C1140,70 1170,60 1200,42" fill="none" stroke="#68C1ED" stroke-width="1.4" opacity=".22"/>
+  </svg>
+  <div class="header-inner">
+    <svg class="logo-mark" width="46" height="46" viewBox="0 0 46 46" aria-hidden="true">
+      <defs>
+        <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#68C1ED"/><stop offset="1" stop-color="#2A5294"/>
+        </linearGradient>
+      </defs>
+      <rect x="1.5" y="1.5" width="43" height="43" rx="13" fill="url(#logoGrad)"/>
+      <path d="M10 27c4.2 0 4.2-7 8.4-7s4.2 7 8.4 7 4.2-7 8.4-7" fill="none" stroke="#FFFFFF" stroke-width="2.7" stroke-linecap="round" opacity=".95"/>
+      <path d="M13 15h20" stroke="#FFFFFF" stroke-width="2.7" stroke-linecap="round" opacity=".55"/>
+      <path d="M13 34h20" stroke="#68C1ED" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+    </svg>
+    <div class="brand-text">
+      <div class="brand-title">ТМХ</div>
+      <div class="brand-sub">Новочеркасский электровозостроительный завод</div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/>
+      </svg>
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.5 14.5A8.6 8.6 0 0 1 9.5 3.5a8.6 8.6 0 1 0 11 11z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- ============ СПРАВОЧНИК ============ -->
+  <section class="panel active" id="panel-guide">
+    <h1 class="page-title">Справочник</h1>
+    <p class="page-sub">Всё, что нужно для быстрой адаптации в команде НЭВЗа</p>
+
+    <div class="searchbar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+      <input id="searchInput" type="text" placeholder="Поиск по справочнику" autocomplete="off" aria-label="Поиск">
+      <button class="search-clear" id="searchClear" aria-label="Очистить поиск">✕</button>
+    </div>
+
+    <div class="chips-row">
+      <div class="chips" id="chips"></div>
+      <button class="expand-all" id="expandAll">Развернуть всё</button>
+    </div>
+
+    <div class="search-meta" id="searchMeta"></div>
+    <div id="guideList"></div>
+    <div class="foot">© ООО «ПК «НЭВЗ», 2026 · Справочник нового сотрудника</div>
+  </section>
+
+  <!-- ============ ВИКТОРИНА ============ -->
+  <section class="panel" id="panel-quiz">
+    <h1 class="page-title">Викторина</h1>
+    <p class="page-sub">Обучающий режим с пояснениями к каждому ответу</p>
+    <div id="quizBody"></div>
+  </section>
+
+  <!-- ============ СТАТИСТИКА ============ -->
+  <section class="panel" id="panel-stats">
+    <h1 class="page-title">Статистика</h1>
+    <p class="page-sub">Ваши последние 10 прохождений викторины</p>
+    <div id="statsBody"></div>
+  </section>
+</main>
+
+<nav class="tabbar">
+  <div class="tabbar-inner">
+    <button class="tab active" data-tab="guide" aria-label="Справочник">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v14.5H6.5A2.5 2.5 0 0 0 4 20z"/><path d="M4 20a2.5 2.5 0 0 1 2.5-2.5H20V21H6.5A2.5 2.5 0 0 1 4 18.5z"/><path d="M8.5 7.5h7"/></svg>
+      Справочник
+    </button>
+    <button class="tab" data-tab="quiz" aria-label="Викторина">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.4 9.2a2.7 2.7 0 0 1 5.2.9c0 1.8-2.6 2.3-2.6 4"/><path d="M12 17.4h.01"/></svg>
+      Викторина
+    </button>
+    <button class="tab" data-tab="stats" aria-label="Статистика">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><rect x="5" y="11" width="3.6" height="6.5" rx="1.2"/><rect x="10.2" y="6.5" width="3.6" height="11" rx="1.2"/><rect x="15.4" y="9" width="3.6" height="8.5" rx="1.2"/></svg>
+      Статистика
+    </button>
+  </div>
+</nav>
+
+<script>
+/* ==========================================================
+   1. ИКОНКИ
+========================================================== */
+const ICONS = {
+  factory:'<path d="M3 21h18"/><path d="M5 21V9.5l5 3V9.5l5 3V7l4 3v11"/><path d="M9 17h2M14 17h2"/>',
+  shield:'<path d="M12 3l7.5 3v6.2c0 4.6-3.1 7.9-7.5 9.3-4.4-1.4-7.5-4.7-7.5-9.3V6L12 3z"/><path d="M9 12l2.2 2.2L15.5 10"/>',
+  train:'<rect x="4.5" y="3" width="15" height="13" rx="3.5"/><path d="M4.5 10h15"/><path d="M8.5 19.5L6.5 22M15.5 19.5L17.5 22"/><path d="M8.6 13.2h.01M15.4 13.2h.01"/><path d="M9 16.5h6"/>',
+  gear:'<circle cx="12" cy="12" r="3.2"/><path d="M19.4 14.5a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1v.3a2 2 0 1 1-4 0v-.2a1.6 1.6 0 0 0-2.8-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3.5 13H3a2 2 0 1 1 0-4h.2A1.6 1.6 0 0 0 4.3 6.2l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9.8 2.3V2a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7h.3a2 2 0 1 1 0 4h-.2a1.6 1.6 0 0 0-1.1 1z"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5.3l3.4 2"/>',
+  money:'<path d="M8.5 20h8"/><path d="M8.5 16.5h8.2a4.2 4.2 0 1 0 0-8.4H8.5V20"/><path d="M6 12.6h5"/>',
+  heart:'<path d="M12 20.4C7.2 17 3.6 13.8 3.6 10.2A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 8.4 2.6c0 3.6-3.6 6.8-8.4 10.2z"/>',
+  users:'<path d="M15.5 20v-1.4a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20"/><circle cx="9.2" cy="7.4" r="3.4"/><path d="M21 20v-1.4a4 4 0 0 0-3-3.87"/><path d="M15.6 4.2a4 4 0 0 1 0 7.5"/>',
+  cap:'<path d="M12 4L2.5 9 12 14l9.5-5L12 4z"/><path d="M6 11.2V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.8"/><path d="M21.5 9v5"/>',
+  phone:'<path d="M6.2 3h3.4l1.8 4.4-2.2 1.4a12.4 12.4 0 0 0 5.9 5.9l1.4-2.2L21 14.3v3.4A2.3 2.3 0 0 1 18.5 20 15.6 15.6 0 0 1 4 5.5 2.3 2.3 0 0 1 6.2 3z"/>',
+  chart:'<path d="M4 20h16"/><rect x="5" y="11" width="3.6" height="6.5" rx="1.2"/><rect x="10.2" y="6.5" width="3.6" height="11" rx="1.2"/><rect x="15.4" y="9" width="3.6" height="8.5" rx="1.2"/>',
+  calendar:'<rect x="3.5" y="5" width="17" height="16" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17.5h2"/>',
+  list:'<path d="M8.5 6.5h12M8.5 12h12M8.5 17.5h12"/><path d="M4 6.5h.01M4 12h.01M4 17.5h.01"/>',
+  bolt:'<path d="M13.2 2.5L4.5 14h6l-1.2 7.5L18.5 10h-6z"/>',
+  bulb:'<path d="M9.2 18h5.6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 1 3.6 10.8c-.6.5-1 1.2-1.1 2h-5c-.1-.8-.5-1.5-1.1-2A6 6 0 0 1 12 3z"/>',
+  compass:'<circle cx="12" cy="12" r="9"/><path d="M15.6 8.4l-2.1 5.1-5.1 2.1 2.1-5.1z"/>',
+  alert:'<path d="M12 3.5l9.3 16.6H2.7z"/><path d="M12 9.5v4.2M12 17h.01"/>',
+  id:'<rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2.3"/><path d="M5.6 16.4a3.6 3.6 0 0 1 6.8 0"/><path d="M14.5 10h4M14.5 13.5h4"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3.2 9.5h17.6M3.2 14.5h17.6"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>',
+  check:'<circle cx="12" cy="12" r="9.2"/><path d="M8.2 12.3l2.6 2.6 5-5.4"/>',
+  cross:'<circle cx="12" cy="12" r="9.2"/><path d="M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6"/>',
+  star:'<path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.6 9.7l5.8-.8z"/>',
+  refresh:'<path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.5 4.5V10h-5.5"/>'
+};
+function icon(name,cls){return '<svg class="'+(cls||'')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[name]||'')+'</svg>';}
+
+/* ==========================================================
+   2. ДАННЫЕ СПРАВОЧНИКА (из PDF)
+========================================================== */
+const guideData = [
+{
+  id:'welcome', cat:'О заводе', title:'Добро пожаловать в команду НЭВЗа', icon:'star',
+  items:[
+    {t:'Обращение генерального директора',
+     text:'Новочеркасский электровозостроительный завод — одно из крупнейших динамично развивающихся предприятий Донского края. Здесь производят востребованную железнодорожную технику и разрабатывают подвижной состав завтрашнего дня.',
+     list:[
+       'Завод занимает ведущее положение на внутреннем рынке России как производитель серийных локомотивов на электрической тяге.',
+       'НЭВЗ — предприятие со значительным техническим и научным потенциалом, квалифицированными кадрами и высокотехнологичным оборудованием.',
+       'Созданы безопасные и комфортные условия труда, действуют программы социальной защиты и эффективной мотивации.',
+       'С 2003 года НЭВЗ входит в состав Группы компаний «Трансмашхолдинг».',
+       'Предприятие развивает производственную систему, повышает качество продукции, внедряет инновации, расширяет линейку и привлекает новые контракты.',
+       'Работникам доступны профессиональный и личностный рост и насыщенная корпоративная жизнь.'
+     ],
+     note:'«Теперь и Вы стали частью нашей сильной команды. А значит, вместе мы достигнем ещё больших успехов!» — Евгений Васильевич Гридасов, генеральный директор ООО «ПК «НЭВЗ».', noteType:'brand'},
+    {t:'Как пользоваться справочником',
+     text:'Информация сгруппирована по разделам — так проще быстро найти нужные сведения.',
+     list:[
+       'Используйте строку поиска сверху: она мгновенно фильтрует разделы и подсвечивает совпадения.',
+       'Фильтры-категории помогают перейти к нужной группе разделов одним нажатием.',
+       'Если ответа в справочнике нет — обратитесь к непосредственному руководителю, наставнику или специалистам группы подбора и адаптации персонала (ГПиАП).',
+       'Проверьте знания во вкладке «Викторина», прогресс сохраняется во вкладке «Статистика».'
+     ]}
+  ]
+},
+{
+  id:'facts', cat:'О заводе', title:'НЭВЗ в цифрах и фактах', icon:'chart',
+  items:[
+    {t:'Ключевые показатели',
+     stats:[['1932','начало истории завода'],['1936','выпущен первый локомотив'],['~70','типов электровозов создано'],['17 000+','электровозов изготовлено'],['500+','секций в год — мощность'],['4200+','специалистов'],['350+','профессий и должностей'],['112 га','территория предприятия'],['65%','доля локомотивов на рынке РФ']]},
+    {t:'География и признание',
+     list:[
+       'Ежегодно завод выпускает около 500 локомотивных секций.',
+       'Более 65% железнодорожных перевозок в стране осуществляют локомотивы, выпущенные на НЭВЗе.',
+       'Локомотивы работают от Калининграда до Владивостока, в том числе на Транссибирской и Байкало-Амурской магистралях.',
+       'Технику предприятия можно встретить за пределами страны: в Китае, Финляндии, Польше, Узбекистане.',
+       'НЭВЗ выпускает электровозы и для добывающей и металлургической промышленности.',
+       'Завод входит в реестр «100 лучших предприятий России» НИИ социального развития и предпринимательства.'
+     ]},
+    {t:'Развитие',
+     text:'Завод осваивает новую технику, развивает социальную сферу и продолжает движение по пути инновационного развития: внедряются новые технологии и оборудование, проводятся масштабные модернизация и реконструкция производства.',
+     note:'НЭВЗ работает в периметре одного из мировых лидеров транспортного машиностроения — компании «Трансмашхолдинг».', noteType:'tip'}
+  ]
+},
+{
+  id:'mission', cat:'О заводе', title:'Миссия и ценности', icon:'compass',
+  items:[
+    {t:'Наша миссия', note:'ОБЕСПЕЧИВАЕМ ДВИЖЕНИЕ ЖИЗНИ. СОЕДИНЯЕМ ЛЮДЕЙ И МЕЧТЫ.', noteType:'brand'},
+    {t:'Наши ценности',
+     kv:[
+       ['Развитие — основа успеха','Учимся новому, чтобы предлагать лучшее. Наша сила — в единой сплочённой команде.'],
+       ['Единство разных','Работаем в команде и ценим вклад каждого. Объединяя таланты и экспертизу, добиваемся большего.'],
+       ['Ответственность за будущее','Гармоничное и безопасное будущее формируется прямо сейчас — через надёжные и экологически эффективные решения.'],
+       ['Любовь к своему делу','Вместе создаём реальные продукты и решения, развивая страну и мир.']
+     ]}
+  ]
+},
+{
+  id:'competence', cat:'О заводе', title:'Наши компетенции', icon:'users',
+  items:[
+    {text:'Компетенции — это совокупность знаний, навыков, деловых и личностных качеств, позволяющих сотрудникам успешно действовать и реализовывать поставленные задачи.'},
+    {t:'Ключевые компетенции команды',
+     list:[
+       'Ответственность за результат',
+       'Непрерывное улучшение',
+       'Лидерство в команде',
+       'Развитие команды',
+       'Взаимодействие с другими',
+       'Управление людьми',
+       'Партнёрство',
+       'Стратегическое принятие решений',
+       'Приверженность'
+     ]}
+  ]
+},
+{
+  id:'safety', cat:'Безопасность', title:'Правила безопасности и СИЗ', icon:'shield',
+  items:[
+    {t:'Обязательные средства индивидуальной защиты',
+     list:[
+       'Защитная каска (шлем)',
+       'Защитные очки',
+       'Защитный щиток',
+       'Защитные перчатки',
+       'Защитная одежда',
+       'Защитная обувь',
+       'Защитные наушники (беруши)',
+       'СИЗ органов дыхания'
+     ]},
+    {note:'ВНИМАНИЕ! Вход на территорию цехов без каски ЗАПРЕЩЁН.', noteType:'warn'},
+    {note:'ОПАСНОЕ НАПРЯЖЕНИЕ! При сварке применяйте щиты из огнестойкого материала.', noteType:'warn'},
+    {t:'Курение на предприятии',
+     text:'Курение в помещениях предприятия СТРОГО ЗАПРЕЩЕНО. Разрешается курить только в специально отведённых местах на прилегающей территории.'},
+    {t:'Где получить СИЗ',
+     kv:[
+       ['Отдел экологии и техносферной безопасности (ОЭиТБ)','тел. 35-87'],
+       ['Место выдачи','склад № 093'],
+       ['Медицинская служба','тел. 24-00 или 30-11 (круглосуточный пункт первой помощи)']
+     ],
+     note:'Если вам стало плохо в течение рабочего дня — незамедлительно обратитесь к непосредственному руководителю и в медслужбу.', noteType:'tip'}
+  ]
+},
+{
+  id:'products', cat:'Продукция', title:'Наша продукция', icon:'train',
+  items:[
+    {text:'ООО «ПК «НЭВЗ» — крупнейший российский производитель магистральных грузовых, пассажирских и промышленных электровозов. Более чем за 90 лет завод освоил около 70 типов электровозов, изготовил свыше 17 000 машин и продолжает выпускать инновационную продукцию высокого качества.'},
+    {t:'Линейка продукции',
+     kv:[
+       ['2(3,4)ЭС5К «Ермак»','Магистральный грузовой электровоз переменного тока, от 2 до 4 секций. Самая массовая серия электровозов на российских железных дорогах.'],
+       ['2(3)ЭС5С «Атаман»','Магистральный грузовой электровоз переменного тока.'],
+       ['2(3)ЭС4К «Дончак»','Магистральный грузовой электровоз постоянного тока.'],
+       ['ЭП1М','Пассажирский электровоз переменного тока.'],
+       ['ЭП20 «Олимп»','Пассажирский двухсистемный электровоз.'],
+       ['ЭМКА2','Маневровый гибридный контактно-аккумуляторный электровоз постоянного тока. Готовится к серийному выпуску.'],
+       ['НП1','Тяговый агрегат переменного тока.'],
+       ['НПМ2М','Промышленный электровоз постоянного тока.']
+     ]},
+    {note:'ЭМКА2 — существенное достижение отечественной науки и техники: такой локомотив создан впервые в практике российского транспортного машиностроения.', noteType:'tip'}
+  ]
+},
+{
+  id:'ps', cat:'Производственная система', title:'Производственная система НЭВЗа', icon:'gear',
+  items:[
+    {text:'Производственная система — комплекс подходов, принципов и инструментов для совершенствования управленческих и производственных процессов. Её основа — сотрудники и их непрерывное развитие, а также современное оборудование и цифровые технологии. Это цельный механизм, где каждый элемент влияет на эффективность всего предприятия.'},
+    {t:'Задачи производственной системы',
+     list:[
+       'Сокращение времени запуска новой продукции в производство',
+       'Совершенствование форм и методов организации процессов производства',
+       'Обеспечение непрерывности и ритмичности производственного процесса',
+       'Оптимизация производственной инфраструктуры предприятия',
+       'Совершенствование бизнес-процессов предприятия'
+     ]},
+    {t:'Цель', note:'Интеграция методологии выявления и устранения потерь во все технологические и управленческие процессы.', noteType:'brand'},
+    {t:'Кто вы в производственной системе?',
+     kv:[
+       ['Руководитель','«Я отвечаю за ритмичную работу цеха / производства без простоев».'],
+       ['Мастер','«Я отвечаю за своевременное производство продукта на участке».'],
+       ['Оператор сборки','«Я выполняю операцию качественно с первого раза, оперативно сигнализирую о проблемах».'],
+       ['Рабочий производства','«Я ответственен за выпуск точно в срок качественного изделия для эталонной линии».'],
+       ['Сотрудник вспомогательных подразделений','«Без моей работы на производстве возникнут проблемы».']
+     ],
+     note:'Каждый сотрудник завода — часть общей производственной системы, и каждый вносит вклад в общее дело. Производственная система НЭВЗа является неотъемлемой частью операционной системы ТМХ.', noteType:'tip'}
+  ]
+},
+{
+  id:'tos', cat:'Производственная система', title:'Операционная система ТМХ (TOS)', icon:'list',
+  items:[
+    {text:'Операционная система ТМХ (TOS) — основа производственной деятельности и оптимизации бизнес-процессов. Она также определяет подходы к работе и модели поведения.'},
+    {t:'Дорожная карта развертывания TOS',
+     text:'Для повышения зрелости TOS на предприятиях используется Дорожная карта развертывания операционной системы ТМХ. По её требованиям определяется текущий уровень зрелости предприятия, а затем формируются планы реализации требований.'},
+    {t:'Уровни зрелости (от 1 до 5)',
+     kv:[
+       ['1 уровень','Первоначальное положение'],
+       ['2 уровень','Изучение / понимание'],
+       ['3 уровень','Первое применение'],
+       ['4 уровень','Мастерское исполнение'],
+       ['5 уровень','Постоянные улучшения — максимальный уровень зрелости']
+     ]},
+    {t:'Что оценивается',
+     list:[
+       'Создание ценности для заказчика',
+       'Эффективная производственная среда',
+       'Постоянные улучшения и стремление к совершенствованию'
+     ]}
+  ]
+},
+{
+  id:'concept', cat:'Производственная система', title:'Концепция развития производственной системы', icon:'bulb',
+  items:[
+    {t:'Механизм преобразований',
+     steps:[
+       'От эффективной культуры производства — к упорядоченным процессам',
+       'От упорядоченных процессов — к их сквозной автоматизации',
+       'От сквозной автоматизации — к адаптивной модели управления бизнесом'
+     ]},
+    {t:'Активная среда',
+     list:['«Команда команд»','«Тотальный кайдзен»','«Всеобщая стандартизация»','«Эффективное целеполагание»']},
+    {t:'Синхронный поток',
+     list:['Ежесуточное управление потоком','Система встроенного качества','Всеобщее обслуживание оборудования','Гибкое управление персоналом']},
+    {t:'Цифровизация',
+     list:['Локальная автоматизация на местах','Автоматизация сквозных бизнес-процессов','Единая цифровая среда']},
+    {note:'Задача каждого — используя свой потенциал, участвовать в развитии производственной системы. Подробная информация по телефону 25-10.', noteType:'tip'}
+  ]
+},
+{
+  id:'tools', cat:'Производственная система', title:'Инструменты: 5С, ППУ и потери', icon:'bolt',
+  items:[
+    {t:'Бережливое производство',
+     text:'В основе производственной системы НЭВЗа лежат принципы бережливого производства: организация рабочих мест по системе 5С, работа с потерями и непрерывные улучшения, подкреплённые стандартами. Бережливое производство формируется за счёт хозяйского подхода и вовлечения всего персонала в развитие.'},
+    {t:'Система 5С',
+     text:'Метод организации рабочего места из 5 элементарных шагов. Значительно повышает эффективность и управляемость любого процесса — цеха, отдела, службы, склада; повышает безопасность работы, улучшает производственную культуру, укрепляет трудовую дисциплину и сохраняет время.',
+     note:'Хочешь работать в комфортных условиях? Улучши своё рабочее место по принципам системы 5С.', noteType:'tip'},
+    {t:'ППУ — предложение по улучшению: порядок подачи',
+     steps:[
+       'Заполнение бланка ППУ. Бланк предоставляет рацорг или мастер; руководитель участка проводит оценку ППУ.',
+       'Регистрация ППУ. Рацорг регистрирует заполненные бланки.',
+       'Рассмотр ППУ. Цеховая комиссия оценивает предложение.',
+       'Принятие решений. Комитет по улучшениям (КПУ) рассматривает ППУ подразделений завода и решает, внедрять ли их.',
+       'Внедрение ППУ — на основании решений протокола совещаний КПУ.',
+       'Выплата вознаграждения. Размер определяется приказом по заводу.'
+     ]},
+    {t:'Колесо улучшений', text:'Время → Эффективность → Стандарт: непрерывный цикл улучшений рабочего места и процесса.'},
+    {t:'Инструменты поиска потерь',
+     kv:[
+       ['Диаграмма «Рыбья кость»','Определить вероятные причины: материалы, оборудование, люди, процесс, управление, окружающая среда — почему возникает «узкое место»?'],
+       ['«5 почему»','Понимание реальной первопричины проблемы.'],
+       ['Принцип Парето','20% причин вызывают 80% проблем.']
+     ]},
+    {t:'8 видов потерь',
+     kv:[
+       ['Транспортировка','Лишнее время, потраченное при сдаче работы или оборудования.'],
+       ['Дефекты','Необходимость повторной работы, так как с первого раза она выполнена неправильно.'],
+       ['Движения','Передвижение людей, деталей, материалов и оборудования, которые нужны, но неэффективны.'],
+       ['Излишняя обработка','Выполнение ненужных операций, которые не добавляют стоимости.'],
+       ['Ожидания','Ожидание материалов, деталей, информации.'],
+       ['Перепроизводство','Производство в большем объёме или быстрее, чем требуется.'],
+       ['Запасы','Слишком большой объём запасов или незавершённого производства.'],
+       ['Неиспользованный человеческий потенциал','Неиспользованные умения и человеческий потенциал.']
+     ]},
+    {note:'Если каждый сотрудник — от рабочего до руководителя — научится видеть потери и правильно выбирать инструменты их устранения, компания сэкономит значительные средства и повысит производительность труда на 20–30%.', noteType:'brand'}
+  ]
+},
+{
+  id:'workplace', cat:'Рабочий процесс', title:'Пропуск, рабочее место и доступы', icon:'id',
+  items:[
+    {t:'Пропускная система',
+     list:[
+       'Вход на предприятие осуществляется исключительно по пропускам (магнитным карточкам).',
+       'Вопросы пропускного режима — бюро пропусков, тел. 24-15.',
+       'Если вы ЗАБЫЛИ или ПОТЕРЯЛИ пропуск — обратитесь в БЮРО ПРОПУСКОВ с паспортом.'
+     ]},
+    {t:'Рабочее место в первый день',
+     list:[
+       'Канцелярские принадлежности можно получить у руководителя или делопроизводителя подразделения, далее — по дополнительной заявке в конце каждого квартала.',
+       'В первый рабочий день выдают учётную запись: подключение к корпоративной почте Microsoft Outlook и доступ в 1С.',
+       'Вопросы по работе оргтехники — Управление по информационным технологиям (УИТ), тел. 35-25.'
+     ]},
+    {t:'СИЗ',
+     kv:[['Отдел экологии и техносферной безопасности','тел. 35-87'],['Выдача СИЗ','склад № 093']]},
+    {t:'«Маятник решений» и горячая линия',
+     text:'Любой вопрос по организации рабочего процесса можно задать с помощью приложения «Маятник решений» или на горячую линию.',
+     kv:[['Горячая линия для обратной связи','8 (800) 700 03-73']]}
+  ]
+},
+{
+  id:'resources', cat:'Рабочий процесс', title:'Информационные ресурсы и связь', icon:'globe',
+  items:[
+    {t:'Ресурсы предприятия',
+     kv:[
+       ['Корпоративный сайт','www.nevz.com'],
+       ['Форум НЭВЗ','http://forum.nevz.com'],
+       ['Общий электронный адрес','Nevz@nevz.com'],
+       ['Нормативные документы (ЛНА)','\\\\nevz\\nevz\\Система менеджмента бизнеса'],
+       ['Документооборот','КСЭД — корпоративная система электронного документооборота: переписка внутри предприятия и с предприятиями ГК «ТМХ»']
+     ]},
+    {t:'Телефонная связь',
+     list:[
+       'Для звонков коллегам используйте внутренние номера. Список номеров есть у делопроизводителей и на форуме НЭВЗа в разделе «Справочник абонентов завода».',
+       'Для звонков с рабочего телефона: по Новочеркасску и на межгород — 8 + 8 + (код города) + номер; на мобильный телефон — 8 + 8 + (номер абонента).'
+     ],
+     kv:[['Справочная служба','09'],['Дежурный диспетчер','22-04, 25-04']]}
+  ]
+},
+{
+  id:'transport', cat:'Рабочий процесс', title:'Корпоративный транспорт', icon:'factory',
+  items:[
+    {text:'Для удобства сотрудников организовано 4 маршрута служебного транспорта:'},
+    {list:[
+       'г. Шахты — автовокзал',
+       'г. Новочеркасск — автовокзал',
+       'ст. Бессергеневская — школа № 43',
+       'г. Новочеркасск — парковка «Магнит» (по Старой Ростовской трассе)'
+     ]},
+    {kv:[['Подробная информация','кабинет 229б или тел. 10-15']]}
+  ]
+},
+{
+  id:'schedule', cat:'Распорядок', title:'Трудовой распорядок и графики', icon:'clock',
+  items:[
+    {t:'Режим работы',
+     list:[
+       'Работаем с понедельника по пятницу.',
+       'Отдыхаем в субботу, воскресенье и праздничные дни.',
+       'Отдельные категории сотрудников работают по скользящему графику.'
+     ]},
+    {t:'Основные графики работы',
+     kv:[
+       ['1 смена','начало 7:45 или 8:00 · обеденный перерыв 11:30–12:00 или 12:00–12:30 · окончание 16:15 или 16:30'],
+       ['2 смена','начало 19:00 или 19:30 · обеденный перерыв в течение смены · окончание 00:45'],
+       ['Офисный график','начало работы · обеденный перерыв · конец работы — уточняйте в своём подразделении']
+     ]},
+    {t:'Обеденное время',
+     list:[
+       'В специально оборудованных комнатах приёма пищи (в офисе и в цехах).',
+       'В столовых № 9, № 10 и № 11 (как пройти — смотрите план-схему предприятия).'
+     ]},
+    {t:'Отпуск',
+     text:'Каждый сотрудник, работающий по трудовому договору, имеет право на ежегодный оплачиваемый отпуск в соответствии с нормами ТК РФ.',
+     kv:[['Порядок предоставления и оформления','П 117.12-2024 «Порядок предоставления основных и дополнительных отпусков» — раздел «Положения → 117 ОК» в Системе менеджмента бизнеса']]},
+    {t:'Отсутствие на рабочем месте',
+     kv:[
+       ['Если вы заболели','Известите руководителя до начала или в течение первого получаса рабочего дня.'],
+       ['Если вам стало плохо','Незамедлительно обратитесь к непосредственному руководителю и в медслужбу: тел. 24-00 или 30-11.']
+     ]},
+    {t:'Командировки',
+     text:'Командировка оформляется согласно Положению о служебных командировках (раздел «Положения → 120 Главная бухгалтерия» в Системе менеджмента бизнеса).'}
+  ]
+},
+{
+  id:'salary', cat:'Оплата и КПЭ', title:'Оплата труда и КПЭ', icon:'money',
+  items:[
+    {t:'График выплат',
+     kv:[
+       ['Аванс','27-го числа каждого месяца'],
+       ['Заработная плата','12-го числа месяца, следующего за отработанным'],
+       ['НДФЛ','удерживается автоматически'],
+       ['Выходные и праздники','если день выплаты выпадает на выходной или праздничный день, зарплата выплачивается накануне, в рабочий день']
+     ]},
+    {t:'Формы оплаты труда', list:['Повременная','Сдельная']},
+    {t:'КПЭ — ключевой показатель эффективности',
+     text:'КПЭ — показатель, отражающий цели и задачи, поставленные работнику на предстоящий отчётный период. Деятельность сотрудников оценивается по показателям эффективности.',
+     list:[
+       'Задачи по КПЭ в зависимости от занимаемой должности оцениваются: по итогам месяца, по итогам квартала, по итогам полугодия.',
+       'Опираясь на результаты выполнения КПЭ, сотрудников поощряют за достигнутые результаты и выполненные цели.'
+     ]}
+  ]
+},
+{
+  id:'medsport', cat:'Соцпрограмма', title:'Медицина, спорт и культура', icon:'heart',
+  items:[
+    {t:'Медицинское обеспечение',
+     list:[
+       'Работникам оказываются бесплатные услуги медицинского центра.',
+       'На территории предприятия проводятся периодические медицинские осмотры, диспансеризация, вакцинация от гриппа.',
+       'Работает круглосуточный пункт оказания первой медицинской помощи.'
+     ],
+     kv:[['Медслужба','тел. 24-00 или 30-11']]},
+    {t:'Спортивная и культурная инфраструктура',
+     list:[
+       'Спортивный и тренажёрный залы, Дворец культуры, стадион и база отдыха (КСК — культурно-спортивный комплекс).',
+       'Для членов семей сотрудников действуют льготные условия на абонементы.'
+     ]},
+    {t:'Бесплатные спортивные секции',
+     list:['Мини-футбол','Волейбол','Баскетбол','Настольный теннис','Лёгкая атлетика','Шахматы','Бокс']},
+    {kv:[
+       ['Месторасположение','корпус аппаратно-механического цеха № 46 (вход со стороны Сквера Дружбы)'],
+       ['Спортивные и корпоративные мероприятия','тел. 23-93-40']
+     ]}
+  ]
+},
+{
+  id:'social', cat:'Соцпрограмма', title:'Материальная помощь и поддержка семей', icon:'users',
+  items:[
+    {t:'Материальная помощь сотрудникам',
+     text:'Сотрудникам предприятия оказывается материальная помощь:',
+     list:[
+       'при рождении ребёнка',
+       'при регистрации брака',
+       'в случае смерти работника',
+       'в случае смерти близких родственников (супруги, дети, родители работника)',
+       'молодым работникам, демобилизованным из российской армии',
+       'в связи с чрезвычайными обстоятельствами / дорогостоящим лечением'
+     ],
+     note:'Оформить материальную помощь можно, обратившись к специалисту по кадрам вашего подразделения.', noteType:'tip'},
+    {t:'НЭВЗ заботится о семьях работников',
+     list:[
+       'новогодние подарки для детей',
+       'путёвки в санатории и детские лагеря',
+       'подарки первоклассникам',
+       'подарки отличникам'
+     ],
+     text:'Для оформления необходимо предоставить документы (копию свидетельства о рождении ребёнка и др.) специалисту по кадрам подразделения.'}
+  ]
+},
+{
+  id:'food', cat:'Соцпрограмма', title:'Питание и обратная связь', icon:'factory',
+  items:[
+    {t:'Организация питания',
+     text:'На территории предприятия расположены:',
+     list:['3 столовых (№ 9, № 10, № 11)','5 торговых павильонов','автоматы для продажи еды и напитков'],
+     kv:[['Подробная информация','тел. 24-66']]},
+    {t:'Каналы обратной связи',
+     kv:[
+       ['Горячая линия','8 (800) 700 03-73'],
+       ['Приложение','«Маятник решений» — любой вопрос по организации рабочего процесса'],
+       ['Форум НЭВЗ','http://forum.nevz.com']
+     ]}
+  ]
+},
+{
+  id:'injen', cat:'Развитие', title:'Молодёжное движение ИНЖЕН', icon:'bolt',
+  items:[
+    {note:'К ИНЖЕНам могут присоединиться сотрудники до 35 лет.', noteType:'brand'},
+    {t:'Направления программы',
+     kv:[
+       ['Поддержка молодых специалистов','Программа ИНЖЕН включает стажировки, наставничество и карьерное сопровождение для молодых сотрудников.'],
+       ['Инновационные проекты','Активно вовлекаем молодёжь в инновационные проекты и научно-технические конференции, стимулируя профессиональный рост.'],
+       ['Развитие и волонтёрство','Организуем образовательные и спортивные мероприятия, развиваем корпоративное волонтёрство среди молодых сотрудников.']
+     ]},
+    {t:'Наши мероприятия',
+     list:[
+       'Организация спортивной жизни предприятия',
+       'Экскурсии для детей сотрудников',
+       'Участие в экологических проектах',
+       'Кинотеатр под открытым небом',
+       'Развитие корпоративной культуры и патриотического воспитания',
+       'Благоустройство территории завода',
+       'Работа с образовательными организациями',
+       'Благотворительная деятельность и волонтёрство'
+     ]}
+  ]
+},
+{
+  id:'education', cat:'Развитие', title:'Образование и целевое обучение', icon:'cap',
+  items:[
+    {t:'ДГТУ: профильная кафедра «Транспортное машиностроение»',
+     text:'С 2009 года базовая кафедра предприятия реализует подготовку обучающихся по направлениям:',
+     kv:[
+       ['Бакалавриат','15.03.01 «Машиностроение», заочная форма'],
+       ['Магистратура','15.04.02 «Технологические машины и оборудование», заочная форма']
+     ]},
+    {t:'Целевое обучение',
+     text:'Учебные заведения: ЮРГПУ(НПИ), ДГТУ, РГУПС, НПГК.',
+     kv:[
+       ['Для сотрудников предприятия','Социальный лифт и возможность получить высшее образование за счёт предприятия. Профессиональный рост, финансовая поддержка, удобный формат обучения.'],
+       ['Для детей сотрудников','Возможность получить бесплатное высшее образование и гарантированное место работы. Карьерное развитие, финансовая поддержка, стабильность.'],
+       ['Подробная информация о целевом обучении','тел. 27-27']
+     ]},
+    {t:'Дистанционное обучение и библиотека',
+     kv:[
+       ['TES — TMH Educational System','Образовательная система ТМХ: курсы для развития профессиональных и личностных компетенций.'],
+       ['Alpina Digital','Корпоративная электронная библиотека: более 2,5 тыс. деловых книг, аудио и саммари — самая полная коллекция изданий по бизнесу и саморазвитию на русском языке. Приложение можно загрузить на мобильное устройство.']
+     ]}
+  ]
+},
+{
+  id:'reserves', cat:'Развитие', title:'Кадровый, ZOOM и Серебряный резервы', icon:'star',
+  items:[
+    {t:'Кадровый резерв',
+     text:'Комплексная программа, направленная на подготовку и становление высокопрофессиональных кадров и их дальнейший карьерный рост внутри Группы «ТМХ». НЭВЗ инвестирует в знания и навыки сотрудников, создавая условия для постоянного развития и карьерного продвижения.',
+     list:[
+       'Вступить в кадровый резерв возможно спустя 6 месяцев после трудоустройства',
+       'Быстрое карьерное продвижение',
+       'Повышение профессиональных навыков',
+       'Повышение мотивации',
+       'Уверенность в будущем'
+     ],
+     note:'Лучшие лидеры растут внутри компании. Никита Лейко, начальник отдела обеспечения гарантийных обязательств: карьерный рост от специалиста до начальника отдела за 4 года!', noteType:'tip'},
+    {t:'ZOOM-резерв — сотрудники до 35 лет',
+     text:'Поколение Z — новое дыхание для компании. Вступить в ZOOM-резерв возможно сразу с момента трудоустройства.',
+     kv:[
+       ['Развитие потенциала','Развитие при поддержке опытного наставника.'],
+       ['Чёткий карьерный путь','Траектория карьерного развития в различных компаниях Группы ТМХ.'],
+       ['Проектное лидерство','Возможность продемонстрировать себя в команде и увидеть результат в короткие сроки.'],
+       ['Корпоративная культура ТМХ','Корпоративные, спортивные и интеллектуальные мероприятия, поощрение творческого развития участников резерва.']
+     ],
+     list:[
+       'Быстрая адаптация к изменениям',
+       'Резерв высокой мобильности',
+       'Склонность к инновационным проектам',
+       'Свобода и креативность',
+       'Гибкость и социально ответственная работа',
+       'Потребность в регулярной обратной связи и поддержке'
+     ]},
+    {t:'Серебряный резерв — сотрудники 65+',
+     text:'Когда опыт — истинная ценность.',
+     kv:[
+       ['Передача знаний в контуре ТМХ','Наставничество, мастер-классы, тренинги.'],
+       ['Научное признание','Очное / дистанционное участие в конференциях и рецензирование научных работ профильной тематики.'],
+       ['Признание внутри компании','Фильмы про экспертов, приглашение к практикам обмена опытом между предприятиями в контуре ТМХ.'],
+       ['Серебряная база знаний ТМХ','Создание и постоянное пополнение: получение и обработка материалов под запись и оцифровку.']
+     ],
+     list:[
+       'Уникальный опыт решения профессиональных задач',
+       'Возможность полезного взаимодействия со всеми видами кадрового резерва',
+       'Потребность в передаче накопленного опыта',
+       'Резерв невысокой численности'
+     ]},
+    {note:'Как вступить в любой из резервов и узнать об обучении и развитии работников? Звоните по телефону 20-78.', noteType:'brand'}
+  ]
+},
+{
+  id:'holidays', cat:'Справочные данные', title:'Корпоративные праздники', icon:'calendar',
+  items:[
+    {text:'По традиции развлекательная программа проводится на центральной площади завода перед началом рабочего дня. Для работников выступают музыкальные коллективы, организованы праздничные локации: фотозоны и активности. Генеральный директор завода в конференц-зале награждает работников за выдающиеся производственные заслуги.'},
+    {t:'Календарь праздников',
+     kv:[
+       ['День рождения Трансмашхолдинга','15 апреля'],
+       ['День рождения НЭВЗа','27 апреля'],
+       ['День машиностроителя','26 сентября']
+     ]},
+    {note:'Однажды именно ваше имя может оказаться в числе награждённых.', noteType:'tip'}
+  ]
+},
+{
+  id:'phones', cat:'Справочные данные', title:'Полезные телефоны', icon:'phone',
+  items:[
+    {t:'Рабочий процесс и доступы',
+     kv:[
+       ['24-15','Бюро пропусков (пропускной режим, утерянный пропуск)'],
+       ['35-87','Отдел экологии и техносферной безопасности — выдача СИЗ (склад № 093)'],
+       ['35-25','Управление по информационным технологиям (УИТ), оргтехника'],
+       ['10-15','Корпоративный транспорт, кабинет 229б'],
+       ['09','Справочная служба'],
+       ['22-04, 25-04','Дежурный диспетчер']
+     ]},
+    {t:'Здоровье, питание, соцвопросы',
+     kv:[
+       ['24-00, 30-11','Медицинская служба, круглосуточный пункт первой помощи'],
+       ['24-66','Организация питания'],
+       ['23-93-40','Спортивные и корпоративные мероприятия'],
+       ['8 (800) 700 03-73','Горячая линия для обратной связи']
+     ]},
+    {t:'Развитие и обучение',
+     kv:[
+       ['20-78','Обучение и развитие работников, кадровый / ZOOM / Серебряный резервы'],
+       ['27-27','Целевое обучение'],
+       ['25-10','Отдел по развитию производственной системы']
+     ]}
+  ]
+},
+{
+  id:'abbr', cat:'Справочные данные', title:'Корпоративные сокращения', icon:'list',
+  items:[
+    {t:'Основные понятия',
+     kv:[
+       ['АО «ТМХ»','Акционерное общество «Трансмашхолдинг»'],
+       ['ГК ТМХ / Трансмашхолдинг','Группа компаний «Трансмашхолдинг»'],
+       ['ООО «ПК «НЭВЗ», НЭВЗ','Общество с ограниченной ответственностью «Производственная компания «Новочеркасский электровозостроительный завод»'],
+       ['TES','TMH Educational System — образовательная система ТМХ'],
+       ['КСЭД','Корпоративная система электронного документооборота'],
+       ['АНО ДПО «КУЦ НЭВЗ»','Корпоративный учебный центр НЭВЗ'],
+       ['ППО','Первичная профсоюзная организация'],
+       ['КСК','Культурно-спортивный комплекс (база отдыха, стадион, дворец культуры, спортзал)'],
+       ['КПЭ','Ключевой показатель эффективности'],
+       ['ППУ','Предложение по улучшению'],
+       ['КПУ','Комитет по улучшениям'],
+       ['TOS','Операционная система ТМХ']
+     ]},
+    {t:'Подразделения предприятия',
+     kv:[
+       ['ДУПиТ','Дирекция по управлению персоналом и трансформации'],
+       ['УпРП','Управление по работе с персоналом'],
+       ['УКиЛиОР','Управление компенсаций и льгот и организационного развития'],
+       ['ГПиАП','Группа подбора и адаптации персонала'],
+       ['ОКА','Отдел кадрового администрирования'],
+       ['ФО','Финансовый отдел'],
+       ['ОЭиТБ','Отдел экологии и техносферной безопасности'],
+       ['ОРПС','Отдел по развитию производственной системы'],
+       ['УИТ','Управление по информационным технологиям']
+     ]},
+    {t:'Основные предприятия ГК ТМХ',
+     kv:[
+       ['БМЗ','АО «Управляющая компания «Брянский машиностроительный завод»'],
+       ['БС','АО «Производственное объединение «Бежицкая сталь»'],
+       ['ВЭлНИИ','ОАО «Всероссийский научно-исследовательский и проектно-конструкторский институт электровозостроения»'],
+       ['ДМЗ','АО «Демиховский машиностроительный завод»'],
+       ['ЖДРМ','АО «Желдорреммаш»'],
+       ['КЗ','АО «Коломенский завод»'],
+       ['КСК','ООО «Ключевые Системы и Компоненты»'],
+       ['ЛокоТех','ООО «ЛокоТех»'],
+       ['ЛТЗ','АО «Лугансктепловоз»'],
+       ['МВМ','АО «Метровагонмаш»'],
+       ['МВМС','ООО «МВМ-Сервис»'],
+       ['ОЭВРЗ','АО «Октябрьский электровагоноремонтный завод»'],
+       ['ПДМ','АО «Пензадизельмаш»'],
+       ['ТВЗ','ОАО «Тверской вагоностроительный завод»'],
+       ['ТМХИ','ООО «ТМХ Инжиниринг»'],
+       ['ТМХЭ','ООО «ТМХ-Электротех»'],
+       ['Трансмаш','АО «Транспортное машиностроение»']
+     ]}
+  ]
+}
+];
+
+/* ==========================================================
+   3. БАЗА ВОПРОСОВ ВИКТОРИНЫ
+========================================================== */
+const allQuestions = [
+{q:'В каком году началась история Новочеркасского электровозостроительного завода?',a:['1932','1936','1928','1945'],c:0,e:'История завода началась в 1932 году, а первый локомотив был выпущен в 1936 году (раздел «НЭВЗ сегодня»).'},
+{q:'В каком году НЭВЗ выпустил первый локомотив?',a:['1936','1932','1940','1948'],c:0,e:'Первый локомотив завод выпустил в 1936 году — через четыре года после начала своей истории.'},
+{q:'С какого года НЭВЗ входит в состав Группы компаний «Трансмашхолдинг»?',a:['С 2003 года','С 1998 года','С 2010 года','С 2007 года'],c:0,e:'С 2003 года НЭВЗ работает в периметре одного из мировых лидеров транспортного машиностроения — компании «Трансмашхолдинг».'},
+{q:'Сколько локомотивных секций ежегодно выпускает завод?',a:['Около 500','Около 150','Около 1000','Около 250'],c:0,e:'Ежегодно НЭВЗ выпускает около 500 локомотивных секций — это его производственная мощность.'},
+{q:'Какая доля железнодорожных перевозок России осуществляется локомотивами, выпущенными на НЭВЗе?',a:['Более 65%','Около 30%','Около 45%','Более 90%'],c:0,e:'Более 65% железнодорожных перевозок в стране выполняют локомотивы, выпущенные на предприятии.'},
+{q:'Сколько высококвалифицированных специалистов трудится на НЭВЗе?',a:['Более 4200','Более 1500','Около 900','Более 8000'],c:0,e:'На предприятии трудятся более 4200 высококвалифицированных специалистов, которые создают будущее железнодорожного транспорта.'},
+{q:'Какова территория предприятия?',a:['112 гектаров','45 гектаров','250 гектаров','76 гектаров'],c:0,e:'Территория завода составляет 112 гектаров.'},
+{q:'Сколько типов электровозов освоил завод за свою историю?',a:['Около 70','Около 25','Более 150','Около 40'],c:0,e:'Более чем за 90 лет работы завод освоил около 70 типов электровозов.'},
+{q:'Сколько электровозов различного назначения изготовил НЭВЗ?',a:['Более 17 000','Более 5 000','Более 40 000','Около 9 000'],c:0,e:'Завод изготовил более 17 000 электровозов различного назначения.'},
+{q:'Сколько профессий и должностей насчитывается на предприятии?',a:['Более 350','Более 120','Около 50','Более 800'],c:0,e:'На НЭВЗе более 350 профессий и должностей.'},
+{q:'Какая серия электровозов НЭВЗа является самой массовой на российских железных дорогах?',a:['2(3,4)ЭС5К «Ермак»','2(3)ЭС4К «Дончак»','ЭП20 «Олимп»','НПМ2М'],c:0,e:'«Ермак» — магистральный грузовой электровоз переменного тока от 2 до 4 секций, самая массовая серия на российских железных дорогах.'},
+{q:'Сколько секций может быть в составе электровоза «Ермак»?',a:['От 2 до 4','Ровно 1','От 5 до 8','Всегда 3'],c:0,e:'Магистральные грузовые электровозы переменного тока серии «Ермак» имеют в составе от 2 до 4 секций.'},
+{q:'Какой электровоз НЭВЗа является пассажирским двухсистемным?',a:['ЭП20 «Олимп»','ЭП1М','ЭМКА2','2ЭС4К «Дончак»'],c:0,e:'ЭП20 «Олимп» — пассажирский двухсистемный электровоз производства НЭВЗа.'},
+{q:'Какой маневровый электровоз готовится к серийному выпуску на НЭВЗе?',a:['ЭМКА2','НПМ2М','ЭП1М','2ЭС5С «Атаман»'],c:0,e:'ЭМКА2 — маневровый гибридный контактно-аккумуляторный электровоз постоянного тока. Такой локомотив создан впервые в практике российского транспортного машиностроения.'},
+{q:'Какой магистральный грузовой электровоз постоянного тока производит НЭВЗ?',a:['2(3)ЭС4К «Дончак»','2(3,4)ЭС5К «Ермак»','ЭП20 «Олимп»','2(3)ЭС5С «Атаман»'],c:0,e:'«Дончак» (2(3)ЭС4К) — магистральный грузовой электровоз постоянного тока.'},
+{q:'Что такое НП1 в линейке продукции НЭВЗа?',a:['Тяговый агрегат переменного тока','Промышленный электровоз постоянного тока','Пассажирский электровоз','Маневровый тепловоз'],c:0,e:'НП1 — тяговый агрегат переменного тока, выпускаемый НЭВЗом.'},
+{q:'Какой промышленный электровоз постоянного тока выпускает завод?',a:['НПМ2М','НП1','ЭП1М','2ЭС5С'],c:0,e:'НПМ2М — промышленный электровоз постоянного тока производства НЭВЗа.'},
+{q:'Какой пассажирский электровоз переменного тока производит НЭВЗ?',a:['ЭП1М','ЭМКА2','НП1','2ЭС4К'],c:0,e:'ЭП1М — пассажирский электровоз переменного тока производства НЭВЗа.'},
+{q:'Как называется магистральный грузовой электровоз переменного тока 2(3)ЭС5С?',a:['«Атаман»','«Ермак»','«Дончак»','«Олимп»'],c:0,e:'2(3)ЭС5С «Атаман» — магистральный грузовой электровоз переменного тока.'},
+{q:'Какова миссия компании согласно справочнику?',a:['Обеспечиваем движение жизни. Соединяем людей и мечты.','Производим локомотивы для всего мира.','Лидерство в машиностроении любой ценой.','Эффективность, скорость, прибыль.'],c:0,e:'Миссия: «ОБЕСПЕЧИВАЕМ ДВИЖЕНИЕ ЖИЗНИ. СОЕДИНЯЕМ ЛЮДЕЙ И МЕЧТЫ.»'},
+{q:'Что из перечисленного НЕ входит в ценности компании?',a:['Экономия ресурсов — превыше всего','Развитие — основа успеха','Единство разных','Ответственность за будущее'],c:0,e:'Ценности компании: развитие — основа успеха, единство разных, ответственность за будущее, любовь к своему делу.'},
+{q:'Какая ценность описывается словами «Мы работаем в команде и ценим вклад каждого»?',a:['Единство разных','Развитие — основа успеха','Любовь к своему делу','Ответственность за будущее'],c:0,e:'«Единство разных»: объединяя таланты и экспертизу, команда добивается большего.'},
+{q:'Кто является генеральным директором ООО «ПК «НЭВЗ» согласно справочнику?',a:['Евгений Васильевич Гридасов','Иван Петрович Локомотивов','Сергей Николаевич Траншев','Андрей Михайлович Заводов'],c:0,e:'Обращение к новым сотрудникам подписано генеральным директором ООО «ПК «НЭВЗ» Евгением Васильевичем Гридасовым.'},
+{q:'В какой реестр входит НЭВЗ?',a:['«100 лучших предприятий России»','«500 лучших заводов мира»','«Лучший экспортер года»','«Золотой стандарт качества»'],c:0,e:'НЭВЗ входит в реестр «100 лучших предприятий России» НИИ социального развития и предпринимательства.'},
+{q:'В какой стране НЕ встречается техника НЭВЗа согласно справочнику?',a:['В Бразилии','В Китае','В Финляндии','В Узбекистане'],c:0,e:'Технику предприятия можно встретить в Китае, Финляндии, Польше и Узбекистане.'},
+{q:'На каких крупнейших магистралях работают локомотивы НЭВЗа?',a:['Транссибирская и Байкало-Амурская','Октябрьская и Куйбышевская','Северо-Кавказская и Южно-Уральская','Забайкальская и Горьковская'],c:0,e:'Локомотивы используются от Калининграда до Владивостока, в том числе на Транссибирской и Байкало-Амурской магистралях.'},
+{q:'Что ЗАПРЕЩЕНО при входе на территорию цехов?',a:['Вход без каски','Вход в защитных очках','Вход в специальной обуви','Вход с пропуском'],c:0,e:'ВНИМАНИЕ! Вход на территорию цехов без каски ЗАПРЕЩЁН — это обязательное правило безопасности.'},
+{q:'Где разрешено курить на предприятии?',a:['Только в специально отведённых местах на прилегающей территории','В любом помещении в нерабочее время','В бытовых комнатах цехов','Возле проходной внутри корпуса'],c:0,e:'Курение в помещениях предприятия строго запрещено; курить можно только в специально отведённых местах на прилегающей территории.'},
+{q:'Что необходимо применять при сварке?',a:['Щиты из огнестойкого материала','Полиэтиленовую плёнку','Картонные щиты','Деревянные настилы'],c:0,e:'ОПАСНОЕ НАПРЯЖЕНИЕ! При сварке применяйте щиты из огнестойкого материала.'},
+{q:'Что из перечисленного НЕ относится к обязательным СИЗ по справочнику?',a:['Защитный зонт','Защитная каска (шлем)','Защитный щиток','Защитные наушники (беруши)'],c:0,e:'Перечень СИЗ: каска, очки, щиток, перчатки, защитная одежда и обувь, наушники (беруши), СИЗ органов дыхания.'},
+{q:'По какому телефону можно решить вопросы пропускного режима?',a:['24-15','35-87','35-25','22-04'],c:0,e:'Вопросы пропускного режима — бюро пропусков, тел. 24-15.'},
+{q:'Что делать, если вы забыли или потеряли пропуск?',a:['Обратиться в бюро пропусков с паспортом','Пройти по пропуску коллеги','Купить новый в торговом павильоне','Позвонить на горячую линию питания'],c:0,e:'Если вы забыли или потеряли пропуск, обратитесь в БЮРО ПРОПУСКОВ с паспортом.'},
+{q:'Где выдают средства индивидуальной защиты?',a:['На складе № 093 через ОЭиТБ','В бюро пропусков','В медицинском центре','В управлении по информационным технологиям'],c:0,e:'СИЗ можно получить, обратившись в отдел экологии и техносферной безопасности (тел. 35-87); выдача — на складе № 093.'},
+{q:'Куда обращаться, если возникли вопросы по работе оргтехники?',a:['В УИТ, тел. 35-25','В ОЭиТБ, тел. 35-87','В медслужбу, тел. 24-00','В бюро пропусков, тел. 24-15'],c:0,e:'Вопросы по работе оргтехники решает Управление по информационным технологиям (УИТ), тел. 35-25.'},
+{q:'Какой номер у справочной службы предприятия?',a:['09','01','22','15'],c:0,e:'Справочная служба — 09. Дежурный диспетчер — 22-04, 25-04.'},
+{q:'По какому номеру звонить дежурному диспетчеру?',a:['22-04, 25-04','24-15','10-15','35-87'],c:0,e:'Дежурный диспетчер доступен по номерам 22-04 и 25-04.'},
+{q:'Что такое КСЭД?',a:['Корпоративная система электронного документооборота','Контрольная система оценки деталей','Комитет стандартизации и эксплуатации','Кафедра системного электронного доступа'],c:0,e:'КСЭД — корпоративная система электронного документооборота: через неё ведётся переписка внутри предприятия и с предприятиями ГК «ТМХ».'},
+{q:'Какой корпоративный сайт у завода?',a:['www.nevz.com','www.nevz.ru','tmh-nevz.com','zavod-nevz.info'],c:0,e:'Корпоративный сайт — www.nevz.com, форум — http://forum.nevz.com, общий адрес почты — Nevz@nevz.com.'},
+{q:'Где найти список внутренних телефонных номеров абонентов завода?',a:['На форуме НЭВЗа в разделе «Справочник абонентов завода»','Только у генерального директора','В столовой № 9','В приложении «Маятник решений»'],c:0,e:'Список номеров есть у делопроизводителей и на форуме НЭВЗа в разделе «Справочник абонентов завода».'},
+{q:'Как набрать мобильный номер с рабочего телефона?',a:['8 + 8 + номер абонента','8 + код города + номер','Просто номер абонента','0 + номер абонента'],c:0,e:'С рабочего телефона: на мобильный — 8 + 8 + (номер абонента); по Новочеркасску и на межгород — 8 + 8 + (код города) + номер.'},
+{q:'Сколько маршрутов служебного транспорта организовано для сотрудников?',a:['4','2','6','8'],c:0,e:'Для удобства сотрудников организовано 4 маршрута служебного транспорта (Шахты, Новочеркасск, ст. Бессергеневская, парковка «Магнит»).'},
+{q:'Где уточнить информацию о корпоративном транспорте?',a:['Кабинет 229б, тел. 10-15','Кабинет 101, тел. 24-15','Бюро пропусков, тел. 22-04','Медслужба, тел. 30-11'],c:0,e:'Подробную информацию о служебном транспорте можно уточнить в кабинете 229б или по телефону 10-15.'},
+{q:'Какую корпоративную почту подключают новому сотруднику?',a:['Microsoft Outlook','Gmail','Яндекс Почта','Mail.ru'],c:0,e:'В первый рабочий день выдают учётную запись: подключение к корпоративной почте Microsoft Outlook и доступ в 1С.'},
+{q:'Где взять канцелярские принадлежности в первый день работы?',a:['У руководителя или делопроизводителя подразделения','В бюро пропусков','На складе № 093','В УИТ'],c:0,e:'В первый день канцелярию выдают руководитель или делопроизводитель подразделения, далее — по дополнительной заявке в конце каждого квартала.'},
+{q:'Какое приложение помогает задать вопрос по организации рабочего процесса?',a:['«Маятник решений»','«Пульс ТМХ»','«Голос завода»','«Решение+»'],c:0,e:'Любой вопрос по организации рабочего процесса можно задать с помощью приложения «Маятник решений» или на горячую линию.'},
+{q:'В какие дни работает большинство сотрудников согласно трудовому распорядку?',a:['С понедельника по пятницу','С понедельника по субботу','Через день','Только понедельник, среда, пятница'],c:0,e:'Работаем с понедельника по пятницу, отдыхаем в субботу, воскресенье и праздничные дни; отдельные категории — по скользящему графику.'},
+{q:'Когда начинается обеденный перерыв при начале смены в 7:45?',a:['11:30','12:30','13:00','14:00'],c:0,e:'Для 1 смены: начало 7:45 или 8:00, обеденный перерыв 11:30–12:00 или 12:00–12:30, окончание 16:15 или 16:30.'},
+{q:'В какие числа выплачиваются аванс и заработная плата?',a:['Аванс 27-го, зарплата 12-го числа следующего месяца','Аванс 5-го, зарплата 20-го','Аванс 15-го, зарплата 30-го','Аванс 10-го, зарплата 25-го'],c:0,e:'Заработная плата выплачивается два раза в месяц: аванс — 27-го числа, зарплата — 12-го числа месяца, следующего за отработанным.'},
+{q:'Что происходит, если день выплаты зарплаты выпадает на выходной или праздник?',a:['Выплата производится накануне, в рабочий день','Выплата переносится на следующий понедельник','Деньги выдаются после выходных с задержкой','Выплата отменяется'],c:0,e:'Если день выплаты выпадает на выходные или праздничные дни, зарплата выплачивается накануне, в рабочий день.'},
+{q:'Какие две формы оплаты труда действуют на предприятии?',a:['Повременная и сдельная','Только сдельная','Тарифная и бонусная','Окладная и процентная'],c:0,e:'На НЭВЗе действуют две формы оплаты труда: повременная и сдельная.'},
+{q:'Что означает аббревиатура КПЭ?',a:['Ключевой показатель эффективности','Корпоративный план эксплуатации','Контроль производственного этапа','Кадровый потенциал предприятия'],c:0,e:'КПЭ — ключевой показатель эффективности: показатель, отражающий цели и задачи, поставленные работнику на отчётный период.'},
+{q:'За какие периоды оцениваются задачи по КПЭ?',a:['Месяц, квартал, полугодие','Только календарный год','Каждую рабочую неделю','Ежедневно'],c:0,e:'Задачи по КПЭ в зависимости от должности оцениваются по итогам месяца, квартала и полугодия.'},
+{q:'Что нужно сделать, если вы заболели?',a:['Известить руководителя до начала или в течение первого получаса рабочего дня','Сообщить коллегам в конце недели','Прийти на работу и обратиться в медпункт','Не сообщать никому'],c:0,e:'Если вы заболели — известите руководителя до начала или в течение первого получаса рабочего дня.'},
+{q:'К кому обращаться, если стало плохо в течение рабочего дня?',a:['К непосредственному руководителю и в медслужбу (24-00 или 30-11)','Только в бюро пропусков','К специалисту по кадрам','В УИТ'],c:0,e:'При ухудшении здоровья незамедлительно обратитесь к непосредственному руководителю и в медслужбу: тел. 24-00 или 30-11.'},
+{q:'Какие столовые расположены на территории предприятия?',a:['№ 9, № 10, № 11','№ 1, № 2, № 3','№ 4 и № 5','№ 12 и № 13'],c:0,e:'На территории 3 столовых — № 9, № 10 и № 11 (как пройти — смотрите план-схему предприятия), плюс 5 торговых павильонов и автоматы.'},
+{q:'По какому телефону узнать подробности об организации питания?',a:['24-66','24-00','23-93-40','27-27'],c:0,e:'Подробная информация по организации питания — тел. 24-66.'},
+{q:'Где расположен спортивный зал?',a:['Корпус аппаратно-механического цеха № 46, вход со стороны Сквера Дружбы','В здании бюро пропусков','В столовой № 10','На складе № 093'],c:0,e:'Спортивная инфраструктура расположена в корпусе аппаратно-механического цеха № 46 (вход со стороны Сквера Дружбы).'},
+{q:'Какая спортивная секция НЕ входит в перечень бесплатных секций предприятия?',a:['Плавание','Мини-футбол','Шахматы','Бокс'],c:0,e:'Открыты бесплатные секции: мини-футбол, волейбол, баскетбол, настольный теннис, лёгкая атлетика, шахматы, бокс.'},
+{q:'Какие медицинские услуги предоставляются работникам предприятия?',a:['Бесплатные услуги медицинского центра','Только платные услуги со скидкой 50%','Услуги только для руководителей','Медуслуги не предоставляются'],c:0,e:'Работникам оказываются бесплатные услуги медицинского центра; проводятся медосмотры, диспансеризация, вакцинация от гриппа, работает круглосуточный пункт первой помощи.'},
+{q:'Какой номер у горячей линии для обратной связи?',a:['8 (800) 700 03-73','8 (800) 555 01-01','8 (863) 200-11-22','8 (495) 700 03-73'],c:0,e:'Горячая линия для обратной связи: 8 (800) 700 03-73.'},
+{q:'До какого возраста сотрудники могут присоединиться к молодёжному движению ИНЖЕН?',a:['До 35 лет','До 25 лет','До 45 лет','Ограничений по возрасту нет'],c:0,e:'К ИНЖЕНам могут присоединиться сотрудники до 35 лет.'},
+{q:'Что НЕ входит в направления работы движения ИНЖЕН?',a:['Продажа продукции завода частным лицам','Стажировки, наставничество и карьерное сопровождение','Инновационные проекты и научно-технические конференции','Образовательные, спортивные мероприятия и волонтёрство'],c:0,e:'ИНЖЕН — это поддержка молодых специалистов, инновационные проекты, развитие и волонтёрство, а также корпоративные мероприятия.'},
+{q:'Какое мероприятие НЕ указано в списке мероприятий ИНЖЕНа?',a:['Проведение тендеров на закупку металла','Кинотеатр под открытым небом','Экскурсии для детей сотрудников','Благоустройство территории завода'],c:0,e:'Мероприятия ИНЖЕНа: спорт, экскурсии для детей, экопроекты, кинотеатр под открытым небом, благоустройство территории, работа с образовательными организациями, волонтёрство.'},
+{q:'В каком вузе с 2009 года работает базовая кафедра предприятия «Транспортное машиностроение»?',a:['ДГТУ','ЮРГПУ (НПИ)','РГУПС','НПГК'],c:0,e:'С 2009 года базовая кафедра «Транспортное машиностроение» реализует подготовку в ДОНСКОМ ГОСУДАРСТВЕННОМ ТЕХНИЧЕСКОМ УНИВЕРСИТЕТЕ (ДГТУ).'},
+{q:'По какому направлению ДГТУ готовит бакалавров на профильной кафедре предприятия?',a:['15.03.01 «Машиностроение»','38.03.01 «Экономика»','09.03.02 «Информационные системы»','13.03.02 «Электроэнергетика»'],c:0,e:'Бакалавриат: 15.03.01 «Машиностроение», заочная форма; магистратура: 15.04.02 «Технологические машины и оборудование», заочная форма.'},
+{q:'Какое учебное заведение НЕ указано в списке целевого обучения?',a:['МГТУ им. Н. Э. Баумана','ЮРГПУ (НПИ)','РГУПС','НПГК'],c:0,e:'Целевое обучение: ЮРГПУ(НПИ), ДГТУ, РГУПС, НПГК. Подробности — тел. 27-27.'},
+{q:'По какому телефону можно узнать о целевом обучении?',a:['27-27','20-78','25-10','24-15'],c:0,e:'Более подробную информацию о целевом обучении можно получить по телефону 27-27.'},
+{q:'Через какое время после трудоустройства можно вступить в кадровый резерв?',a:['Спустя 6 месяцев','Сразу в первый день','Спустя 3 года','Спустя 5 лет'],c:0,e:'Вступить в кадровый резерв возможно спустя 6 месяцев после трудоустройства.'},
+{q:'Что такое TES?',a:['TMH Educational System — образовательная система ТМХ','Technical Engineering Standard','Transport Electronic System','Total Efficiency Standard'],c:0,e:'TES (TMH Educational System) — система дистанционного обучения с курсами для развития профессиональных и личностных компетенций.'},
+{q:'Какая корпоративная электронная библиотека доступна сотрудникам НЭВЗа?',a:['Alpina Digital','ЛитРес','MyBook','Bookmate'],c:0,e:'Сотрудникам предоставляется доступ к Alpina Digital — более 2,5 тыс. деловых книг, аудио и саммари на русском языке.'},
+{q:'Для какой категории сотрудников предназначен ZOOM-резерв?',a:['Сотрудники до 35 лет','Сотрудники 65+','Только руководители цехов','Сотрудники со стажем более 20 лет'],c:0,e:'ZOOM-резерв — для сотрудников до 35 лет; вступить можно сразу с момента трудоустройства. Тел. 20-78.'},
+{q:'Какая главная идея Серебряного резерва?',a:['Передача опыта: «Когда опыт — истинная ценность»','Ускоренное карьерное продвижение молодёжи','Обязательная ротация кадров','Обучение цифровым технологиям новичков'],c:0,e:'Серебряный резерв — для сотрудников 65+: наставничество, мастер-классы, научное и внутреннее признание, пополнение серебряной базы знаний ТМХ.'},
+{q:'По какому телефону узнать об обучении, развитии и вступлении в резервы?',a:['20-78','25-10','23-93-40','35-25'],c:0,e:'Более подробную информацию об обучении и развитии работников, а также о резервах можно получить по телефону 20-78.'},
+{q:'Когда отмечается День рождения Трансмашхолдинга?',a:['15 апреля','27 апреля','26 сентября','1 мая'],c:0,e:'Корпоративные праздники: День рождения ТМХ — 15 апреля, День рождения НЭВЗа — 27 апреля, День машиностроителя — 26 сентября.'},
+{q:'Когда отмечается День рождения НЭВЗа?',a:['27 апреля','15 апреля','26 сентября','8 июля'],c:0,e:'День рождения НЭВЗа отмечается 27 апреля.'},
+{q:'Когда празднуется День машиностроителя?',a:['26 сентября','27 апреля','15 мая','1 октября'],c:0,e:'День машиностроителя — 26 сентября; по традиции программа проводится на центральной площади завода перед началом рабочего дня.'},
+{q:'Что означает сокращение ДУПиТ?',a:['Дирекция по управлению персоналом и трансформации','Департамент учебного производства и технологий','Дирекция по управлению проектами и техникой','Отдел документационного управления и печати'],c:0,e:'ДУПиТ — Дирекция по управлению персоналом и трансформации.'},
+{q:'Что такое ГПиАП?',a:['Группа подбора и адаптации персонала','Главное производственное и аварийное подразделение','Группа планирования и анализа производства','Государственная программа адаптации персонала'],c:0,e:'ГПиАП — группа подбора и адаптации персонала; к её специалистам можно обратиться с вопросами, которых нет в справочнике.'},
+{q:'Что такое ОЭиТБ?',a:['Отдел экологии и техносферной безопасности','Отдел эксплуатации и технического бюро','Объединение энергетиков и теплотехников','Отдел экономического и технического баланса'],c:0,e:'ОЭиТБ — отдел экологии и техносферной безопасности; он отвечает в том числе за выдачу СИЗ (тел. 35-87).'},
+{q:'Что означает сокращение ОРПС?',a:['Отдел по развитию производственной системы','Отдел распределения промышленной собственности','Объединение рабочих производственных специальностей','Отдел ремонта подвижного состава'],c:0,e:'ОРПС — отдел по развитию производственной системы (тел. 25-10).'},
+{q:'Что такое КСК в перечне корпоративных сокращений НЭВЗа?',a:['Культурно-спортивный комплекс','Комитет стандартизации качества','Корпоративная система контроля','Конструкторско-сборочный корпус'],c:0,e:'КСК — культурно-спортивный комплекс: база отдыха, стадион, дворец культуры, спортзал.'},
+{q:'Что такое КУЦ НЭВЗ?',a:['Корпоративный учебный центр НЭВЗ','Контрольно-учётный цех','Комитет улучшений и качества','Цех кузовных и сборочных работ'],c:0,e:'АНО ДПО «КУЦ НЭВЗ» — корпоративный учебный центр НЭВЗа.'},
+{q:'Что такое УКиЛиОР?',a:['Управление компенсаций и льгот и организационного развития','Управление контроля и лицензирования оборудования','Учебный центр квалификации и обучения','Управление кадровых и логистических операций'],c:0,e:'УКиЛиОР — управление компенсаций и льгот и организационного развития.'},
+{q:'Сколько уровней зрелости операционной системы ТМХ (TOS) существует?',a:['5','3','10','4'],c:0,e:'Зрелость TOS измеряется в уровнях от 1 до 5, где 1 — первоначальное положение, 5 — максимальный уровень зрелости.'},
+{q:'Что соответствует 5 уровню зрелости TOS?',a:['Постоянные улучшения','Мастерское исполнение','Первое применение','Первоначальное положение'],c:0,e:'5 уровень — «Постоянные улучшения», максимальный уровень зрелости; 4 уровень — «Мастерское исполнение».'},
+{q:'Что означает 2 уровень зрелости TOS?',a:['Изучение / понимание','Мастерское исполнение','Постоянные улучшения','Первое применение'],c:0,e:'Уровни зрелости TOS: 1 — первоначальное положение, 2 — изучение/понимание, 3 — первое применение, 4 — мастерское исполнение, 5 — постоянные улучшения.'},
+{q:'Что лежит в основе производственной системы НЭВЗа?',a:['Принципы бережливого производства','Методология Six Sigma','Стандарт ISO 14001','Гибкие методологии Agile'],c:0,e:'В основе — принципы бережливого производства: организация рабочих мест по системе 5С, работа с потерями и непрерывные улучшения, подкреплённые стандартами.'},
+{q:'Что представляет собой система 5С?',a:['Метод организации рабочего места из 5 шагов','Систему оплаты труда из 5 уровней','Пять ступеней контроля качества','Пять правил пожарной безопасности'],c:0,e:'Система 5С — метод организации рабочего места, который за 5 элементарных шагов повышает эффективность и управляемость процесса, безопасность и производственную культуру.'},
+{q:'Сколько шагов включает порядок подачи предложения по улучшению (ППУ)?',a:['6','4','5','8'],c:0,e:'Порядок подачи ППУ: заполнение бланка, регистрация, рассмотрение, принятие решения, внедрение, выплата вознаграждения — 6 шагов.'},
+{q:'Кто предоставляет бланк ППУ?',a:['Рацорг или мастер','Бухгалтерия','Бюро пропусков','Дежурный диспетчер'],c:0,e:'1 шаг подачи ППУ: бланк предоставляет рацорг или мастер, а руководитель участка проводит оценку предложения.'},
+{q:'Кто принимает решение о внедрении ППУ?',a:['Комитет по улучшениям (КПУ)','Профсоюзный комитет','Управление по информационным технологиям','Дежурный диспетчер'],c:0,e:'4 шаг: состав комитета по улучшениям (КПУ) рассматривает ППУ подразделений завода и принимает решения об их внедрении.'},
+{q:'Сколько видов потерь рассматривает производственная система согласно справочнику?',a:['8','5','6','10'],c:0,e:'Выделяют 8 видов потерь: транспортировка, дефекты, движения, излишняя обработка, ожидания, перепроизводство, запасы, неиспользованный человеческий потенциал.'},
+{q:'Какой инструмент помогает определить вероятные причины возникновения «узкого места»?',a:['Диаграмма «Рыбья кость»','Принцип Парето','Система 5С','Колесо улучшений'],c:0,e:'1-й инструмент поиска потерь — диаграмма «Рыбья кость»: материалы, оборудование, люди, процесс, управление, окружающая среда.'},
+{q:'Какой метод используется для понимания реальной первопричины проблемы?',a:['«5 почему»','Диаграмма Ганта','SWOT-анализ','Метод Дельфи'],c:0,e:'Понимание реальной первопричины достигается методом «5 ПОЧЕМУ».'},
+{q:'В чём суть принципа Парето?',a:['20% причин вызывают 80% проблем','80% причин вызывают 20% проблем','Все причины равнозначны','50% проблем решаются за 50% времени'],c:0,e:'Принцип «ПАРЕТО»: 20% причин вызывают 80% проблем.'},
+{q:'Насколько может вырасти производительность труда при системной работе с потерями?',a:['На 20–30%','На 5–7%','На 50–60%','На 1–2%'],c:0,e:'Если каждый сотрудник научится видеть потери и устранять их, компания сэкономит значительные средства и повысит производительность труда на 20–30%.'},
+{q:'По какому телефону можно получить подробную информацию о производственной системе?',a:['25-10','24-00','20-78','35-87'],c:0,e:'Подробная информация по производственной системе — тел. 25-10 (отдел по развитию производственной системы).'},
+{q:'Какой элемент НЕ входит в концепцию развития производственной системы?',a:['«Тотальный маркетинг»','«Тотальный кайдзен»','«Всеобщая стандартизация»','«Эффективное целеполагание»'],c:0,e:'Концепция развития ПС: «Команда команд», «Тотальный кайдзен», «Всеобщая стандартизация», «Эффективное целеполагание», синхронный поток и цифровизация.'},
+{q:'Какая роль в производственной системе описывается фразой «Я отвечаю за ритмичную работу цеха / производства без простоев»?',a:['Руководитель','Мастер','Оператор сборки','Рабочий производства'],c:0,e:'Это позиция руководителя; мастер отвечает за своевременное производство продукта на участке.'},
+{q:'Какая роль описывается фразой «Я выполняю операцию качественно с первого раза, оперативно сигнализирую о проблемах»?',a:['Оператор сборки','Руководитель','Сотрудник вспомогательных подразделений','Мастер'],c:0,e:'Так в производственной системе определяется роль оператора сборки.'},
+{q:'Что входит в элементы «Колеса улучшений»?',a:['Время, эффективность, стандарт','Скорость, цена, качество','План, действие, проверка','Затраты, прибыль, риск'],c:0,e:'Колесо улучшений включает время, эффективность и стандарт — цикл непрерывного совершенствования.'},
+{q:'Где можно ознакомиться с локальными нормативными актами НЭВЗа?',a:['\\\\nevz\\nevz\\Система менеджмента бизнеса','На сайте www.gosuslugi.ru','В бюро пропусков','В приложении «Маятник решений»'],c:0,e:'С локальными нормативными актами можно ознакомиться по внутренней ссылке \\\\nevz\\nevz\\Система менеджмента бизнеса.'},
+{q:'Каким документом регулируется порядок предоставления отпусков?',a:['П 117.12-2024 «Порядок предоставления основных и дополнительных отпусков»','Положением о служебных командировках','Приказом о пропускном режиме','Дорожной картой TOS'],c:0,e:'С порядком предоставления и оформления отпуска можно ознакомиться в Положении П 117.12-2024 (раздел «Положения → 117 ОК»).'},
+{q:'Какую поддержку НЕ предоставляет предприятие семьям сотрудников?',a:['Оплату личного автотранспорта','Новогодние подарки для детей','Путёвки в санатории и детские лагеря','Подарки первоклассникам и отличникам'],c:0,e:'НЭВЗ заботится о семьях работников: новогодние подарки детям, путёвки в санатории и детские лагеря, подарки первоклассникам и отличникам.'},
+{q:'В каких случаях сотрудникам НЕ оказывается материальная помощь согласно справочнику?',a:['При покупке автомобиля','При рождении ребёнка','При регистрации брака','В связи с дорогостоящим лечением'],c:0,e:'Материальная помощь оказывается при рождении ребёнка, регистрации брака, смерти работника или близких родственников, молодым демобилизованным работникам, при ЧС и дорогостоящем лечении.'},
+{q:'К кому обратиться для оформления материальной помощи?',a:['К специалисту по кадрам своего подразделения','В бюро пропусков','В медслужбу','В комитет по улучшениям'],c:0,e:'Оформить материальную помощь можно, обратившись к специалисту по кадрам вашего подразделения.'},
+{q:'Что такое «План-схема завода» в справочнике?',a:['Схема территории предприятия с расположением объектов','График движения поездов','Организационная структура дирекций','Чертёж электровоза'],c:0,e:'План-схема завода помогает ориентироваться на территории предприятия — например, найти столовые № 9, № 10 и № 11.'},
+{q:'Что означает аббревиатура ППО?',a:['Первичная профсоюзная организация','Подразделение производственного обучения','Планово-производственный отдел','Промышленная платформа обучения'],c:0,e:'ППО — первичная профсоюзная организация.'},
+{q:'Что такое УпРП?',a:['Управление по работе с персоналом','Управление производственных работ','Учебно-производственное ремонтное подразделение','Управление распределения продукции'],c:0,e:'УпРП — управление по работе с персоналом; в структуру ДУПиТ также входят УКиЛиОР, ГПиАП и ОКА.'},
+{q:'Какое предприятие НЕ входит в перечень основных предприятий ГК ТМХ?',a:['ОАО «РЖД»','АО «Коломенский завод»','АО «Метровагонмаш»','ООО «ЛокоТех»'],c:0,e:'В перечень основных предприятий ГК ТМХ входят БМЗ, Бежицкая сталь, ВЭлНИИ, ДМЗ, Желдорреммаш, Коломенский завод, КСК, ЛокоТех, ЛТЗ, Метровагонмаш, МВМ-Сервис, ОЭВРЗ, Пензадизельмаш, ТВЗ, ТМХ Инжиниринг, ТМХ-Электротех, Трансмаш.'},
+{q:'Что означает сокращение ВЭлНИИ?',a:['Всероссийский научно-исследовательский и проектно-конструкторский институт электровозостроения','Высшее электронное научно-техническое издательство','Ведомственный центр обучения и инноваций','Волго-Енисейское научно-исследовательское объединение'],c:0,e:'ВЭлНИИ — Всероссийский научно-исследовательский и проектно-конструкторский институт электровозостроения, входит в ГК ТМХ.'},
+{q:'Для чего используется Дорожная карта развертывания операционной системы ТМХ (TOS)?',a:['Для оценки уровня зрелости и формирования планов развития','Для расчёта заработной платы','Для оформления командировок','Для планирования корпоративных праздников'],c:0,e:'По требованиям Дорожной карты определяется текущий уровень зрелости предприятия по TOS, затем формируются планы реализации требований.'},
+{q:'Какой вид потерь описывается как «неиспользованные умения и человеческий потенциал»?',a:['Неиспользованный человеческий потенциал','Перепроизводство','Излишняя обработка','Запасы'],c:0,e:'Это 8-й вид потерь — неиспользованный человеческий потенциал.'},
+{q:'Что относится к задачам производственной системы НЭВЗа?',a:['Сокращение времени запуска новой продукции в производство','Продажа излишков оборудования','Организация экскурсий для школьников','Разработка рекламных кампаний'],c:0,e:'Задачи ПС: сокращение времени запуска новой продукции, совершенствование организации процессов, обеспечение ритмичности, оптимизация инфраструктуры, совершенствование бизнес-процессов.'},
+{q:'Какой доступ получает сотрудник в первый рабочий день помимо корпоративной почты?',a:['Доступ в 1С','Доступ к бухгалтерской отчётности конкурентов','Доступ к управлению цехом','Доступ к системе видеонаблюдения города'],c:0,e:'В первый рабочий день предоставляется учётная запись: подключение к Microsoft Outlook и доступ в 1С.'}
+];
+
+/* ==========================================================
+   4. СОСТОЯНИЕ И ХРАНИЛИЩЕ
+========================================================== */
+const QUIZ_LEN = 10;
+const STATS_KEY = 'nevz_stats_v1';
+const THEME_KEY = 'nevz_theme_v1';
+const state = {q:'', cat:'all', open:new Set(), theme:'light', allExpanded:false};
+
+function loadStats(){ try{ const raw = localStorage.getItem(STATS_KEY); const arr = raw?JSON.parse(raw):[]; return Array.isArray(arr)?arr:[]; }catch(err){ return []; } }
+function saveStats(arr){ try{ localStorage.setItem(STATS_KEY, JSON.stringify(arr.slice(-10))); }catch(err){} }
+
+/* ---------- ТЕМА ---------- */
+function applyTheme(t){
+  state.theme = t;
+  document.documentElement.setAttribute('data-theme', t);
+  const mt = document.getElementById('metaTheme');
+  if(mt) mt.setAttribute('content', t==='dark' ? '#0D1117' : '#FFFFFF');
+  try{ localStorage.setItem(THEME_KEY, t); }catch(err){}
+}
+(function initTheme(){
+  let saved = null;
+  try{ saved = localStorage.getItem(THEME_KEY); }catch(err){}
+  if(!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) saved = 'dark';
+  applyTheme(saved === 'dark' ? 'dark' : 'light');
+})();
+document.getElementById('themeToggle').addEventListener('click', function(){
+  applyTheme(state.theme === 'dark' ? 'light' : 'dark');
+});
+
+/* ==========================================================
+   5. УТИЛИТЫ
+========================================================== */
+function esc(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function hl(s,q){
+  const e = esc(s);
+  if(!q) return e;
+  const safe = q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  try{ return e.replace(new RegExp('('+safe+')','gi'), '<mark>$1</mark>'); }catch(err){ return e; }
+}
+function shuffleArr(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+function plural(n, forms){
+  const n10 = n%10, n100 = n%100;
+  if(n10===1 && n100!==11) return forms[0];
+  if(n10>=2 && n10<=4 && (n100<10||n100>=20)) return forms[1];
+  return forms[2];
+}
+function fmtDate(ts){
+  const d = new Date(ts);
+  const p = function(v){ return v<10 ? '0'+v : ''+v; };
+  return {short:p(d.getDate())+'.'+p(d.getMonth()+1), time:p(d.getHours())+':'+p(d.getMinutes()), full:p(d.getDate())+'.'+p(d.getMonth()+1)+'.'+d.getFullYear()+' · '+p(d.getHours())+':'+p(d.getMinutes())};
+}
+
+/* ==========================================================
+   6. ВКЛАДКИ
+========================================================== */
+const tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+const panels = {guide:document.getElementById('panel-guide'), quiz:document.getElementById('panel-quiz'), stats:document.getElementById('panel-stats')};
+function setTab(name){
+  tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.tab===name); });
+  Object.keys(panels).forEach(function(k){ panels[k].classList.toggle('active', k===name); });
+  window.scrollTo({top:0, behavior:'smooth'});
+  if(name==='stats') renderStats();
+}
+tabs.forEach(function(t){ t.addEventListener('click', function(){ setTab(t.dataset.tab); }); });
+
+/* ==========================================================
+   7. СПРАВОЧНИК: РЕНДЕР
+========================================================== */
+const cats = ['all'].concat(guideData.map(function(s){ return s.cat; }).filter(function(v,i,a){ return a.indexOf(v)===i; }));
+const chipsEl = document.getElementById('chips');
+function renderChips(){
+  chipsEl.innerHTML = cats.map(function(c){
+    const label = c==='all' ? 'Все разделы' : c;
+    return '<button class="chip'+(state.cat===c?' active':'')+'" data-cat="'+esc(c)+'">'+esc(label)+'</button>';
+  }).join('');
+}
+chipsEl.addEventListener('click', function(e){
+  const b = e.target.closest('.chip');
+  if(!b) return;
+  state.cat = b.dataset.cat;
+  renderChips();
+  renderGuide();
+});
+
+function itemText(it){
+  let s = (it.t||'')+' '+(it.text||'')+' '+(it.note||'');
+  (it.list||[]).forEach(function(x){ s += ' '+x; });
+  (it.kv||[]).forEach(function(r){ s += ' '+r[0]+' '+r[1]; });
+  (it.stats||[]).forEach(function(r){ s += ' '+r[0]+' '+r[1]; });
+  (it.steps||[]).forEach(function(x){ s += ' '+x; });
+  return s.toLowerCase();
+}
+
+function renderItem(it, q){
+  let h = '<div class="item">';
+  if(it.t) h += '<div class="item-title">'+hl(it.t,q)+'</div>';
+  if(it.text) h += '<p class="item-text">'+hl(it.text,q)+'</p>';
+  if(it.stats) h += '<div class="stats-grid">'+it.stats.map(function(s){
+    return '<div class="stat"><div class="stat-num">'+hl(s[0],q)+'</div><div class="stat-lbl">'+hl(s[1],q)+'</div></div>';
+  }).join('')+'</div>';
+  if(it.list) h += '<ul class="item-list">'+it.list.map(function(l){ return '<li>'+hl(l,q)+'</li>'; }).join('')+'</ul>';
+  if(it.kv) h += '<div class="kv-list">'+it.kv.map(function(r){
+    return '<div class="kv"><span class="kv-k">'+hl(r[0],q)+'</span><span class="kv-v">'+hl(r[1],q)+'</span></div>';
+  }).join('')+'</div>';
+  if(it.steps) h += '<ol class="steps">'+it.steps.map(function(s){ return '<li>'+hl(s,q)+'</li>'; }).join('')+'</ol>';
+  if(it.note) h += '<div class="note '+(it.noteType||'')+'">'+hl(it.note,q)+'</div>';
+  h += '</div>';
+  return h;
+}
+
+function renderGuide(){
+  const qRaw = state.q.trim();
+  const q = qRaw.toLowerCase();
+  const listEl = document.getElementById('guideList');
+  const metaEl = document.getElementById('searchMeta');
+  let html = '', secCount = 0, itemFound = 0;
+
+  guideData.forEach(function(sec){
+    if(state.cat!=='all' && sec.cat!==state.cat) return;
+    let items = sec.items;
+    if(q){
+      const titleHit = sec.title.toLowerCase().indexOf(q) !== -1;
+      items = sec.items.filter(function(it){ return titleHit || itemText(it).indexOf(q) !== -1; });
+      if(!items.length) return;
+    }
+    secCount++;
+    itemFound += items.length;
+    const open = q ? true : state.open.has(sec.id);
+    html += '<article class="acc'+(open?' open':'')+'" data-id="'+sec.id+'">'
+      + '<button class="acc-head" type="button" aria-expanded="'+(open?'true':'false')+'">'
+      + '<span class="acc-icon">'+icon(sec.icon)+'</span>'
+      + '<span class="acc-head-text"><span class="acc-title">'+hl(sec.title,qRaw)+'</span><span class="acc-cat">'+esc(sec.cat)+'</span></span>'
+      + '<span class="acc-right"><span class="acc-count">'+items.length+' '+plural(items.length,['блок','блока','блоков'])+'</span>'
+      + '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>'
+      + '</span></button>'
+      + '<div class="acc-body"><div><div class="acc-inner">'
+      + items.map(function(it){ return renderItem(it, qRaw); }).join('')
+      + '</div></div></div></article>';
+  });
+
+  if(!secCount){
+    html = '<div class="empty">'+icon('search')+'<h3>Ничего не найдено</h3><p>Попробуйте изменить запрос или выберите другую категорию.<br>Например: «пропуск», «5С», «отпуск», «20-78», «Ермак».</p></div>';
+  }
+
+  listEl.innerHTML = html;
+
+  if(q){
+    metaEl.textContent = 'По запросу «'+qRaw+'» найдено '+secCount+' '+plural(secCount,['раздел','раздела','разделов'])+' · '+itemFound+' '+plural(itemFound,['блок','блока','блоков']);
+    metaEl.style.display = 'block';
+  } else if(state.cat!=='all'){
+    metaEl.textContent = 'Категория: '+state.cat+' · '+secCount+' '+plural(secCount,['раздел','раздела','разделов']);
+    metaEl.style.display = 'block';
+  } else {
+    metaEl.textContent = 'Всего разделов: '+guideData.length+' · вопросов в викторине: '+allQuestions.length;
+    metaEl.style.display = 'block';
+  }
+  updateExpandBtn();
+}
+
+document.getElementById('guideList').addEventListener('click', function(e){
+  const head = e.target.closest('.acc-head');
+  if(!head) return;
+  const acc = head.parentElement;
+  const id = acc.dataset.id;
+  const nowOpen = !acc.classList.contains('open');
+  acc.classList.toggle('open', nowOpen);
+  head.setAttribute('aria-expanded', nowOpen?'true':'false');
+  if(nowOpen) state.open.add(id); else state.open.delete(id);
+  updateExpandBtn();
+});
+
+const expandBtn = document.getElementById('expandAll');
+function updateExpandBtn(){
+  const total = document.querySelectorAll('#guideList .acc').length;
+  const opened = document.querySelectorAll('#guideList .acc.open').length;
+  state.allExpanded = total>0 && opened===total;
+  expandBtn.textContent = state.allExpanded ? 'Свернуть всё' : 'Развернуть всё';
+}
+expandBtn.addEventListener('click', function(){
+  const accs = Array.prototype.slice.call(document.querySelectorAll('#guideList .acc'));
+  const expand = !state.allExpanded;
+  accs.forEach(function(a){
+    a.classList.toggle('open', expand);
+    const h = a.querySelector('.acc-head');
+    if(h) h.setAttribute('aria-expanded', expand?'true':'false');
+    if(expand) state.open.add(a.dataset.id); else state.open.delete(a.dataset.id);
+  });
+  updateExpandBtn();
+});
+
+const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('searchClear');
+searchInput.addEventListener('input', function(){
+  state.q = searchInput.value;
+  searchClear.classList.toggle('show', state.q.length>0);
+  renderGuide();
+});
+searchInput.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){ searchInput.value=''; state.q=''; searchClear.classList.remove('show'); renderGuide(); searchInput.blur(); }
+});
+searchClear.addEventListener('click', function(){
+  searchInput.value=''; state.q=''; searchClear.classList.remove('show'); renderGuide(); searchInput.focus();
+});
+
+/* ==========================================================
+   8. ВИКТОРИНА
+========================================================== */
+const quizBody = document.getElementById('quizBody');
+let quiz = {list:[], idx:0, score:0, locked:true};
+
+function renderStart(){
+  quizBody.innerHTML =
+  '<div class="quiz-card"><div class="start-hero">'
+  + '<div class="start-emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.4-2.7 4.1"/><path d="M12 17.6h.01"/></svg></div>'
+  + '<h2>Проверьте знания справочника</h2>'
+  + '<p>База содержит <b>'+allQuestions.length+' вопросов</b> по всем разделам справочника нового сотрудника НЭВЗа. Каждая попытка — это '+QUIZ_LEN+' случайных вопросов с подробными пояснениями.</p>'
+  + '<div class="feature-list">'
+  + '<div class="feature">'+icon('refresh')+'<span><b>Новые вопросы каждый раз.</b> База перемешивается алгоритмом Фишера — Йетса, варианты ответов тоже.</span></div>'
+  + '<div class="feature">'+icon('bulb')+'<span><b>Обучающий режим.</b> После ответа появляется пояснение со ссылкой на факт из справочника.</span></div>'
+  + '<div class="feature">'+icon('chart')+'<span><b>Прогресс сохраняется.</b> Результат автоматически попадает во вкладку «Статистика».</span></div>'
+  + '</div>'
+  + '<button class="btn btn-primary" id="startQuiz">Начать викторину</button>'
+  + '</div></div>';
+  document.getElementById('startQuiz').addEventListener('click', startQuiz);
+}
+
+function startQuiz(){
+  const picked = shuffleArr(allQuestions).slice(0, QUIZ_LEN);
+  quiz.list = picked.map(function(o){
+    const opts = o.a.map(function(txt,i){ return {text:txt, ok:(i===o.c)}; });
+    const sh = shuffleArr(opts);
+    return {q:o.q, e:o.e, opts:sh, ci:sh.findIndex(function(x){ return x.ok; })};
+  });
+  quiz.idx = 0; quiz.score = 0;
+  renderQuestion();
+}
+
+const LETTERS = ['А','Б','В','Г'];
+
+function renderQuestion(){
+  const item = quiz.list[quiz.idx];
+  const num = quiz.idx+1;
+  const pct = Math.round((quiz.idx)/QUIZ_LEN*100);
+  let h = '<div class="quiz-card">'
+    + '<div class="quiz-top"><span class="q-counter">Вопрос '+num+' из '+QUIZ_LEN+'</span><span class="q-score">Верно: '+quiz.score+'</span></div>'
+    + '<div class="progress-track"><div class="progress-fill" id="pfill" style="width:'+pct+'%"></div></div>'
+    + '<div class="q-text">'+esc(item.q)+'</div>'
+    + '<div class="answers" id="answers">'
+    + item.opts.map(function(o,i){
+        return '<button class="answer" data-i="'+i+'"><span class="letter">'+LETTERS[i]+'</span><span>'+esc(o.text)+'</span></button>';
+      }).join('')
+    + '</div>'
+    + '<div id="explainSlot"></div>'
+    + '</div>';
+  quizBody.innerHTML = h;
+  requestAnimationFrame(function(){
+    const pf = document.getElementById('pfill');
+    if(pf) pf.style.width = Math.round((num-1)/QUIZ_LEN*100)+'%';
+  });
+  document.getElementById('answers').addEventListener('click', onAnswer);
+  quiz.locked = false;
+}
+
+function onAnswer(e){
+  if(quiz.locked) return;
+  const btn = e.target.closest('.answer');
+  if(!btn) return;
+  quiz.locked = true;
+  const chosen = parseInt(btn.dataset.i,10);
+  const item = quiz.list[quiz.idx];
+  const isRight = chosen === item.ci;
+  if(isRight) quiz.score++;
+
+  const btns = Array.prototype.slice.call(document.querySelectorAll('#answers .answer'));
+  btns.forEach(function(b,i){
+    b.classList.add('locked');
+    if(i===item.ci) b.classList.add('correct');
+    else if(i===chosen) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+
+  const pf = document.getElementById('pfill');
+  if(pf) pf.style.width = Math.round((quiz.idx+1)/QUIZ_LEN*100)+'%';
+  const scoreEl = document.querySelector('.q-score');
+  if(scoreEl) scoreEl.textContent = 'Верно: '+quiz.score;
+
+  const last = quiz.idx === QUIZ_LEN-1;
+  const slot = document.getElementById('explainSlot');
+  slot.innerHTML = '<div class="explain '+(isRight?'ok':'bad')+'">'
+    + '<div class="explain-head">'+(isRight?icon('check'):icon('cross'))+(isRight?'Верно!':'Неверно')+'</div>'
+    + '<p class="explain-text">'+esc(item.e)+'</p>'
+    + '</div>'
+    + '<button class="btn btn-primary mt" id="nextBtn">'+(last?'Показать результат':'Следующий вопрос')+'</button>';
+  document.getElementById('nextBtn').addEventListener('click', function(){
+    if(last) finishQuiz();
+    else { quiz.idx++; renderQuestion(); }
+  });
+  slot.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function finishQuiz(){
+  const pct = Math.round(quiz.score/QUIZ_LEN*100);
+  const stats = loadStats();
+  stats.push({p:pct, ok:quiz.score, total:QUIZ_LEN, d:Date.now()});
+  saveStats(stats.slice(-10));
+
+  let msg, note;
+  if(pct>=90){ msg='Отличный результат!'; note='Вы уверенно ориентируетесь в справочнике и готовы к работе в команде НЭВЗа.'; }
+  else if(pct>=70){ msg='Хороший результат!'; note='База знаний solid — повторите разделы, где были ошибки, и доведите результат до максимума.'; }
+  else if(pct>=50){ msg='Неплохо, но есть куда расти'; note='Загляните в разделы «Правила безопасности», «Трудовой распорядок» и «Производственная система» — там много важных деталей.'; }
+  else { msg='Стоит повторить справочник'; note='Пройдитесь по разделам во вкладке «Справочник», а затем запустите викторину заново: вопросы будут другими.'; }
+
+  const C = 2*Math.PI*58;
+  const wrong = QUIZ_LEN - quiz.score;
+  quizBody.innerHTML = '<div class="quiz-card"><div class="result-wrap">'
+    + '<div class="ring-wrap"><svg width="180" height="180" viewBox="0 0 180 180">'
+    + '<defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#68C1ED"/><stop offset="1" stop-color="#2A5294"/></linearGradient></defs>'
+    + '<circle class="ring-bg" cx="90" cy="90" r="58" fill="none" stroke-width="15"/>'
+    + '<circle class="ring-fg" id="ringFg" cx="90" cy="90" r="58" fill="none" stroke-width="15" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+C.toFixed(1)+'"/>'
+    + '</svg><div class="ring-label"><div class="ring-pct" id="ringPct">0%</div><div class="ring-sub">результат</div></div></div>'
+    + '<div class="result-msg">'+esc(msg)+'</div>'
+    + '<p class="result-note">'+esc(note)+'</p>'
+    + '<div class="result-pills">'
+    + '<div class="pill"><b>'+quiz.score+'</b><span>Верных</span></div>'
+    + '<div class="pill"><b>'+wrong+'</b><span>Ошибок</span></div>'
+    + '<div class="pill"><b>'+QUIZ_LEN+'</b><span>Вопросов</span></div>'
+    + '</div>'
+    + '<button class="btn btn-primary" id="restartQuiz">'+icon('refresh')+'Пройти заново (новые вопросы)</button>'
+    + '<button class="btn btn-ghost mt" id="toStats">Посмотреть статистику</button>'
+    + '</div></div>';
+
+  requestAnimationFrame(function(){
+    const ring = document.getElementById('ringFg');
+    if(ring) ring.style.strokeDashoffset = (C - C*pct/100).toFixed(1);
+    const lbl = document.getElementById('ringPct');
+    if(!lbl) return;
+    const start = performance.now(), dur = 1000;
+    (function tick(now){
+      const t = Math.min(1,(now-start)/dur);
+      const eased = 1 - Math.pow(1-t,3);
+      lbl.textContent = Math.round(pct*eased)+'%';
+      if(t<1) requestAnimationFrame(tick);
+    })(start);
+  });
+
+  document.getElementById('restartQuiz').addEventListener('click', startQuiz);
+  document.getElementById('toStats').addEventListener('click', function(){ setTab('stats'); });
+}
+
+/* ==========================================================
+   9. СТАТИСТИКА
+========================================================== */
+const statsBody = document.getElementById('statsBody');
+let confirmReset = false, resetTimer = null;
+
+function renderStats(){
+  const data = loadStats();
+  if(!data.length){
+    statsBody.innerHTML = '<div class="empty">'+icon('chart')+'<h3>Пока нет результатов</h3><p>Пройдите викторину — результаты 10 последних попыток сохранятся здесь и будут отображаться на диаграмме.</p>'
+      + '<button class="btn btn-primary mt" id="goQuiz" style="max-width:340px;margin:18px auto 0">Перейти к викторине</button></div>';
+    const gq = document.getElementById('goQuiz');
+    if(gq) gq.addEventListener('click', function(){ setTab('quiz'); });
+    return;
+  }
+
+  const arr = data.slice(-10);
+  const avg = Math.round(arr.reduce(function(s,x){ return s+x.p; },0)/arr.length);
+  const best = Math.max.apply(null, arr.map(function(x){ return x.p; }));
+  const lastD = fmtDate(arr[arr.length-1].d);
+
+  let h = '<div class="metric-grid">'
+    + '<div class="metric"><div class="metric-val">'+avg+'%</div><div class="metric-lbl">Средний балл</div></div>'
+    + '<div class="metric"><div class="metric-val">'+best+'%</div><div class="metric-lbl">Лучший результат</div></div>'
+    + '<div class="metric"><div class="metric-val">'+arr.length+'</div><div class="metric-lbl">Попыток</div></div>'
+    + '</div>';
+
+  h += '<div class="chart-card"><div class="chart-head"><h3>Динамика результатов</h3><span>последняя попытка: '+lastD.full+'</span></div>'
+    + '<div class="chart" id="chart" style="position:relative">';
+  arr.forEach(function(x){
+    const d = fmtDate(x.d);
+    h += '<div class="bar-col"><div class="bar-val">'+x.p+'%</div>'
+      + '<div class="bar-track"><div class="bar-fill" data-h="'+x.p+'"></div></div>'
+      + '<div class="bar-date">'+d.short+'<br>'+d.time+'</div></div>';
+  });
+  h += '<div class="avg-line" id="avgLine" style="bottom:calc('+(avg*0.74)+'% + 30px)"></div>';
+  h += '</div></div>';
+
+  h += '<div class="hist"><div class="hist-head">История попыток</div>';
+  arr.slice().reverse().forEach(function(x,i){
+    const d = fmtDate(x.d);
+    h += '<div class="hist-row"><div class="hist-num">'+(arr.length-i)+'</div>'
+      + '<div class="hist-info"><div class="hist-date">'+d.full+'</div>'
+      + '<div class="hist-mini">Верных ответов: '+x.ok+' из '+x.total+'</div>'
+      + '<div class="hist-bar"><i style="width:'+x.p+'%"></i></div></div>'
+      + '<div class="hist-pct">'+x.p+'%</div></div>';
+  });
+  h += '</div>';
+
+  h += '<button class="btn '+(confirmReset?'btn-danger':'btn-ghost')+'" id="resetStats">'
+    + (confirmReset?'Точно сбросить статистику?':'Сбросить статистику')+'</button>';
+
+  statsBody.innerHTML = h;
+
+  requestAnimationFrame(function(){
+    const fills = document.querySelectorAll('#chart .bar-fill');
+    fills.forEach(function(f){ f.style.height = f.dataset.h+'%'; });
+  });
+
+  document.getElementById('resetStats').addEventListener('click', function(){
+    if(!confirmReset){
+      confirmReset = true;
+      renderStats();
+      resetTimer = setTimeout(function(){ confirmReset=false; renderStats(); }, 3500);
+      return;
+    }
+    clearTimeout(resetTimer);
+    confirmReset = false;
+    try{ localStorage.removeItem(STATS_KEY); }catch(err){}
+    renderStats();
+  });
+}
+
+/* ==========================================================
+   10. СТАРТ
+========================================================== */
+renderChips();
+renderGuide();
+renderStart();
+renderStats();
+</script>
+</body>
+</html>
