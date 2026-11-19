@@ -1,0 +1,1359 @@
+﻿
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                body {
+                  background-color: white; /* Ensure the iframe has a white background */
+                }
+
+                
+              </style>
+                        </head>
+                        <body>
+                            <!-- index.html — НЭВЗ // ЛИГА СТАВОК (Mobile-First веб-приложение) -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>НЭВЗ // ЛИГА СТАВОК — фан-прогнозы</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/russo-one@5/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5/800.css">
+<style>
+:root{
+  --red:#d92129; --red-hot:#e8433f; --red-deep:#a3121a; --red-dark:#7e0d13;
+  --orange:#f2914a; --orange-deep:#e0762c; --gold:#f6b73c; --gold-deep:#d99a1b;
+  --green:#1fa653; --green-deep:#157a3c;
+  --ink:#111827; --muted:#6b7280; --line:#e5e7eb; --bg:#ffffff; --bg2:#f3f4f6;
+  --scrim:rgba(17,24,39,.55);
+  --fd:'Russo One',system-ui,sans-serif; --fu:'Inter',system-ui,-apple-system,sans-serif;
+  --hh:96px; --r16:16px;
+  --sh-red:0 14px 34px rgba(217,33,41,.28), 0 3px 10px rgba(163,18,26,.22);
+  --sh-orange:0 12px 28px rgba(224,118,44,.28), 0 3px 8px rgba(224,118,44,.18);
+  --sh-gray:0 10px 24px rgba(17,24,39,.08), 0 2px 6px rgba(17,24,39,.05);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html.lock,html.lock body{overflow:hidden!important}
+body{font-family:var(--fu);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;min-height:100dvh}
+::selection{background:var(--red);color:#fff}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input{font-family:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:6px}
+/* фирменный скроллбар */
+*{scrollbar-width:thin;scrollbar-color:var(--red) var(--bg2)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--red),var(--orange));border-radius:8px;border:2px solid var(--bg2)}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,var(--red-deep),var(--orange-deep))}
+/* фон: аура + зерно */
+.bg-aurora{position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:radial-gradient(620px 420px at 88% -60px,rgba(242,145,74,.16),transparent 62%),
+             radial-gradient(720px 520px at -12% 28%,rgba(217,33,41,.08),transparent 60%),
+             radial-gradient(560px 420px at 112% 82%,rgba(217,33,41,.06),transparent 60%),
+             linear-gradient(180deg,#fff, #fdfdfd 40%, #fafafa);
+  animation:auroraDrift 26s ease-in-out infinite alternate}
+@keyframes auroraDrift{from{background-position:0 0,0 0,0 0,0 0}to{background-position:-40px 30px,50px -20px,-30px -40px,0 0}}
+.bg-grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.6'/></svg>")}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.ic{width:18px;height:18px;flex:none;display:inline-block;vertical-align:-3px}
+.hidden{display:none!important}
+/* ===== Шапка ===== */
+header{position:sticky;top:0;z-index:50}
+.brandbar{background:linear-gradient(100deg,#0d1420,#111827 55%,#1a2333);border-bottom:2px solid;border-image:linear-gradient(90deg,var(--red),var(--orange)) 1}
+.brandbar-in{display:flex;align-items:center;justify-content:space-between;height:36px}
+.brand{font-family:var(--fd);font-size:13px;letter-spacing:.14em;color:#fff;white-space:nowrap}
+.brand b{color:var(--red-hot);font-weight:400;padding:0 2px}
+.brand em{font-style:normal;color:#cbd5e1}
+.conn{display:flex;align-items:center;gap:7px;font-size:10.5px;font-weight:700;letter-spacing:.08em;color:#9ca3af;text-transform:uppercase}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(31,166,83,.5);animation:pulse 2s infinite}
+.dot.demo{background:var(--orange);box-shadow:0 0 0 0 rgba(242,145,74,.5)}
+.dot.err{background:var(--red);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,166,83,.45)}70%{box-shadow:0 0 0 7px rgba(31,166,83,0)}100%{box-shadow:0 0 0 0 rgba(31,166,83,0)}}
+.mainbar{background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:box-shadow .25s}
+header.scrolled .mainbar{box-shadow:0 8px 24px rgba(17,24,39,.08)}
+.mainbar-in{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:58px;padding-top:8px;padding-bottom:8px}
+.title-side{display:flex;align-items:center;gap:10px;min-width:0}
+h1{font-family:var(--fd);font-size:21px;font-weight:400;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.actions{display:flex;align-items:center;gap:8px;flex:none}
+.btn{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:13px;border-radius:12px;padding:9px 13px;transition:transform .15s,box-shadow .2s,background .2s;user-select:none}
+.btn:active{transform:scale(.96)}
+.btn.dark{background:var(--ink);color:#fff;box-shadow:0 6px 16px rgba(17,24,39,.22)}
+.btn.dark:hover{background:#1f2937;transform:translateY(-1px)}
+.btn.ghost{background:var(--bg2);color:var(--ink);font-weight:600}
+.btn.ghost:hover{background:var(--line)}
+.btn.iconbtn{width:40px;height:40px;justify-content:center;padding:0;background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn.iconbtn:hover{border-color:var(--red);color:var(--red)}
+.btn.iconbtn.spin .ic{animation:rot .8s linear infinite}
+.btn.iconbtn:disabled{opacity:.6;cursor:default}
+@keyframes rot{to{transform:rotate(360deg)}}
+@media(max-width:379px){.sb-label{display:none}h1{font-size:18px}}
+/* демо-баннер */
+.demo-banner{background:#fff4ec;border-bottom:1px solid rgba(242,145,74,.5);font-size:12.5px;color:#7c3a10}
+.demo-banner .wrap{display:flex;align-items:center;gap:10px;padding-top:8px;padding-bottom:8px}
+.demo-banner p{flex:1;min-width:0}
+.demo-banner button.link{color:var(--red);font-weight:700;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+.demo-banner .x{color:#b45309;padding:4px}
+/* ===== Секции ===== */
+main{padding-bottom:8px}
+.view{animation:viewIn .35s ease both}
+@keyframes viewIn{from{opacity:0}to{opacity:1}}
+.sec-label{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 10px}
+.sec-label>span:first-child{color:var(--red);font-family:var(--fd);letter-spacing:0}
+.count-badge{background:var(--bg2);color:var(--muted);border-radius:999px;padding:2px 9px;font-size:11px;letter-spacing:0}
+/* ===== Карусель ===== */
+.carousel-shell{position:relative;margin:0 -16px}
+.carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 16px 14px;scroll-padding-left:16px;scrollbar-width:none}
+.carousel::-webkit-scrollbar{display:none}
+.edge{position:absolute;top:0;bottom:14px;width:16px;pointer-events:none;z-index:2}
+.edge-l{left:0;background:linear-gradient(90deg,#fff,transparent)}
+.edge-r{right:0;background:linear-gradient(-90deg,#fff,transparent)}
+.mcard{position:relative;flex:0 0 min(84vw,320px);height:222px;border-radius:var(--r16);scroll-snap-align:start;padding:14px 16px;display:flex;flex-direction:column;cursor:pointer;overflow:hidden;transition:transform .2s,box-shadow .25s;text-align:left}
+.mcard:hover{transform:translateY(-3px)}
+.mcard:active{transform:scale(.985)}
+.mcard::after{content:'//';position:absolute;right:-6px;bottom:-38px;font-family:var(--fd);font-size:110px;line-height:1;opacity:.08;pointer-events:none}
+.mcard.c-red{background:linear-gradient(135deg,var(--red-deep),var(--red) 52%,var(--red-hot));color:#fff;box-shadow:var(--sh-red)}
+.mcard.c-red::after{color:#fff}
+.mcard.c-orange{background:linear-gradient(135deg,var(--orange-deep),var(--orange) 55%,#f7a86b);color:var(--ink);box-shadow:var(--sh-orange)}
+.mcard.c-orange::after{color:#fff;opacity:.16}
+.mcard.c-gray{background:var(--bg2);color:var(--ink);box-shadow:var(--sh-gray)}
+.mcard.c-gray::after{color:var(--ink);opacity:.05}
+.mc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.status-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--ink);border-radius:999px;padding:4px 10px;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;box-shadow:0 2px 6px rgba(17,24,39,.12);white-space:nowrap}
+.c-gray .status-chip{border:1px solid var(--line)}
+.sdot{width:7px;height:7px;border-radius:50%;flex:none}
+.sdot.open{background:var(--green);animation:pulse 2s infinite}
+.sdot.closed{background:var(--orange)}
+.sdot.finished{background:var(--ink)}
+.mc-sport{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.2);flex:none}
+.c-gray .mc-sport{background:#fff;border:1px solid var(--line);color:var(--red)}
+.mc-score{flex:1;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:56px;letter-spacing:.04em;line-height:1}
+.c-red .mc-score{text-shadow:0 6px 20px rgba(0,0,0,.28)}
+.mc-score.pending{opacity:.85;font-size:46px}
+.mc-teams{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800;font-size:14px}
+.mc-teams span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:44%}
+.mc-teams span:last-child{text-align:right}
+.mc-teams i{font-style:normal;font-family:var(--fd);font-size:11px;opacity:.65;flex:none}
+.mc-meta{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;font-weight:600;opacity:.85;min-width:0}
+.mc-meta .ic{width:13px;height:13px}
+.mc-meta .venue{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+.mc-cd{display:inline-flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700}
+.mc-mine{position:absolute;top:52px;right:14px;display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;background:rgba(255,255,255,.92);color:var(--green-deep);border-radius:999px;padding:3px 8px}
+.c-gray .mc-mine{border:1px solid var(--line)}
+.dots{display:flex;justify-content:center;gap:6px;margin:2px 0 4px}
+.dots button{width:7px;height:7px;border-radius:999px;background:#d8dbe0;padding:0;transition:all .25s}
+.dots button.on{width:22px;background:var(--red)}
+/* ===== Фильтры ===== */
+.filterbar{position:sticky;top:var(--hh);z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin:8px -16px 0;border-bottom:1px solid var(--line)}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.fpill{display:inline-flex;align-items:center;gap:7px;flex:none;background:var(--bg2);color:var(--muted);border-radius:999px;padding:9px 14px;font-size:13px;font-weight:700;transition:all .2s}
+.fpill .ic{width:16px;height:16px}
+.fpill:hover{background:var(--line);color:var(--ink)}
+.fpill.on{background:var(--ink);color:#fff;box-shadow:0 6px 14px rgba(17,24,39,.25)}
+.fpill.on .ic{color:var(--orange)}
+/* ===== Список матчей ===== */
+.group-label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:16px 0 2px}
+.group-label b{color:var(--red);font-family:var(--fd);font-weight:400}
+.row{display:flex;align-items:center;gap:10px;padding:13px 4px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .15s;border-radius:8px}
+.row:hover{background:#fafbfc}
+.row:active{background:var(--bg2)}
+.row-main{flex:1;min-width:0}
+.row-meta{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:5px;min-width:0}
+.row-meta .ic{width:13px;height:13px;color:var(--red)}
+.row-meta .txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.live-tag{display:inline-flex;align-items:center;gap:4px;color:var(--red);font-weight:800;font-size:10px;letter-spacing:.06em}
+.live-tag i{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.4s infinite}
+.row-team{font-weight:700;font-size:14.5px;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-mine{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--green-deep);margin-top:4px}
+.row-mine .ic{width:12px;height:12px}
+.row-mine .pts{color:var(--gold-deep)}
+.row-side{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right}
+.row-score{font-family:var(--fd);font-size:25px;line-height:1;letter-spacing:.03em}
+.row-score .win-cup{font-size:14px;vertical-align:2px}
+.bet-chip{background:rgba(217,33,41,.1);color:var(--red);font-weight:800;font-size:12.5px;border-radius:9px;padding:6px 12px;letter-spacing:.02em}
+.closed-chip{display:inline-flex;align-items:center;gap:5px;background:var(--bg2);color:var(--muted);font-weight:700;font-size:11.5px;border-radius:9px;padding:6px 10px}
+.closed-chip .ic{width:12px;height:12px}
+.row-cd{font-size:10.5px;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:4px}
+.row-cd .ic{width:11px;height:11px}
+.row-chev{color:#d1d5db;flex:none}
+/* ===== Пусто / скелетоны / ошибки ===== */
+.empty{text-align:center;padding:44px 20px;color:var(--muted)}
+.empty .em{font-size:42px;display:block;margin-bottom:10px}
+.empty h3{color:var(--ink);font-size:15.5px;margin-bottom:5px}
+.empty p{font-size:13px;max-width:340px;margin:0 auto 14px}
+.btn.red{background:linear-gradient(135deg,var(--red-hot),var(--red) 60%,var(--red-deep));color:#fff;box-shadow:var(--sh-red);padding:11px 18px}
+.btn.red:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.sk{background:linear-gradient(90deg,var(--bg2) 25%,#eceef1 37%,var(--bg2) 63%);background-size:400% 100%;animation:shimmer 1.4s infinite;border-radius:10px}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+.sk-card{flex:0 0 min(84vw,320px);height:222px;border-radius:var(--r16)}
+.sk-row{height:74px;margin:10px 0;border-radius:12px}
+/* появление */
+.rise{animation:rise .5s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0)*55ms)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* ===== Bottom Sheet ===== */
+.sheet-root{position:fixed;inset:0;z-index:100;visibility:hidden;transition:visibility 0s .4s}
+.sheet-root.open{visibility:visible;transition:none}
+.scrim{position:absolute;inset:0;background:var(--scrim);opacity:0;transition:opacity .35s;touch-action:none}
+.sheet-root.open .scrim{opacity:1}
+.sheet{position:absolute;bottom:0;left:50%;width:min(100vw,600px);max-height:92vh;max-height:92dvh;background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -18px 60px rgba(17,24,39,.35);display:flex;flex-direction:column;transform:translate(-50%,105%);transition:transform .38s cubic-bezier(.32,.72,.24,1)}
+.sheet-root.open .sheet{transform:translate(-50%,0)}
+.grip{padding:12px 0 6px;display:flex;justify-content:center;cursor:grab;touch-action:none;flex:none}
+.grip span{width:46px;height:5px;border-radius:999px;background:var(--line)}
+.grip:active{cursor:grabbing}
+.sh-head{display:flex;align-items:center;gap:8px;padding:2px 16px 10px;border-bottom:1px solid var(--line);flex:none;flex-wrap:wrap}
+.sh-sport{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;border-radius:999px;padding:5px 11px;font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.sh-sport .ic{width:14px;height:14px;color:var(--orange)}
+.sh-head .status-chip{border:1px solid var(--line);box-shadow:none}
+.sh-id{font-size:10.5px;color:#9ca3af;font-weight:700;margin-left:auto}
+.sh-close{width:34px;height:34px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--muted);flex:none;transition:all .2s}
+.sh-close:hover{background:var(--red);color:#fff}
+.sheet-body{overflow-y:auto;overscroll-behavior:contain;padding:16px 16px calc(20px + env(safe-area-inset-bottom));scrollbar-width:thin}
+.sheet-body::-webkit-scrollbar{width:8px}
+.sh-teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-bottom:14px}
+.sh-team{font-family:var(--fd);font-size:16.5px;line-height:1.3;text-align:center;overflow-wrap:anywhere}
+.sh-center{text-align:center;min-width:96px}
+.sh-center .lbl{font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.sh-final{font-family:var(--fd);font-size:44px;line-height:1;color:var(--red);letter-spacing:.03em}
+.sh-vs{font-family:var(--fd);font-size:24px;color:#c3c8cf;line-height:1.2}
+.sh-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.meta-chip{display:inline-flex;align-items:center;gap:7px;background:var(--bg2);border-radius:10px;padding:8px 11px;font-size:12.5px;font-weight:600;color:var(--ink);min-width:0}
+.meta-chip .ic{width:14px;height:14px;color:var(--red)}
+.prize{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,var(--orange-deep),var(--orange) 60%,#f7a86b);border-radius:14px;padding:12px 14px;margin-bottom:12px;box-shadow:var(--sh-orange)}
+.prize .pic{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;color:var(--orange-deep);flex:none}
+.prize .pl{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(17,24,39,.65)}
+.prize .pt{font-size:14.5px;font-weight:800;color:var(--ink);line-height:1.3}
+.cd-block{margin-bottom:14px}
+.cd-label{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.cd-label .ic{width:13px;height:13px;color:var(--red)}
+.cd-boxes{display:flex;align-items:center;gap:6px}
+.cd-u{background:var(--ink);color:#fff;border-radius:11px;padding:8px 6px;min-width:58px;text-align:center;flex:1;max-width:76px}
+.cd-u b{display:block;font-family:var(--fd);font-weight:400;font-size:23px;line-height:1.1;font-variant-numeric:tabular-nums}
+.cd-u i{display:block;font-style:normal;font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:2px}
+.cd-sep{font-family:var(--fd);font-size:20px;color:#c3c8cf}
+.cd-boxes.urgent .cd-u{background:var(--red);animation:urg 1s infinite}
+@keyframes urg{50%{box-shadow:0 0 0 5px rgba(217,33,41,.15)}}
+.cd-over{font-family:var(--fd);font-size:18px;color:var(--muted)}
+.closed-plate{display:flex;gap:11px;align-items:flex-start;background:var(--bg2);border-left:4px solid var(--orange);border-radius:10px;padding:12px 13px;margin-bottom:14px}
+.closed-plate .ic{color:var(--orange-deep);margin-top:1px}
+.closed-plate b{font-size:13.5px;display:block}
+.closed-plate small{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;margin-top:4px}
+.closed-plate small i{width:7px;height:7px;border-radius:50%;background:var(--red);animation:pulse 1.4s infinite;flex:none}
+/* форма прогноза */
+.pred-form{background:var(--bg2);border-radius:16px;padding:15px;margin-bottom:6px}
+.pf-title{font-size:13px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.pf-title .ic{color:var(--red);width:16px;height:16px}
+.f-label{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.f-text{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:12px 13px;font-size:15px;font-weight:600;color:var(--ink);transition:border .2s,box-shadow .2s}
+.f-text:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 4px rgba(217,33,41,.12)}
+.score-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end;margin:13px 0}
+.score-col .f-label{text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stepper{display:flex;align-items:center;gap:6px}
+.step-btn{width:34px;height:44px;border-radius:10px;background:#fff;border:1.5px solid var(--line);font-size:19px;font-weight:800;color:var(--red);flex:none;transition:all .15s;line-height:1}
+.step-btn:hover{background:var(--red);border-color:var(--red);color:#fff}
+.step-btn:active{transform:scale(.92)}
+.f-num{width:100%;min-width:0;height:56px;background:#fff;border:1.5px solid var(--line);border-radius:11px;text-align:center;font-family:var(--fd);font-size:27px;color:var(--ink);transition:border .2s,box-shadow .2s;-moz-appearance:textfield;appearance:textfield}
+.f-num::-webkit-outer-spin-button,.f-num::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.f-num:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 4px rgba(217,33,41,.12)}
+.score-colon{font-family:var(--fd);font-size:24px;color:#c3c8cf;padding-bottom:14px}
+.f-err{display:none;color:var(--red);font-size:12.5px;font-weight:700;margin:-4px 0 10px;animation:shake .35s}
+.f-err.show{display:block}
+@keyframes shake{20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}
+.btn.submit{width:100%;justify-content:center;background:linear-gradient(135deg,var(--red-hot),var(--red) 55%,var(--red-deep));color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:13px;box-shadow:var(--sh-red)}
+.btn.submit:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.btn.submit:disabled{opacity:.65;transform:none;cursor:default}
+.btn.submit .spin-ic{animation:rot .8s linear infinite}
+.f-help{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--muted);font-weight:600;margin-top:10px;text-align:center}
+.f-help .ic{width:12px;height:12px;flex:none}
+.locked{background:#e9f9ef;border:1.5px solid rgba(31,166,83,.35);border-radius:16px;padding:18px 15px;text-align:center;margin-bottom:6px}
+.locked .ok{width:44px;height:44px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 9px}
+.locked b{font-size:14.5px;display:block}
+.locked .ls{font-family:var(--fd);font-size:36px;margin:6px 0 2px;color:var(--ink)}
+.locked .ln{font-size:12.5px;color:var(--muted);font-weight:600}
+.locked .lx{font-size:11px;color:var(--green-deep);font-weight:700;margin-top:8px}
+.hidden-note{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);font-weight:600;background:var(--bg2);border-radius:10px;padding:10px 12px;margin-top:10px}
+.hidden-note .ic{width:14px;height:14px;color:var(--orange-deep);flex:none}
+/* участники */
+.parts-head{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;margin:16px 0 4px}
+.parts-head .count-badge{background:var(--ink);color:#fff}
+.prow{display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px solid var(--line);border-radius:10px}
+.prow.win{background:linear-gradient(100deg,#fff7e6,#ffefcf);border:1px solid rgba(246,183,60,.6);margin:6px 0;padding:11px 10px;box-shadow:0 6px 16px rgba(217,154,27,.14)}
+.prow.me{border-left:3px solid var(--red)}
+.avatar{width:34px;height:34px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:none;letter-spacing:.02em}
+.p-info{flex:1;min-width:0}
+.p-name{font-size:13.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.p-name .you{color:var(--red);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-left:5px}
+.p-sub{font-size:11px;color:var(--muted);font-weight:600;margin-top:1px}
+.win-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(120deg,var(--gold),#ffd97a);color:#6b4a00;font-size:10.5px;font-weight:800;border-radius:999px;padding:3px 9px;margin-top:4px;line-height:1.35;flex-wrap:wrap}
+.p-score{font-family:var(--fd);font-size:16px;background:var(--bg2);border-radius:9px;padding:5px 9px;flex:none;letter-spacing:.03em}
+.prow.win .p-score{background:#fff}
+.p-pts{flex:none;min-width:34px;text-align:center;font-family:var(--fd);font-size:15px;border-radius:9px;padding:5px 7px}
+.p-pts.p5{background:linear-gradient(120deg,var(--gold),#ffd97a);color:#6b4a00}
+.p-pts.p3{background:rgba(242,145,74,.22);color:var(--orange-deep)}
+.p-pts.p2{background:var(--bg2);color:var(--ink)}
+.p-pts.p1{background:var(--bg2);color:var(--muted)}
+.p-pts.p0{background:transparent;color:#c3c8cf}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.legend span{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;color:var(--muted);background:var(--bg2);border-radius:999px;padding:4px 9px}
+.legend i{width:8px;height:8px;border-radius:50%;flex:none}
+/* setup-шторка */
+.setup-steps{counter-reset:st;list-style:none;margin:4px 0 14px}
+.setup-steps li{counter-increment:st;position:relative;padding:9px 0 9px 40px;font-size:13.5px;border-bottom:1px solid var(--line)}
+.setup-steps li::before{content:counter(st);position:absolute;left:0;top:9px;width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;font-family:var(--fd);font-size:13px;display:flex;align-items:center;justify-content:center}
+.setup-steps b{font-weight:700}
+.code-box{background:var(--ink);color:#e5e7eb;border-radius:12px;padding:12px 13px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;overflow-x:auto;margin-bottom:10px;line-height:1.6}
+.code-box em{color:var(--orange);font-style:normal}
+.setup-note{font-size:12px;color:var(--muted);margin-top:10px}
+/* ===== Статистика ===== */
+.period-card{background:#fff;border:1.5px solid var(--line);border-radius:var(--r16);padding:14px;box-shadow:var(--sh-gray)}
+.date-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px}
+.date-grid label{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.date-grid input{display:block;width:100%;margin-top:5px;background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:10px 11px;font-size:14px;font-weight:600;color:var(--ink);min-height:44px}
+.date-grid input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 4px rgba(217,33,41,.12)}
+.presets{display:flex;flex-wrap:wrap;gap:7px}
+.presets button{background:var(--bg2);color:var(--muted);border-radius:999px;padding:8px 13px;font-size:12.5px;font-weight:700;transition:all .2s}
+.presets button:hover{background:var(--line);color:var(--ink)}
+.presets button.on{background:var(--red);color:#fff;box-shadow:0 5px 12px rgba(217,33,41,.3)}
+.period-label{margin-top:11px;font-size:12px;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:6px}
+.period-label .ic{width:13px;height:13px;color:var(--red)}
+.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px}
+.sum-card{background:var(--bg2);border-radius:14px;padding:12px 13px}
+.sum-card b{display:block;font-family:var(--fd);font-weight:400;font-size:25px;line-height:1.15}
+.sum-card.hot b{color:var(--red)}
+.sum-card span{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+@media(min-width:560px){.summary{grid-template-columns:repeat(4,1fr)}}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin:22px 0 6px}
+.pod{flex:1;max-width:130px;text-align:center;min-width:0}
+.pod .medal{font-size:23px;line-height:1;margin-bottom:5px}
+.pod .block{border-radius:13px 13px 5px 5px;display:flex;align-items:flex-start;justify-content:center;padding-top:11px;font-family:var(--fd);font-size:27px;color:#fff;transform-origin:bottom;animation:grow .6s cubic-bezier(.2,.7,.3,1) both}
+.pod.p1 .block{height:112px;background:linear-gradient(160deg,var(--red-hot),var(--red) 55%,var(--red-deep));box-shadow:var(--sh-red);animation-delay:.1s}
+.pod.p2 .block{height:84px;background:linear-gradient(160deg,#374151,var(--ink));box-shadow:var(--sh-gray);animation-delay:.22s}
+.pod.p3 .block{height:62px;background:linear-gradient(160deg,#f7a86b,var(--orange) 55%,var(--orange-deep));color:var(--ink);box-shadow:var(--sh-orange);animation-delay:.34s}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.pod .pname{font-size:12px;font-weight:800;margin-top:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pod .pstats{font-size:10.5px;color:var(--muted);font-weight:700}
+.rating-card{border:1.5px solid var(--line);border-radius:var(--r16);overflow:hidden;margin-top:16px;box-shadow:var(--sh-gray);background:#fff}
+table.rating{width:100%;border-collapse:collapse}
+.rating thead th{background:var(--ink);color:#fff;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:11px 7px;text-align:center;white-space:nowrap}
+.rating thead th:nth-child(2){text-align:left}
+.rating tbody td{padding:10px 7px;border-bottom:1px solid var(--line);font-size:13px;text-align:center;font-variant-numeric:tabular-nums}
+.rating tbody tr:last-child td{border-bottom:none}
+.rating tbody tr:nth-child(even){background:#fafafa}
+.rating tbody tr:hover{background:#fdf3f3}
+.rating tbody tr.me-row{background:rgba(217,33,41,.06);box-shadow:inset 3px 0 0 var(--red)}
+.rating td.name-cell{text-align:left;min-width:0}
+.name-wrap{display:flex;align-items:center;gap:8px;min-width:0}
+.name-wrap .avatar{width:26px;height:26px;font-size:9.5px}
+.name-wrap span{font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:50%;background:var(--bg2);color:var(--muted);font-family:var(--fd);font-size:12px}
+.rank.r1{background:linear-gradient(120deg,var(--gold),#ffd97a);color:#6b4a00}
+.rank.r2{background:linear-gradient(120deg,#cbd5e1,#eef2f6);color:#334155}
+.rank.r3{background:linear-gradient(120deg,#e8a06a,#f4c19a);color:#7c3a10}
+td.num{font-family:var(--fd);font-size:15px}
+td.pts-cell{color:var(--red)}
+td .none{color:#c3c8cf;font-family:var(--fu);font-weight:600}
+.short{display:none}
+@media(max-width:559px){.full{display:none}.short{display:inline}}
+.sort-note{font-size:11px;color:var(--muted);font-weight:600;margin-top:9px;display:flex;align-items:center;gap:6px}
+.sort-note .ic{width:12px;height:12px;color:var(--orange-deep)}
+/* ===== Тосты ===== */
+.toasts{position:fixed;top:calc(var(--hh) + 10px);left:50%;transform:translateX(-50%);z-index:120;display:flex;flex-direction:column;gap:8px;width:min(92vw,420px);pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;background:var(--ink);color:#fff;border-radius:13px;padding:11px 14px;font-size:13px;font-weight:600;box-shadow:0 14px 34px rgba(17,24,39,.35);animation:toastIn .35s cubic-bezier(.2,.7,.3,1) both}
+.toast .tic{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.toast .tic .ic{width:14px;height:14px}
+.toast.success .tic{background:var(--green)}
+.toast.error .tic{background:var(--red)}
+.toast.info .tic{background:var(--orange)}
+.toast.out{animation:toastOut .3s ease both}
+@keyframes toastIn{from{opacity:0;transform:translateY(-14px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-10px) scale(.96)}}
+/* футер */
+footer{border-top:1px solid var(--line);margin-top:26px;background:rgba(243,244,246,.6)}
+footer .wrap{padding:22px 16px 40px;text-align:center}
+footer .fbrand{font-family:var(--fd);font-size:12px;letter-spacing:.12em;color:var(--ink)}
+footer .fbrand b{color:var(--red);font-weight:400}
+footer p{font-size:11.5px;color:var(--muted);margin-top:5px}
+footer button.link{color:var(--red);font-weight:700;font-size:12px;margin-top:9px;text-decoration:underline;text-underline-offset:2px}
+#fx{position:fixed;inset:0;z-index:140;pointer-events:none}
+@media(min-width:760px){
+  h1{font-size:24px}
+  .mcard{flex-basis:320px;height:230px}
+  .mc-score{font-size:60px}
+  .row{padding:15px 8px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></g></symbol>
+    <symbol id="i-football" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l4.3 3.1-1.6 5h-5.4l-1.6-5z"/><path d="M12 3v4.5M20.6 9.5l-4.3 1.1M17.3 19.2l-2.6-3.6M6.7 19.2l2.6-3.6M3.4 9.5l4.3 1.1"/></g></symbol>
+    <symbol id="i-basket" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.7 5.7c3.6 3.5 3.6 9.1 0 12.6M18.3 5.7c-3.6 3.5-3.6 9.1 0 12.6"/></g></symbol>
+    <symbol id="i-hockey" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3.5l6.8 12.5H20"/><path d="M20 16v3.5h-9.5"/><ellipse cx="5" cy="19.5" rx="2.7" ry="1.5"/></g></symbol>
+    <symbol id="i-volley" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3c4.2 4.6 4.2 13.4 0 18"/><path d="M4.1 7.6c6 1 11.8 4.8 14.9 10.2"/><path d="M4.1 16.4c6-1 11.8-4.8 14.9-10.2"/></g></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 5M17 6h3a3 3 0 0 1-3 5"/></g></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></g></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M7 20v-6M12 20V6M17 20v-9"/></g></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></g></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></g></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></g></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></g></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8c-1.8 0-4.5-.6-4.5-2.7C7.5 3.6 9 3 10.2 3.4 11.8 4 12 8 12 8z"/><path d="M12 8c1.8 0 4.5-.6 4.5-2.7C16.5 3.6 15 3 13.8 3.4 12.2 4 12 8 12 8z"/></g></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></g></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></g></symbol>
+  </defs>
+</svg>
+<div class="bg-aurora" aria-hidden="true"></div>
+<div class="bg-grain" aria-hidden="true"></div>
+
+<header id="appHeader">
+  <div class="brandbar"><div class="wrap brandbar-in">
+    <div class="brand">НЭВЗ <b>//</b> <em>ЛИГА СТАВОК</em></div>
+    <div class="conn"><span id="connDot" class="dot"></span><span id="connText">ЗАГРУЗКА</span></div>
+  </div></div>
+  <div class="mainbar"><div class="wrap mainbar-in">
+    <div class="title-side">
+      <button id="backBtn" class="btn ghost hidden" type="button">← К матчам</button>
+      <h1 id="screenTitle">Текущие матчи</h1>
+    </div>
+    <div class="actions">
+      <button id="statsBtn" class="btn dark" type="button"><span class="sb-label">Статистика</span> <span aria-hidden="true">📊</span></button>
+      <button id="refreshBtn" class="btn iconbtn" type="button" aria-label="Обновить данные" title="Обновить данные"><svg class="ic"><use href="#i-refresh"/></svg></button>
+    </div>
+  </div></div>
+</header>
+
+<div id="demoBanner" class="demo-banner hidden"><div class="wrap">
+  <span aria-hidden="true">🧪</span>
+  <p><b>Демо-режим.</b> Показаны примеры данных. Подключите Google Таблицу — и здесь появятся реальные матчи клуба.</p>
+  <button class="link" id="demoSetupBtn" type="button">Как подключить</button>
+  <button class="x" id="demoCloseBtn" type="button" aria-label="Скрыть уведомление"><svg class="ic" style="width:14px;height:14px"><use href="#i-x"/></svg></button>
+</div></div>
+
+<main class="wrap">
+  <section id="viewMatches" class="view">
+    <div class="sec-label"><span>//</span> Главные матчи</div>
+    <div class="carousel-shell" id="carouselShell">
+      <div class="carousel" id="carousel" aria-label="Карусель главных матчей"></div>
+      <div class="edge edge-l"></div><div class="edge edge-r"></div>
+    </div>
+    <div class="dots" id="dots"></div>
+    <div class="filterbar" id="filterbar"><div class="filters" id="filters" role="tablist" aria-label="Фильтр по видам спорта"></div></div>
+    <div class="sec-label"><span>//</span> Все матчи <span class="count-badge" id="listCount">0</span></div>
+    <div id="matchList"></div>
+  </section>
+
+  <section id="viewStats" class="view hidden">
+    <div class="sec-label"><span>//</span> Период статистики</div>
+    <div class="period-card">
+      <div class="date-grid">
+        <label>С даты<input type="date" id="dateFrom"></label>
+        <label>По дату<input type="date" id="dateTo"></label>
+      </div>
+      <div class="presets" id="presets">
+        <button type="button" data-preset="week">Эта неделя</button>
+        <button type="button" data-preset="month">Этот месяц</button>
+        <button type="button" data-preset="year">Весь год</button>
+        <button type="button" data-preset="all">Всё время</button>
+      </div>
+      <div class="period-label" id="periodLabel"></div>
+    </div>
+    <div id="statsSummary" class="summary"></div>
+    <div id="podiumWrap"></div>
+    <div id="ratingWrap"></div>
+    <div id="statsEmpty" class="empty hidden">
+      <span class="em" aria-hidden="true">📊</span>
+      <h3>Нет завершенных матчей в этом периоде</h3>
+      <p>Измените даты или дождитесь, когда организатор внесет итоговый счет в таблицу.</p>
+    </div>
+    <div id="statsLegend"></div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <div class="fbrand">НЭВЗ <b>//</b> ЛИГА СТАВОК</div>
+  <p>Фан-прогнозы на точный счёт — без денег и ставок. Данные обновляются автоматически каждые 20 секунд.</p>
+  <button class="link" id="setupLink" type="button" style="display:none">Подключение Google Таблицы</button>
+</div></footer>
+
+<div id="sheetRoot" class="sheet-root" aria-hidden="true">
+  <div id="scrim" class="scrim"></div>
+  <div id="sheetPanel" class="sheet" role="dialog" aria-modal="true" aria-label="Детали матча">
+    <div id="sheetGrip" class="grip" aria-hidden="true"><span></span></div>
+    <div id="sheetHead" class="sh-head"></div>
+    <div id="sheetBody" class="sheet-body"></div>
+  </div>
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script>
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwlGQUOlHFVzBY-6dz1hulcb8plCuoWN5ZPglbzxNlvPmP0FEDfaNBsxpTSfrAaZyk/exec'; // ← URL веб-приложения Apps Script (инструкция — в конце файла Code.gs)
+
+/* ================= КОНФИГ И СОСТОЯНИЕ ================= */
+const POLL_MS = 20000;
+const DEADLINE_MS = 3600000; // прием закрывается за 1 час до начала
+const IS_DEMO = !(GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.indexOf('https://') === 0);
+const LS_KEYS = { name:'nevz_name', mine:'nevz_mine', demo:'nevz_demo_preds', banner:'nevz_banner_hidden' };
+const DEFAULT_SPORTS = ['Футбол','Баскетбол','Хоккей','Волейбол'];
+const TIER_LABEL = {5:'Точный счет',3:'Исход + разница',2:'Только исход',1:'Голы одной команды',0:'Мимо'};
+const AV_COLORS = ['#d92129','#e0762c','#111827','#a3121a','#1fa653','#b45309','#475569','#f2914a'];
+
+const state = {
+  screen:'matches', sport:'all', matches:[], predictions:[],
+  loading:true, fetching:false, error:null, lastUpdated:null, clockOffset:0,
+  sheet:null, draft:{name:'',s1:'',s2:''}, pending:false, formError:'',
+  stats:{from:'',to:''}, savedName:'', mine:{},
+  sigs:{main:null,stats:null,sheet:null}, firstPaint:true, animNext:false, celebrated:{}
+};
+let pollTimer=null, tickTimer=null, fxRaf=0, dragInfo=null, lastFocusEl=null, dotRaf=0;
+
+/* ================= УТИЛИТЫ ================= */
+const $ = id => document.getElementById(id);
+const escHtml = v => String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const normName = v => String(v==null?'':v).replace(/\s+/g,' ').trim().toLowerCase();
+const collapseSpaces = v => String(v==null?'':v).replace(/\s+/g,' ').trim();
+const p2 = n => String(n).padStart(2,'0');
+const appNow = () => Date.now() + state.clockOffset;
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+const icon = (n,cls) => '<svg class="ic'+(cls?' '+cls:'')+'" aria-hidden="true"><use href="#i-'+n+'"/></svg>';
+function lsGet(k,fallback){ try{ const v=localStorage.getItem(k); return v==null?fallback:JSON.parse(v); }catch(e){ return fallback; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+function plural(n,forms){ const a=Math.abs(n)%100, b=a%10; if(a>10&&a<20)return forms[2]; if(b>1&&b<5)return forms[1]; if(b===1)return forms[0]; return forms[2]; }
+function parseStart(str){
+  const s = String(str||'').trim();
+  let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})[ T](\d{1,2}):(\d{2})/);
+  if(m) return new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5]).getTime();
+  m = s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})\s+(\d{1,2}):(\d{2})/);
+  if(m) return new Date(+m[3],+m[2]-1,+m[1],+m[4],+m[5]).getTime();
+  const t = Date.parse(s); return isFinite(t)?t:NaN;
+}
+const tsOf = m => (m && Number.isFinite(m.startTs)) ? m.startTs : parseStart(m && m.start);
+const deadlineOf = m => tsOf(m) - DEADLINE_MS;
+function parseScore(str){
+  const m = String(str||'').trim().match(/^(\d{1,3})\s*[:\-–—]\s*(\d{1,3})$/);
+  return m ? [+m[1],+m[2]] : null;
+}
+function statusOf(m){
+  if(parseScore(m.final)) return 'finished';
+  const t = tsOf(m);
+  if(!isFinite(t)) return 'closed';
+  return appNow() < t - DEADLINE_MS ? 'open' : 'closed';
+}
+function pointsOf(p1,p2,f1,f2){
+  if(p1===f1 && p2===f2) return 5;
+  const sg=(a,b)=>(a>b)-(a<b);
+  if(sg(p1,p2)===sg(f1,f2) && (p1-p2)===(f1-f2)) return 3;
+  if(sg(p1,p2)===sg(f1,f2)) return 2;
+  if(p1===f1 || p2===f2) return 1;
+  return 0;
+}
+const MONTHS_GEN=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const WD_SHORT=['вс','пн','вт','ср','чт','пт','сб'];
+function fmtShort(ts){ const d=new Date(ts); if(!isFinite(ts))return '—'; return p2(d.getDate())+'.'+p2(d.getMonth()+1)+' '+p2(d.getHours())+':'+p2(d.getMinutes()); }
+function fmtLong(ts){ const d=new Date(ts); if(!isFinite(ts))return 'Дата уточняется'; return d.getDate()+' '+MONTHS_GEN[d.getMonth()]+', '+WD_SHORT[d.getDay()]+' · '+p2(d.getHours())+':'+p2(d.getMinutes()); }
+function fmtDay(ts){ const d=new Date(ts); return p2(d.getDate())+'.'+p2(d.getMonth()+1)+'.'+d.getFullYear(); }
+function fmtClock(ts){ const d=new Date(ts); return p2(d.getHours())+':'+p2(d.getMinutes()); }
+function fmtDT(d){ return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+' '+p2(d.getHours())+':'+p2(d.getMinutes()); }
+function toISODate(d){ return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); }
+function cdShort(ms){
+  const t=Math.max(0,Math.floor(ms/1000)), d=Math.floor(t/86400), h=Math.floor(t%86400/3600), m=Math.floor(t%3600/60), s=t%60;
+  return (d>0? d+'д ':'')+p2(h)+':'+p2(m)+':'+p2(s);
+}
+function cdBoxesHtml(ms){
+  const t=Math.max(0,Math.floor(ms/1000)), d=Math.floor(t/86400), h=Math.floor(t%86400/3600), m=Math.floor(t%3600/60), s=t%60;
+  const units=[]; if(d>0)units.push([d,'дней']); units.push([p2(h),'часов'],[p2(m),'минут'],[p2(s),'секунд']);
+  return units.map(u=>'<div class="cd-u"><b>'+u[0]+'</b><i>'+u[1]+'</i></div>').join('<span class="cd-sep">:</span>');
+}
+function sportIconName(sport){
+  const s=String(sport||'').toLowerCase();
+  if(s.includes('футбол'))return 'football';
+  if(s.includes('баскет'))return 'basket';
+  if(s.includes('хоккей'))return 'hockey';
+  if(s.includes('волей'))return 'volley';
+  return 'trophy';
+}
+function avatarHtml(name,size){
+  const words=collapseSpaces(name).split(' ');
+  const ini=((words[0]||'?')[0]+(words[1]?words[1][0]:'')).toUpperCase();
+  let h=0; for(let i=0;i<name.length;i++)h=(h*31+name.charCodeAt(i))>>>0;
+  return '<span class="avatar" style="background:'+AV_COLORS[h%AV_COLORS.length]+'" aria-hidden="true">'+escHtml(ini)+'</span>';
+}
+function statusMeta(st){
+  return st==='open' ? {label:'Прием открыт',dot:'open'} : st==='closed' ? {label:'Ставки закрыты',dot:'closed'} : {label:'Завершен',dot:'finished'};
+}
+function myPredFor(matchId){
+  const local=state.mine[matchId], saved=state.savedName;
+  const p=state.predictions.find(x=>x.matchId===matchId && ((local && normName(x.name)===normName(local.name)) || (saved && normName(x.name)===normName(saved))));
+  if(p) return p;
+  if(local) return {matchId, name:local.name, s1:local.s1, s2:local.s2, ts:new Date(local.ts).toISOString(), localOnly:true};
+  return null;
+}
+const predsOf = id => state.predictions.filter(p=>p.matchId===id);
+
+/* ================= ДЕМО-ДАННЫЕ (пока URL не задан) ================= */
+const DEMO_NOW = Date.now();
+function buildDemo(){
+  const roundHalf = d => { const x=new Date(d); x.setMinutes(x.getMinutes()<30?30:60,0,0); return x; };
+  const past = (days,h,m) => { const x=new Date(DEMO_NOW-days*86400000); x.setHours(h,m,0,0); return x; };
+  const future = h => roundHalf(new Date(DEMO_NOW+h*3600000));
+  const closedSoon = new Date(DEMO_NOW+40*60000); closedSoon.setSeconds(0,0);
+  const M=(id,sport,t1,t2,d,venue,prize,fin)=>({id,sport,team1:t1,team2:t2,start:fmtDT(d),startTs:d.getTime(),venue,prize:prize||'',final:fin||''});
+  const matches=[
+    M('M-1001','Хоккей','НЭВЗ','Дизелист',closedSoon,'Ледовый дворец «Айсберг»','',''),
+    M('M-1002','Футбол','НЭВЗ','Энергомаш',future(3),'Стадион «Труд»','Фирменное джерси НЭВЗ',''),
+    M('M-1003','Баскетбол','НЭВЗ','Строитель',future(26),'Дворец спорта НЭВЗ','Сертификат «Спортмастер» — 3 000 ₽',''),
+    M('M-1004','Волейбол','НЭВЗ (ж)','Заречье',future(50),'СК «Энергия»','',''),
+    M('M-1009','Футбол','НЭВЗ','Атоммаш',future(74),'Стадион «Труд»','Абонемент в фитнес-клуб на месяц',''),
+    M('M-1010','Настольный теннис','НЭВЗ','Кристалл',future(96),'Спортзал цеха №2','',''),
+    M('M-1005','Хоккей','НЭВЗ','Сокол',past(1,19,0),'Ледовый дворец «Айсберг»','Переходящий кубок фан-клуба','4:2'),
+    M('M-1006','Футбол','НЭВЗ','Металлург',past(3,16,0),'Стадион «Труд»','','2:2'),
+    M('M-1007','Баскетбол','НЭВЗ','Политех',past(6,18,30),'Дворец спорта НЭВЗ','Мяч с автографами команды','84:79'),
+    M('M-1008','Волейбол','НЭВЗ','Локомотив',past(9,17,0),'СК «Энергия»','','3:1'),
+    M('M-1011','Хоккей','НЭВЗ','Торпедо',past(13,19,30),'Ледовый дворец «Айсберг»','','1:0')
+  ];
+  const predictions=[];
+  const addP=(mid,list,base,step)=>{ const m=matches.find(x=>x.id===mid); list.forEach((p,i)=>predictions.push({ts:new Date(m.startTs-(base+i*step)*3600000).toISOString(),matchId:mid,name:p[0],s1:p[1],s2:p[2]})); };
+  addP('M-1001',[['Алексей Смирнов',3,2],['Дмитрий Ковалёв',2,1],['Игорь Савченко',4,1],['Мария Ветрова',2,2],['Сергей Лебедев',3,1],['Ольга Кузнецова',1,2],['Павел Гусев',5,2],['Наталья Орлова',2,0]],3,1.2);
+  addP('M-1002',[['Роман Ткаченко',2,0],['Анна Соколова',1,1],['Максим Барсуков',3,1],['Екатерина Руденко',2,2],['Виктор Мельник',0,1]],6,4);
+  addP('M-1003',[['Алексей Смирнов',82,75],['Сергей Лебедев',90,84],['Дмитрий Ковалёв',76,80],['Мария Ветрова',85,70],['Андрей Фоменко',79,77],['Ольга Кузнецова',88,81]],6,4);
+  addP('M-1004',[['Наталья Орлова',3,1],['Екатерина Руденко',3,2],['Анна Соколова',2,3],['Павел Гусев',3,0]],6,4);
+  addP('M-1009',[['Игорь Савченко',1,0],['Роман Ткаченко',2,2],['Максим Барсуков',1,3]],6,4);
+  addP('M-1010',[['Виктор Мельник',3,2],['Андрей Фоменко',3,1]],6,4);
+  addP('M-1005',[['Алексей Смирнов',4,2],['Мария Ветрова',4,2],['Дмитрий Ковалёв',3,1],['Игорь Савченко',5,3],['Сергей Лебедев',2,0],['Ольга Кузнецова',3,2],['Андрей Фоменко',1,0],['Павел Гусев',4,3],['Наталья Орлова',0,2],['Виктор Мельник',1,3]],2,2.5);
+  addP('M-1006',[['Роман Ткаченко',2,2],['Екатерина Руденко',1,1],['Максим Барсуков',3,3],['Анна Соколова',2,1],['Алексей Смирнов',1,2],['Дмитрий Ковалёв',3,1],['Ольга Кузнецова',0,0],['Игорь Савченко',2,0],['Павел Гусев',0,3]],2,2.5);
+  addP('M-1007',[['Сергей Лебедев',84,79],['Алексей Смирнов',90,85],['Мария Ветрова',80,75],['Дмитрий Ковалёв',88,80],['Андрей Фоменко',75,68],['Павел Гусев',84,81],['Виктор Мельник',84,70],['Екатерина Руденко',60,70]],2,2.5);
+  addP('M-1008',[['Роман Ткаченко',3,1],['Ольга Кузнецова',3,2],['Игорь Савченко',3,0],['Мария Ветрова',1,3],['Сергей Лебедев',2,1],['Павел Гусев',0,3],['Наталья Орлова',3,2]],2,2.5);
+  addP('M-1011',[['Дмитрий Ковалёв',1,0],['Андрей Фоменко',1,0],['Алексей Смирнов',2,1],['Екатерина Руденко',2,0],['Роман Ткаченко',0,0],['Виктор Мельник',2,1]],2,2.5);
+  return {matches,predictions};
+}
+const DEMO_BASE = buildDemo();
+function demoAllPreds(){ return DEMO_BASE.predictions.concat(lsGet(LS_KEYS.demo,[])); }
+async function demoLoad(){ await sleep(state.firstPaint?380:140); return {status:'success',serverTime:new Date().toISOString(),matches:DEMO_BASE.matches,predictions:demoAllPreds()}; }
+async function demoPost(body){
+  await sleep(450);
+  const m=DEMO_BASE.matches.find(x=>x.id===String(body.matchId));
+  if(!m) return {status:'error',message:'Матч не найден'};
+  if(parseScore(m.final)) return {status:'error',message:'Матч уже завершен — прием прогнозов закрыт'};
+  if(!(m.startTs-Date.now()>DEADLINE_MS)) return {status:'error',message:'Прием прогнозов прекращен за 1 час до начала матча'};
+  const name=collapseSpaces(body.userName);
+  if(name.length<3) return {status:'error',message:'Укажите имя и фамилию'};
+  const s1=Number(body.score1),s2=Number(body.score2);
+  if(!Number.isInteger(s1)||!Number.isInteger(s2)||s1<0||s2<0||s1>999||s2>999) return {status:'error',message:'Счет должен быть целым числом от 0 до 999'};
+  const all=demoAllPreds();
+  if(all.some(p=>p.matchId===m.id && normName(p.name)===normName(name))) return {status:'error',message:'Вы уже отправили прогноз на этот матч'};
+  all.push({ts:new Date().toISOString(),matchId:m.id,name,s1,s2});
+  lsSet(LS_KEYS.demo,all.slice(DEMO_BASE.predictions.length));
+  return {status:'success'};
+}
+
+/* ================= API ================= */
+function normMatch(r){
+  return {id:String(r.id==null?'':r.id).trim(),sport:String(r.sport||'').trim()||'Матч',team1:String(r.team1||'').trim(),team2:String(r.team2||'').trim(),start:String(r.start||'').trim(),startTs:Number.isFinite(+r.startTs)?+r.startTs:null,venue:String(r.venue||'').trim(),prize:String(r.prize||'').trim(),final:String(r.final||'').trim()};
+}
+function normPred(r){
+  return {ts:String(r.ts||''),matchId:String(r.matchId==null?'':r.matchId).trim(),name:String(r.name||'').trim(),s1:+r.s1,s2:+r.s2};
+}
+async function apiLoad(){
+  if(IS_DEMO) return demoLoad();
+  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),15000);
+  try{
+    const url=GOOGLE_SCRIPT_URL+(GOOGLE_SCRIPT_URL.includes('?')?'&':'?')+'t='+Date.now();
+    const res=await fetch(url,{method:'GET',redirect:'follow',signal:ctrl.signal});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const j=await res.json();
+    if(!j||j.status!=='success'||!Array.isArray(j.matches)) throw new Error((j&&j.message)||'Некорректный ответ сервера');
+    return {serverTime:j.serverTime,matches:j.matches.map(normMatch).filter(m=>m.id&&m.team1&&m.team2),predictions:(j.predictions||[]).map(normPred).filter(p=>p.matchId&&p.name&&Number.isFinite(p.s1)&&Number.isFinite(p.s2))};
+  } finally { clearTimeout(to); }
+}
+async function apiSubmit(body){
+  if(IS_DEMO){ const r=await demoPost(body); if(r.status!=='success') throw new Error(r.message); return r; }
+  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),15000);
+  try{
+    const res=await fetch(GOOGLE_SCRIPT_URL,{method:'POST',redirect:'follow',signal:ctrl.signal,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const j=await res.json();
+    if(!j||j.status!=='success') throw new Error((j&&j.message)||'Не удалось отправить прогноз');
+    return j;
+  } finally { clearTimeout(to); }
+}
+async function refresh(manual){
+  if(state.fetching) return;
+  state.fetching=true; $('refreshBtn').classList.add('spin'); $('refreshBtn').disabled=true;
+  try{
+    const data=await apiLoad();
+    applyData(data,manual);
+    if(manual) toast('success','Данные обновлены');
+  }catch(err){
+    state.error=String(err&&err.message||err); state.loading=false;
+    renderAll(true);
+    if(manual||state.firstPaint) toast('error','Не удалось загрузить данные: '+state.error);
+  }finally{
+    state.fetching=false; $('refreshBtn').classList.remove('spin'); $('refreshBtn').disabled=false; renderHeader();
+  }
+}
+function applyData(data,manual){
+  const hadData=state.matches.length>0;
+  const prevIds=new Set(state.matches.map(m=>m.id));
+  const prevFinished=new Set(state.matches.filter(m=>statusOf(m)==='finished').map(m=>m.id));
+  if(data.serverTime){ const st=Date.parse(data.serverTime); if(isFinite(st)) state.clockOffset=st-Date.now(); }
+  state.matches=data.matches; state.predictions=data.predictions;
+  state.loading=false; state.error=null; state.lastUpdated=Date.now();
+  if(hadData){
+    const fresh=data.matches.filter(m=>statusOf(m)==='finished'&&!prevFinished.has(m.id));
+    if(fresh.length){
+      const m=fresh[0], sc=parseScore(m.final);
+      toast('info','🏁 Итог: '+m.team1+' — '+m.team2+' · '+sc[0]+':'+sc[1]+(fresh.length>1?' (и ещё '+(fresh.length-1)+')':''));
+      const my=myPredFor(m.id);
+      if(my){ const pts=pointsOf(my.s1,my.s2,sc[0],sc[1]);
+        if(pts===5){ toast('success','🏆 Вы угадали точный счёт! +5 баллов'); fxConfetti(); }
+        else toast('info','Ваш прогноз на '+m.team1+' — '+m.team2+': +'+pts+' '+plural(pts,['балл','балла','баллов']));
+      }
+    }
+    const newM=data.matches.filter(m=>!prevIds.has(m.id));
+    if(newM.length) toast('info','🆕 В афише новый матч: '+newM[0].team1+' — '+newM[0].team2);
+  }
+  renderAll(true);
+}
+
+/* ================= ТОСТЫ ================= */
+function toast(type,msg){
+  const box=$('toasts');
+  while(box.children.length>=3) box.removeChild(box.firstChild);
+  const el=document.createElement('div');
+  el.className='toast '+type;
+  const ic=type==='success'?'check':type==='error'?'x':'info';
+  el.innerHTML='<span class="tic">'+icon(ic)+'</span><span>'+escHtml(msg)+'</span>';
+  box.appendChild(el);
+  setTimeout(()=>{ el.classList.add('out'); setTimeout(()=>el.remove(),320); },3600);
+}
+
+/* ================= КОНФЕТТИ ================= */
+const fxCanvas=$('fx'), fxCtx=fxCanvas.getContext('2d');
+let fxPieces=[];
+function fxResize(){ const dpr=Math.min(2,window.devicePixelRatio||1); fxCanvas.width=innerWidth*dpr; fxCanvas.height=innerHeight*dpr; fxCanvas.style.width=innerWidth+'px'; fxCanvas.style.height=innerHeight+'px'; fxCtx.setTransform(dpr,0,0,dpr,0,0); }
+function fxConfetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const colors=['#d92129','#f2914a','#f6b73c','#111827','#1fa653','#e8433f'];
+  const cx=innerWidth/2, cy=innerHeight*0.35;
+  for(let i=0;i<130;i++){
+    fxPieces.push({x:cx+(Math.random()-.5)*120,y:cy+(Math.random()-.5)*40,vx:(Math.random()-.5)*11,vy:-4-Math.random()*8,g:.26,r:Math.random()*Math.PI,vr:(Math.random()-.5)*.3,s:5+Math.random()*6,c:colors[i%colors.length],life:90+Math.random()*50,round:Math.random()<.3});
+  }
+  if(!fxRaf) fxRaf=requestAnimationFrame(fxLoop);
+}
+function fxLoop(){
+  fxCtx.clearRect(0,0,innerWidth,innerHeight);
+  fxPieces=fxPieces.filter(p=>p.life>0&&p.y<innerHeight+30);
+  for(const p of fxPieces){
+    p.x+=p.vx; p.vy+=p.g; p.y+=p.vy; p.vx*=.99; p.r+=p.vr; p.life--;
+    fxCtx.save(); fxCtx.translate(p.x,p.y); fxCtx.rotate(p.r);
+    fxCtx.globalAlpha=Math.min(1,p.life/40); fxCtx.fillStyle=p.c;
+    if(p.round){ fxCtx.beginPath(); fxCtx.arc(0,0,p.s/2,0,7); fxCtx.fill(); }
+    else fxCtx.fillRect(-p.s/2,-p.s/3,p.s,p.s*.66);
+    fxCtx.restore();
+  }
+  if(fxPieces.length){ fxRaf=requestAnimationFrame(fxLoop); }
+  else { fxRaf=0; fxCtx.clearRect(0,0,innerWidth,innerHeight); }
+}
+
+/* ================= РЕНДЕР: ШАПКА ================= */
+function renderHeader(){
+  const isStats=state.screen==='stats';
+  $('screenTitle').textContent=isStats?'Общая статистика':'Матчи КОМАНДЫ ТМХ | НЭВЗ';
+  $('backBtn').classList.toggle('hidden',!isStats);
+  $('statsBtn').classList.toggle('hidden',isStats);
+  const dot=$('connDot');
+  dot.className='dot'+(state.error?' err':IS_DEMO?' demo':'');
+  const time=state.lastUpdated?(' · '+fmtClock(state.lastUpdated)):'';
+  $('connText').textContent=(state.error?'ОФФЛАЙН':IS_DEMO?'DEMO':'LIVE')+time;
+  $('setupLink').textContent=IS_DEMO?'Подключить Google Таблицу':'Google Таблица подключена · инструкция';
+}
+
+/* ================= РЕНДЕР: ФИЛЬТРЫ ================= */
+function allSports(){
+  const extra=[];
+  state.matches.forEach(m=>{
+    const s=m.sport;
+    if(s && !DEFAULT_SPORTS.some(d=>d.toLowerCase()===s.toLowerCase()) && !extra.some(e=>e.toLowerCase()===s.toLowerCase())) extra.push(s);
+  });
+  extra.sort((a,b)=>a.localeCompare(b,'ru'));
+  return DEFAULT_SPORTS.concat(extra);
+}
+function renderFilters(){
+  const bar=$('filterbar');
+  bar.classList.toggle('hidden',!state.matches.length&&!state.loading);
+  const items=[{key:'all',label:'Все',icon:'grid'}].concat(allSports().map(s=>({key:s,label:s,icon:sportIconName(s)})));
+  $('filters').innerHTML=items.map(it=>{
+    const on=state.sport===it.key||(it.key!=='all'&&String(state.sport).toLowerCase()===String(it.key).toLowerCase());
+    return '<button type="button" role="tab" aria-selected="'+on+'" class="fpill'+(on?' on':'')+'" data-sport="'+escHtml(it.key)+'">'+icon(it.icon)+escHtml(it.label)+'</button>';
+  }).join('');
+}
+
+/* ================= РЕНДЕР: КАРУСЕЛЬ ================= */
+function featuredMatches(){
+  const up=state.matches.filter(m=>statusOf(m)!=='finished').sort((a,b)=>tsOf(a)-tsOf(b));
+  const fin=state.matches.filter(m=>statusOf(m)==='finished').sort((a,b)=>tsOf(b)-tsOf(a));
+  return up.concat(fin).slice(0,10);
+}
+function cardHtml(m,idx,anim){
+  const st=statusOf(m), meta=statusMeta(st), sc=parseScore(m.final), t=tsOf(m);
+  const cls=idx===0?'c-red':(st==='open'?'c-orange':'c-gray');
+  const my=myPredFor(m.id);
+  const started=isFinite(t)&&appNow()>=t&&st!=='finished';
+  let metaRight='';
+  if(st==='open') metaRight='<span class="mc-cd">'+icon('clock')+'<span data-cd data-cd-mode="chip" data-cd-target="'+deadlineOf(m)+'">'+cdShort(deadlineOf(m)-appNow())+'</span></span>';
+  else if(started) metaRight='<span class="live-tag" data-live-at="'+t+'" data-live-done="1"><i></i>LIVE</span>';
+  return '<article class="mcard '+cls+(anim?' rise':'')+'" style="--i:'+idx+'" data-match="'+escHtml(m.id)+'" tabindex="0" role="button" aria-label="'+escHtml(m.team1+' — '+m.team2+', '+meta.label)+'">'
+    +'<div class="mc-top"><span class="status-chip"><span class="sdot '+meta.dot+'"></span>'+meta.label+'</span><span class="mc-sport">'+icon(sportIconName(m.sport))+'</span></div>'
+    +(my?'<span class="mc-mine">'+icon('check')+' ваш прогноз</span>':'')
+    +'<div class="mc-score'+(sc?'':' pending')+'">'+(sc?sc[0]+' : '+sc[1]:'-- : --')+'</div>'
+    +'<div class="mc-teams"><span>'+escHtml(m.team1)+'</span><i>VS</i><span>'+escHtml(m.team2)+'</span></div>'
+    +'<div class="mc-meta">'+icon('cal')+'<span>'+fmtShort(t)+'</span><span>•</span><span class="venue">'+escHtml(m.venue||'Место уточняется')+'</span>'+(m.prize?icon('gift'):'')+metaRight+'</div>'
+    +'</article>';
+}
+function renderCarousel(anim){
+  const track=$('carousel'), shell=$('carouselShell'), dots=$('dots');
+  if(state.loading){
+    shell.classList.remove('hidden'); dots.innerHTML='';
+    track.innerHTML='<div class="sk sk-card"></div><div class="sk sk-card"></div><div class="sk sk-card"></div>';
+    return;
+  }
+  const feat=featuredMatches();
+  shell.classList.toggle('hidden',!feat.length);
+  dots.classList.toggle('hidden',!feat.length);
+  if(!feat.length){ track.innerHTML=''; dots.innerHTML=''; return; }
+  const sl=track.scrollLeft;
+  track.innerHTML=feat.map((m,i)=>cardHtml(m,i,anim)).join('');
+  dots.innerHTML=feat.map((m,i)=>'<button type="button" data-dot="'+i+'" aria-label="Матч '+(i+1)+'"></button>').join('');
+  track.scrollLeft=sl;
+  syncDots();
+}
+function syncDots(){
+  const track=$('carousel'), cards=track.querySelectorAll('.mcard');
+  if(!cards.length) return;
+  const w=cards[0].offsetWidth+12;
+  const idx=Math.max(0,Math.min(cards.length-1,Math.round(track.scrollLeft/w)));
+  $('dots').querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===idx));
+}
+
+/* ================= РЕНДЕР: СПИСОК ================= */
+function rowHtml(m,idx,anim){
+  const st=statusOf(m), sc=parseScore(m.final), t=tsOf(m);
+  const my=myPredFor(m.id);
+  const started=isFinite(t)&&appNow()>=t&&st!=='finished';
+  let side='',mineLine='';
+  if(st==='finished'){
+    const pts=my?pointsOf(my.s1,my.s2,sc[0],sc[1]):null;
+    side='<span class="row-score">'+sc[0]+':'+sc[1]+(pts===5?' <span class="win-cup">🏆</span>':'')+'</span>';
+    if(my) mineLine='<div class="row-mine">'+icon('check')+'Ваш прогноз '+my.s1+':'+my.s2+' · <span class="pts">+'+pts+' '+plural(pts,['балл','балла','баллов'])+'</span></div>';
+  } else if(st==='open'){
+    side='<span class="bet-chip">Ставка</span><span class="row-cd">'+icon('clock')+'<span data-cd data-cd-mode="chip" data-cd-target="'+deadlineOf(m)+'">'+cdShort(deadlineOf(m)-appNow())+'</span></span>';
+    if(my) mineLine='<div class="row-mine">'+icon('check')+'Ваш прогноз '+my.s1+':'+my.s2+' принят</div>';
+  } else {
+    side='<span class="closed-chip">'+icon('lock')+'Закрыто</span>';
+    if(my) mineLine='<div class="row-mine">'+icon('check')+'Ваш прогноз '+my.s1+':'+my.s2+'</div>';
+  }
+  return '<article class="row'+(anim?' rise':'')+'" style="--i:'+Math.min(idx,10)+'" data-match="'+escHtml(m.id)+'" tabindex="0" role="button" aria-label="'+escHtml(m.team1+' — '+m.team2)+'">'
+    +'<div class="row-main">'
+    +'<div class="row-meta">'+icon(sportIconName(m.sport))+'<span class="txt">'+fmtShort(t)+' • '+escHtml(m.venue||'Место уточняется')+'</span>'+(started?'<span class="live-tag" data-live-at="'+t+'" data-live-done="1"><i></i>LIVE</span>':'')+'</div>'
+    +'<div class="row-team">'+escHtml(m.team1)+'</div><div class="row-team">'+escHtml(m.team2)+'</div>'+mineLine
+    +'</div><div class="row-side">'+side+'</div><span class="row-chev">'+icon('chev')+'</span></article>';
+}
+function renderList(anim){
+  const box=$('matchList');
+  if(state.loading){
+    $('listCount').textContent='…';
+    box.innerHTML='<div class="sk sk-row"></div><div class="sk sk-row"></div><div class="sk sk-row"></div><div class="sk sk-row"></div><div class="sk sk-row"></div>';
+    return;
+  }
+  if(state.error&&!state.matches.length){
+    $('listCount').textContent='0';
+    box.innerHTML='<div class="empty"><span class="em">📡</span><h3>Не удалось связаться с таблицей</h3><p>'+escHtml(state.error)+'</p><button type="button" class="btn red" data-action="retry">'+icon('refresh')+' Повторить</button></div>';
+    return;
+  }
+  const filtered=state.matches.filter(m=>state.sport==='all'||m.sport.toLowerCase()===String(state.sport).toLowerCase());
+  $('listCount').textContent=filtered.length;
+  if(!filtered.length){
+    const hasFilter=state.sport!=='all';
+    box.innerHTML='<div class="empty"><span class="em">🏟️</span><h3>'+(hasFilter?'Нет матчей по выбранному виду спорта':'Афиша пока пуста')+'</h3><p>'+(hasFilter?'Попробуйте другую категорию или сбросьте фильтр.':'Организатор добавит матчи в Google Таблицу — они появятся здесь автоматически.')+'</p>'+(hasFilter?'<button type="button" class="btn red" data-action="reset-filter">Показать все</button>':'')+'</div>';
+    return;
+  }
+  const up=filtered.filter(m=>statusOf(m)!=='finished').sort((a,b)=>tsOf(a)-tsOf(b));
+  const fin=filtered.filter(m=>statusOf(m)==='finished').sort((a,b)=>tsOf(b)-tsOf(a));
+  let html='',i=0;
+  if(up.length){ html+='<div class="group-label"><b>//</b> Предстоящие <span class="count-badge">'+up.length+'</span></div>'+up.map(m=>rowHtml(m,i++,anim)).join(''); }
+  if(fin.length){ html+='<div class="group-label"><b>//</b> Завершенные <span class="count-badge">'+fin.length+'</span></div>'+fin.map(m=>rowHtml(m,i++,anim)).join(''); }
+  box.innerHTML=html;
+}
+
+/* ================= РЕНДЕР: СТАТИСТИКА ================= */
+function presetRange(key){
+  const d=new Date(appNow()); d.setHours(0,0,0,0);
+  if(key==='week'){ const shift=(d.getDay()+6)%7; const from=new Date(d); from.setDate(d.getDate()-shift); const to=new Date(from); to.setDate(from.getDate()+6); return {from:toISODate(from),to:toISODate(to)}; }
+  if(key==='month'){ return {from:toISODate(new Date(d.getFullYear(),d.getMonth(),1)),to:toISODate(new Date(d.getFullYear(),d.getMonth()+1,0))}; }
+  if(key==='year'){ return {from:d.getFullYear()+'-01-01',to:d.getFullYear()+'-12-31'}; }
+  return {from:'',to:''};
+}
+function legendHtml(){
+  const items=[[5,'#f6b73c','5 — точный счёт'],[3,'#f2914a','3 — исход + разница'],[2,'#111827','2 — только исход'],[1,'#9ca3af','1 — голы одной команды'],[0,'#d1d5db','0 — мимо']];
+  return '<div class="legend">'+items.map(i=>'<span><i style="background:'+i[1]+'"></i>'+i[2]+'</span>').join('')+'</div>';
+}
+function renderStats(){
+  const from=state.stats.from,to=state.stats.to;
+  if($('dateFrom').value!==from) $('dateFrom').value=from;
+  if($('dateTo').value!==to) $('dateTo').value=to;
+  document.querySelectorAll('#presets button').forEach(b=>{
+    const r=presetRange(b.dataset.preset);
+    b.classList.toggle('on',r.from===from&&r.to===to);
+  });
+  $('periodLabel').innerHTML=icon('cal')+((!from&&!to)?'Всё время':escHtml((from?fmtDay(new Date(from+'T00:00:00').getTime()):'…')+' — '+(to?fmtDay(new Date(to+'T00:00:00').getTime()):'…')));
+  const fromTs=from?new Date(from+'T00:00:00').getTime():-Infinity;
+  const toTs=to?new Date(to+'T23:59:59.999').getTime():Infinity;
+  const finished=state.matches.filter(m=>{ const sc=parseScore(m.final); if(!sc)return false; const t=tsOf(m); return isFinite(t)&&t>=fromTs&&t<=toTs; });
+  const agg={}; let totalPreds=0,totalExact=0;
+  finished.forEach(m=>{
+    const sc=parseScore(m.final);
+    predsOf(m.id).forEach(p=>{
+      const key=normName(p.name); if(!key)return;
+      if(!agg[key]) agg[key]={name:p.name,parts:0,wins:0,pts:0};
+      agg[key].name=p.name;
+      const v=pointsOf(p.s1,p.s2,sc[0],sc[1]);
+      agg[key].parts++; agg[key].pts+=v; if(v===5){agg[key].wins++;totalExact++;}
+      totalPreds++;
+    });
+  });
+  const rows=Object.values(agg).sort((a,b)=>b.wins-a.wins||b.pts-a.pts||a.name.localeCompare(b.name,'ru'));
+  const summary=[['Матчей',finished.length,true],['Болельщиков',rows.length,false],['Прогнозов',totalPreds,false],['Точных 🏆',totalExact,false]];
+  $('statsSummary').innerHTML=summary.map(s=>'<div class="sum-card'+(s[2]?' hot':'')+'"><b>'+s[1]+'</b><span>'+s[0]+'</span></div>').join('');
+  const podium=$('podiumWrap');
+  if(rows.length>=3){
+    const order=[[rows[1],'p2','🥈',2],[rows[0],'p1','🥇',1],[rows[2],'p3','🥉',3]];
+    podium.innerHTML='<div class="podium">'+order.map(o=>'<div class="pod '+o[1]+'"><div class="medal">'+o[2]+'</div><div class="block">'+o[3]+'</div><div class="pname" title="'+escHtml(o[0].name)+'">'+escHtml(o[0].name)+'</div><div class="pstats">'+o[0].wins+' 🏆 · '+o[0].pts+' б.</div></div>').join('')+'</div>';
+  } else podium.innerHTML='';
+  const wrap=$('ratingWrap'), empty=$('statsEmpty'), legend=$('statsLegend');
+  if(!rows.length){
+    wrap.innerHTML=''; empty.classList.remove('hidden'); legend.innerHTML='';
+    return;
+  }
+  empty.classList.add('hidden');
+  const meKey=normName(state.savedName);
+  const body=rows.map((r,i)=>{
+    const rc=i<3?' r'+(i+1):'';
+    return '<tr'+(meKey&&normName(r.name)===meKey?' class="me-row"':'')+'><td><span class="rank'+rc+'">'+(i+1)+'</span></td>'
+      +'<td class="name-cell"><span class="name-wrap">'+avatarHtml(r.name)+'<span>'+escHtml(r.name)+'</span></span></td>'
+      +'<td class="num">'+r.parts+'</td>'
+      +'<td class="num">'+(r.wins>0?r.wins+' 🏆':'<span class="none">—</span>')+'</td>'
+      +'<td class="num pts-cell">'+r.pts+'</td></tr>';
+  }).join('');
+  wrap.innerHTML='<div class="rating-card"><table class="rating"><thead><tr>'
+    +'<th title="Место">#</th><th>Болельщик</th>'
+    +'<th title="Участий (матчей)"><span class="full">Матчей</span><span class="short">М</span></th>'
+    +'<th title="Точных счетов (побед)"><span class="full">Побед 🏆</span><span class="short">🏆</span></th>'
+    +'<th title="Сумма баллов за близость"><span class="full">Баллов</span><span class="short">Б</span></th>'
+    +'</tr></thead><tbody>'+body+'</tbody></table></div>'
+    +'<div class="sort-note">'+icon('info')+'Сортировка: сначала победы 🏆 (точные счета), затем сумма баллов. Учитываются только завершенные матчи периода.</div>';
+  legend.innerHTML=legendHtml();
+}
+
+/* ================= BOTTOM SHEET ================= */
+function participantsHtml(m,st){
+  const list=predsOf(m.id);
+  const sc=parseScore(m.final);
+  let rows=list.map(p=>{
+    const mine=(state.mine[m.id]&&normName(p.name)===normName(state.mine[m.id].name))||(state.savedName&&normName(p.name)===normName(state.savedName));
+    const pts=sc?pointsOf(p.s1,p.s2,sc[0],sc[1]):null;
+    return {p,mine,pts};
+  });
+  if(st==='finished') rows.sort((a,b)=>b.pts-a.pts||a.p.name.localeCompare(b.p.name,'ru'));
+  else rows.sort((a,b)=>Date.parse(a.p.ts)-Date.parse(b.p.ts));
+  if(!rows.length) return '<div class="empty" style="padding:26px 10px"><span class="em">🫥</span><h3>Прогнозов пока нет</h3><p>'+(st==='open'?'Станьте первым — отправьте свой прогноз!':'Никто не успел отправить прогноз на этот матч.')+'</p></div>';
+  const head='<div class="parts-head">Прогнозы болельщиков <span class="count-badge">'+rows.length+'</span></div>';
+  const html=rows.map(r=>{
+    const win=r.pts===5;
+    const sub=st==='finished'
+      ?'<span>'+TIER_LABEL[r.pts]+'</span>'
+      :'<span>'+fmtShort(Date.parse(r.p.ts))+'</span>';
+    const badge=win?'<div class="win-badge">Победитель 🏆'+(m.prize?' ('+escHtml(m.prize)+')':'')+'</div>':'';
+    return '<div class="prow'+(win?' win':'')+(r.mine?' me':'')+'">'
+      +avatarHtml(r.p.name)
+      +'<div class="p-info"><div class="p-name">'+escHtml(r.p.name)+(r.mine?'<span class="you">это вы</span>':'')+'</div><div class="p-sub">'+sub+'</div>'+badge+'</div>'
+      +'<span class="p-score">'+r.p.s1+':'+r.p.s2+'</span>'
+      +(st==='finished'?'<span class="p-pts p'+r.pts+'" title="'+TIER_LABEL[r.pts]+'">+'+r.pts+'</span>':'')
+      +'</div>';
+  }).join('');
+  return head+html+(st==='finished'?legendHtml():'');
+}
+function formHtml(m){
+  const d=state.draft;
+  return '<form id="predForm" class="pred-form" novalidate>'
+    +'<div class="pf-title">'+icon('send')+'Ваш прогноз на точный счёт</div>'
+    +'<label class="f-label" for="fName">Имя и Фамилия</label>'
+    +'<input class="f-text" id="fName" name="fullname" type="text" autocomplete="name" maxlength="60" placeholder="Например: Иван Петров" value="'+escHtml(d.name)+'">'
+    +'<div class="score-grid">'
+    +'<div class="score-col"><label class="f-label" for="fS1" title="'+escHtml(m.team1)+'">'+escHtml(m.team1)+'</label>'
+    +'<div class="stepper"><button type="button" class="step-btn" data-step="s1:-1" aria-label="Уменьшить">−</button><input class="f-num" id="fS1" type="number" inputmode="numeric" min="0" max="999" placeholder="0" value="'+escHtml(d.s1)+'"><button type="button" class="step-btn" data-step="s1:1" aria-label="Увеличить">+</button></div></div>'
+    +'<div class="score-colon">:</div>'
+    +'<div class="score-col"><label class="f-label" for="fS2" title="'+escHtml(m.team2)+'">'+escHtml(m.team2)+'</label>'
+    +'<div class="stepper"><button type="button" class="step-btn" data-step="s2:-1" aria-label="Уменьшить">−</button><input class="f-num" id="fS2" type="number" inputmode="numeric" min="0" max="999" placeholder="0" value="'+escHtml(d.s2)+'"><button type="button" class="step-btn" data-step="s2:1" aria-label="Увеличить">+</button></div></div>'
+    +'</div>'
+    +'<div class="f-err'+(state.formError?' show':'')+'" id="fErr">'+escHtml(state.formError)+'</div>'
+    +'<button type="submit" class="btn submit" id="fSubmit"'+(state.pending?' disabled':'')+'>'+(state.pending?icon('refresh','spin-ic')+' Отправка…':icon('send')+' Отправить прогноз')+'</button>'
+    +'<div class="f-help">'+icon('lock')+'Один болельщик — один прогноз. Отправка финальная, изменение недоступно.</div>'
+    +'</form>';
+}
+function lockedHtml(my){
+  return '<div class="locked"><span class="ok">'+icon('check')+'</span><b>Ваш прогноз принят</b><div class="ls">'+my.s1+' : '+my.s2+'</div><div class="ln">'+escHtml(my.name)+'</div><div class="lx">Прогноз зафиксирован. Изменение недоступно.</div></div>';
+}
+function matchSheetHtml(m){
+  const st=statusOf(m), meta=statusMeta(st), sc=parseScore(m.final), t=tsOf(m);
+  const started=isFinite(t)&&appNow()>=t&&st!=='finished';
+  const my=myPredFor(m.id);
+  const head='<span class="sh-sport">'+icon(sportIconName(m.sport))+escHtml(m.sport)+'</span>'
+    +'<span class="status-chip"><span class="sdot '+meta.dot+'"></span>'+meta.label+'</span>'
+    +'<span class="sh-id">#'+escHtml(m.id)+'</span>'
+    +'<button type="button" class="sh-close" data-action="close" aria-label="Закрыть">'+icon('x')+'</button>';
+  let body='<div class="sh-teams"><div class="sh-team">'+escHtml(m.team1)+'</div>'
+    +'<div class="sh-center">'+(sc?'<div class="lbl">Итоговый счёт</div><div class="sh-final">'+sc[0]+':'+sc[1]+'</div>':'<div class="sh-vs">VS</div>')+'</div>'
+    +'<div class="sh-team">'+escHtml(m.team2)+'</div></div>'
+    +'<div class="sh-meta"><span class="meta-chip">'+icon('cal')+fmtLong(t)+'</span><span class="meta-chip">'+icon('pin')+escHtml(m.venue||'Место уточняется')+'</span></div>';
+  if(m.prize) body+='<div class="prize"><span class="pic">'+icon('gift')+'</span><div><div class="pl">Приз победителю</div><div class="pt">'+escHtml(m.prize)+'</div></div></div>';
+  if(st==='open'){
+    const left=deadlineOf(m)-appNow();
+    body+='<div class="cd-block"><div class="cd-label">'+icon('clock')+'До закрытия приема прогнозов</div>'
+      +'<div class="cd-boxes'+(left<600000?' urgent':'')+'" data-cd data-cd-mode="boxes" data-cd-target="'+deadlineOf(m)+'">'+cdBoxesHtml(left)+'</div></div>';
+    body+=my?lockedHtml(my):formHtml(m);
+    const n=predsOf(m.id).length;
+    body+='<div class="hidden-note">'+icon('lock')+'Чужие прогнозы скрыты до закрытия приема. Уже отправили: '+n+' '+plural(n,['болельщик','болельщика','болельщиков'])+'.</div>';
+  } else if(st==='closed'){
+    body+='<div class="closed-plate">'+icon('lock')+'<div><b>Прием прогнозов закрыт (менее 1 часа до игры)</b>'+(started?'<small><i></i>Матч начался — ждём итоговый счёт от организатора.</small>':'')+'</div></div>';
+    body+=participantsHtml(m,st);
+  } else {
+    body+=participantsHtml(m,st);
+  }
+  return {head,body};
+}
+function setupSheetHtml(){
+  const head='<span class="sh-sport">'+icon('info')+'Подключение</span><span class="sh-id">Google Таблицы</span><button type="button" class="sh-close" data-action="close" aria-label="Закрыть">'+icon('x')+'</button>';
+  const body='<div class="pf-title" style="font-size:15px">'+icon('chart')+'Как подключить Google Таблицу</div>'
+    +'<ol class="setup-steps">'
+    +'<li>Создайте <b>Google Таблицу</b> (sheets.new).</li>'
+    +'<li>Откройте <b>Расширения → Apps Script</b>, удалите код-заглушку и вставьте файл <b>Code.gs</b>. Сохраните.</li>'
+    +'<li>Нажмите <b>Развернуть → Новое развертывание</b>, тип — <b>Веб-приложение</b>.</li>'
+    +'<li>«Выполнять от имени»: <b>Я</b>. «У кого есть доступ»: <b>Все</b>. Разрешите доступ скрипту.</li>'
+    +'<li>Скопируйте <b>URL веб-приложения</b> (заканчивается на <b>/exec</b>).</li>'
+    +'<li>Вставьте его в <b>index.html</b> в константу ниже вместо заглушки — и откройте страницу. Листы «Матчи» и «Прогнозы» создадутся автоматически.</li>'
+    +'</ol>'
+    +'<div class="code-box">const GOOGLE_SCRIPT_URL = <em>\'ВСТАВЬТЕ_ВАШ_URL_СКРИПТА\'</em>;</div>'
+    +'<button type="button" class="btn red" data-action="copy-steps" style="width:100%;justify-content:center">'+icon('check')+' Скопировать инструкцию</button>'
+    +'<p class="setup-note">Полная пошаговая инструкция администратора — в комментариях в конце файла <b>Code.gs</b>. После изменения кода создавайте новую версию развертывания.</p>';
+  return {head,body};
+}
+function renderSheetContent(force){
+  if(!state.sheet) return;
+  let sig,html;
+  if(state.sheet.type==='setup'){ sig='setup'; html=setupSheetHtml(); }
+  else{
+    const m=state.matches.find(x=>x.id===state.sheet.id);
+    if(!m){ sheetClose(); return; }
+    const st=statusOf(m), t=tsOf(m);
+    sig=JSON.stringify([m,predsOf(m.id),state.mine[m.id]||null,st,isFinite(t)&&appNow()>=t,state.savedName,state.pending,state.formError]);
+    if(!force&&sig===state.sigs.sheet) return;
+    html=matchSheetHtml(m);
+  }
+  if(!force&&sig===state.sigs.sheet) return;
+  const body=$('sheetBody');
+  const scrollTop=body.scrollTop;
+  const act=document.activeElement;
+  const actId=(act&&body.contains(act)&&act.id)?act.id:null;
+  $('sheetHead').innerHTML=html.head;
+  body.innerHTML=html.body;
+  body.scrollTop=scrollTop;
+  if(actId){ const el=$(actId); if(el){ el.focus({preventScroll:true}); if(el.type==='text'){ const L=el.value.length; try{el.setSelectionRange(L,L);}catch(e){} } } }
+  state.sigs.sheet=sig;
+}
+function sheetOpenMatch(id){
+  const m=state.matches.find(x=>x.id===id); if(!m) return;
+  state.sheet={type:'match',id};
+  state.draft={name:state.savedName||'',s1:'',s2:''};
+  state.formError=''; state.sigs.sheet=null;
+  openSheetRoot();
+  renderSheetContent(true);
+  const sc=parseScore(m.final), my=myPredFor(id);
+  if(sc&&my&&pointsOf(my.s1,my.s2,sc[0],sc[1])===5&&!state.celebrated[id]){
+    state.celebrated[id]=true; setTimeout(fxConfetti,380);
+  }
+}
+function sheetOpenSetup(){ state.sheet={type:'setup'}; state.sigs.sheet=null; openSheetRoot(); renderSheetContent(true); }
+function openSheetRoot(){
+  lastFocusEl=document.activeElement;
+  $('sheetRoot').classList.add('open');
+  $('sheetRoot').setAttribute('aria-hidden','false');
+  document.documentElement.classList.add('lock');
+  const btn=$('sheetHead').querySelector('.sh-close');
+  setTimeout(()=>{ const b=$('sheetHead').querySelector('.sh-close'); if(b)b.focus({preventScroll:true}); },80);
+}
+function sheetClose(){
+  if(!state.sheet) return;
+  state.sheet=null; state.sigs.sheet=null; state.formError='';
+  $('sheetRoot').classList.remove('open');
+  $('sheetRoot').setAttribute('aria-hidden','true');
+  document.documentElement.classList.remove('lock');
+  $('sheetPanel').style.transform=''; $('sheetPanel').style.transition='';
+  $('scrim').style.opacity='';
+  if(lastFocusEl&&lastFocusEl.focus) lastFocusEl.focus({preventScroll:true});
+}
+function setFormError(msg){
+  state.formError=msg;
+  const el=$('fErr');
+  if(el){ el.textContent=msg; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+}
+async function handleSubmit(){
+  if(state.pending||!state.sheet||state.sheet.type!=='match') return;
+  const m=state.matches.find(x=>x.id===state.sheet.id); if(!m) return;
+  if(statusOf(m)!=='open'){ toast('error','Прием прогнозов уже закрыт'); renderAll(true); return; }
+  if(myPredFor(m.id)){ setFormError('Вы уже отправили прогноз на этот матч'); return; }
+  const name=collapseSpaces(state.draft.name);
+  if(!/\S+\s+\S+/.test(name)||name.length<4){ setFormError('Укажите имя и фамилию — два слова'); const f=$('fName'); if(f)f.focus(); return; }
+  if(name.length>60){ setFormError('Слишком длинное имя (максимум 60 символов)'); return; }
+  const s1=state.draft.s1===''?NaN:parseInt(state.draft.s1,10);
+  const s2=state.draft.s2===''?NaN:parseInt(state.draft.s2,10);
+  if(!Number.isInteger(s1)||!Number.isInteger(s2)||s1<0||s2<0||s1>999||s2>999){ setFormError('Введите счет обеих команд — целые числа от 0 до 999'); return; }
+  state.formError=''; state.pending=true; renderSheetContent(true);
+  try{
+    await apiSubmit({matchId:m.id,userName:name,score1:s1,score2:s2});
+    state.savedName=name; lsSet(LS_KEYS.name,name);
+    state.mine[m.id]={name,s1,s2,ts:Date.now()}; lsSet(LS_KEYS.mine,state.mine);
+    if(!IS_DEMO) state.predictions.push({ts:new Date().toISOString(),matchId:m.id,name,s1,s2});
+    toast('success','Прогноз принят! Удачи 🍀');
+    fxConfetti();
+  }catch(err){
+    const msg=String(err&&err.message||err);
+    toast('error',msg);
+    if(msg.indexOf('уже отправили')>-1){ state.savedName=name; lsSet(LS_KEYS.name,name); refresh(false); }
+    else state.formError=msg;
+  }finally{
+    state.pending=false; renderAll(true);
+  }
+}
+
+/* ================= ОБЩИЙ РЕНДЕР ================= */
+function renderAll(force){
+  renderHeader();
+  if(state.screen==='matches'){
+    const sig=JSON.stringify([state.matches,state.predictions,state.sport,state.mine,state.savedName,state.loading,state.error]);
+    if(force||sig!==state.sigs.main){
+      const anim=state.animNext||state.firstPaint;
+      renderFilters(); renderCarousel(anim); renderList(anim);
+      state.sigs.main=sig; state.animNext=false;
+    }
+  }else{
+    const sig=JSON.stringify([state.matches,state.predictions,state.stats,state.savedName,state.mine]);
+    if(force||sig!==state.sigs.stats){ renderStats(); state.sigs.stats=sig; }
+  }
+  renderSheetContent(force);
+  if(state.firstPaint&&!state.loading) state.firstPaint=false;
+}
+function switchScreen(to){
+  if(state.screen===to) return;
+  state.screen=to; state.animNext=true;
+  $('viewMatches').classList.toggle('hidden',to!=='matches');
+  $('viewStats').classList.toggle('hidden',to!=='stats');
+  window.scrollTo({top:0,behavior:'auto'});
+  renderAll(true);
+}
+
+/* ================= ТАЙМЕРЫ ================= */
+function tickLoop(){
+  const tNow=appNow();
+  let needRefresh=false;
+  document.querySelectorAll('[data-cd]').forEach(el=>{
+    const target=Number(el.dataset.cdTarget);
+    if(!isFinite(target)) return;
+    const left=target-tNow;
+    if(left<=0){
+      if(el.dataset.cdDone!=='1'){ el.dataset.cdDone='1'; needRefresh=true; }
+      if(el.dataset.cdMode==='boxes') el.innerHTML='<div class="cd-over">Прием закрыт</div>';
+      else el.textContent='закрыт';
+      return;
+    }
+    if(el.dataset.cdMode==='boxes'){ el.innerHTML=cdBoxesHtml(left); el.classList.toggle('urgent',left<600000); }
+    else el.textContent=cdShort(left);
+  });
+  document.querySelectorAll('[data-live-at]').forEach(el=>{
+    const t=Number(el.dataset.liveAt);
+    if(isFinite(t)&&tNow>=t&&el.dataset.liveDone!=='1'){ el.dataset.liveDone='1'; needRefresh=true; }
+  });
+  if(needRefresh) renderAll(true);
+}
+
+/* ================= СОБЫТИЯ ================= */
+function wireEvents(){
+  $('statsBtn').addEventListener('click',()=>switchScreen('stats'));
+  $('backBtn').addEventListener('click',()=>switchScreen('matches'));
+  $('refreshBtn').addEventListener('click',()=>refresh(true));
+  $('setupLink').addEventListener('click',sheetOpenSetup);
+  $('demoSetupBtn').addEventListener('click',sheetOpenSetup);
+  $('demoCloseBtn').addEventListener('click',()=>{ $('demoBanner').classList.add('hidden'); lsSet(LS_KEYS.banner,true); });
+  $('filters').addEventListener('click',ev=>{
+    const b=ev.target.closest('[data-sport]'); if(!b) return;
+    state.sport=b.dataset.sport; state.animNext=true; renderAll();
+  });
+  const openFrom=ev=>{
+    const retry=ev.target.closest('[data-action="retry"]');
+    if(retry){ refresh(true); return; }
+    const reset=ev.target.closest('[data-action="reset-filter"]');
+    if(reset){ state.sport='all'; state.animNext=true; renderAll(); return; }
+    const card=ev.target.closest('[data-match]');
+    if(card) sheetOpenMatch(card.dataset.match);
+  };
+  $('carousel').addEventListener('click',openFrom);
+  $('matchList').addEventListener('click',openFrom);
+  const keyOpen=ev=>{
+    if(ev.key!=='Enter'&&ev.key!==' ') return;
+    const card=ev.target.closest('[data-match]');
+    if(card){ ev.preventDefault(); sheetOpenMatch(card.dataset.match); }
+  };
+  $('carousel').addEventListener('keydown',keyOpen);
+  $('matchList').addEventListener('keydown',keyOpen);
+  $('carousel').addEventListener('scroll',()=>{ if(dotRaf)return; dotRaf=requestAnimationFrame(()=>{ dotRaf=0; syncDots(); }); },{passive:true});
+  $('dots').addEventListener('click',ev=>{
+    const b=ev.target.closest('[data-dot]'); if(!b) return;
+    const cards=$('carousel').querySelectorAll('.mcard');
+    const card=cards[+b.dataset.dot]; if(!card) return;
+    $('carousel').scrollTo({left:card.offsetLeft-16,behavior:'smooth'});
+  });
+  $('dateFrom').addEventListener('change',onDateChange);
+  $('dateTo').addEventListener('change',onDateChange);
+  $('presets').addEventListener('click',ev=>{
+    const b=ev.target.closest('[data-preset]'); if(!b) return;
+    state.stats=presetRange(b.dataset.preset); renderAll(true);
+  });
+  $('scrim').addEventListener('click',sheetClose);
+  $('sheetRoot').addEventListener('click',ev=>{
+    const close=ev.target.closest('[data-action="close"]');
+    if(close){ sheetClose(); return; }
+    const step=ev.target.closest('[data-step]');
+    if(step){
+      const parts=step.dataset.step.split(':'); const key=parts[0], delta=+parts[1];
+      const cur=state.draft[key]===''?0:parseInt(state.draft[key],10)||0;
+      const val=Math.max(0,Math.min(999,cur+delta));
+      state.draft[key]=String(val);
+      const input=$(key==='s1'?'fS1':'fS2'); if(input)input.value=String(val);
+      return;
+    }
+    const copy=ev.target.closest('[data-action="copy-steps"]');
+    if(copy){
+      const text='НЭВЗ // ЛИГА СТАВОК — подключение:\n1. Создайте Google Таблицу (sheets.new).\n2. Расширения → Apps Script: вставьте Code.gs, сохраните.\n3. Развернуть → Новое развертывание → Веб-приложение.\n4. Выполнять от имени: Я. У кого есть доступ: Все.\n5. Скопируйте URL (…/exec).\n6. Вставьте URL в index.html: const GOOGLE_SCRIPT_URL.\n7. Откройте index.html. Листы «Матчи» и «Прогнозы» создадутся автоматически.\nПодробности — в комментариях в конце Code.gs.';
+      const done=()=>toast('success','Инструкция скопирована');
+      if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));
+      else fallbackCopy(text,done);
+    }
+  });
+  $('sheetRoot').addEventListener('input',ev=>{
+    const t=ev.target;
+    if(t.id==='fName'){ state.draft.name=t.value; if(state.formError){state.formError=''; const e=$('fErr'); if(e)e.classList.remove('show');} }
+    else if(t.id==='fS1'||t.id==='fS2'){
+      const clean=t.value.replace(/\D/g,'').slice(0,3);
+      if(t.value!==clean) t.value=clean;
+      state.draft[t.id==='fS1'?'s1':'s2']=clean;
+      if(state.formError){state.formError=''; const e=$('fErr'); if(e)e.classList.remove('show');}
+    }
+  });
+  $('sheetRoot').addEventListener('submit',ev=>{
+    if(ev.target.id==='predForm'){ ev.preventDefault(); handleSubmit(); }
+  });
+  document.addEventListener('keydown',ev=>{
+    if(!state.sheet) return;
+    if(ev.key==='Escape'){ sheetClose(); return; }
+    if(ev.key==='Tab'){
+      const panel=$('sheetPanel');
+      const focusables=Array.from(panel.querySelectorAll('button,input,[tabindex]:not([tabindex="-1"])')).filter(el=>el.offsetParent!==null&&!el.disabled);
+      if(!focusables.length) return;
+      const first=focusables[0], last=focusables[focusables.length-1];
+      if(ev.shiftKey&&document.activeElement===first){ ev.preventDefault(); last.focus(); }
+      else if(!ev.shiftKey&&document.activeElement===last){ ev.preventDefault(); first.focus(); }
+    }
+  });
+  const grip=$('sheetGrip');
+  grip.addEventListener('pointerdown',ev=>{
+    if(!state.sheet) return;
+    dragInfo={y0:ev.clientY,t0:performance.now(),dy:0};
+    $('sheetPanel').style.transition='none';
+    try{ grip.setPointerCapture(ev.pointerId); }catch(e){}
+  });
+  grip.addEventListener('pointermove',ev=>{
+    if(!dragInfo) return;
+    dragInfo.dy=Math.max(0,ev.clientY-dragInfo.y0);
+    $('sheetPanel').style.transform='translate(-50%,'+dragInfo.dy+'px)';
+    $('scrim').style.opacity=String(Math.max(0,1-dragInfo.dy/400));
+  });
+  const endDrag=ev=>{
+    if(!dragInfo) return;
+    const dt=Math.max(1,performance.now()-dragInfo.t0);
+    const velocity=dragInfo.dy/dt;
+    const shouldClose=dragInfo.dy>110||velocity>0.6;
+    $('sheetPanel').style.transition='';
+    $('sheetPanel').style.transform='';
+    $('scrim').style.opacity='';
+    dragInfo=null;
+    if(shouldClose) sheetClose();
+  };
+  grip.addEventListener('pointerup',endDrag);
+  grip.addEventListener('pointercancel',endDrag);
+  window.addEventListener('scroll',()=>{ $('appHeader').classList.toggle('scrolled',window.scrollY>4); },{passive:true});
+  window.addEventListener('resize',()=>{ setHeaderVar(); fxResize(); syncDots(); });
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) refresh(false); });
+}
+function fallbackCopy(text,done){
+  const ta=document.createElement('textarea');
+  ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){ toast('error','Не удалось скопировать'); }
+  ta.remove();
+}
+function onDateChange(){
+  let from=$('dateFrom').value, to=$('dateTo').value;
+  if(from&&to&&from>to){ const tmp=from; from=to; to=tmp; }
+  state.stats={from,to}; renderAll(true);
+}
+function setHeaderVar(){
+  document.documentElement.style.setProperty('--hh',$('appHeader').offsetHeight+'px');
+}
+
+/* ================= СТАРТ ================= */
+function init(){
+  state.savedName=lsGet(LS_KEYS.name,'')||'';
+  state.mine=lsGet(LS_KEYS.mine,{})||{};
+  state.draft.name=state.savedName;
+  if(IS_DEMO&&!lsGet(LS_KEYS.banner,false)) $('demoBanner').classList.remove('hidden');
+  $('statsLegend').innerHTML='';
+  setHeaderVar(); fxResize(); wireEvents();
+  renderAll(true);
+  refresh(false);
+  tickTimer=setInterval(tickLoop,1000);
+  pollTimer=setInterval(()=>{ if(!document.hidden) refresh(false); },POLL_MS);
+  setTimeout(setHeaderVar,400);
+}
+init();
+</script>
+</body>
+</html>
