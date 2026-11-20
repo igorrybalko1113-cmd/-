@@ -1,4 +1,4 @@
-﻿
+
                         <!DOCTYPE html>
                         <html lang="en">
                         <head>
@@ -567,6 +567,22 @@ function pointsOf(p1,p2,f1,f2){
   if(p1===f1 || p2===f2) return 1;
   return 0;
 }
+function evaluateMatch(list,sc){
+  const sg=(a,b)=>(a>b)-(a<b), fOut=sg(sc[0],sc[1]);
+  const items=list.map(p=>{
+    const diff=Math.abs(p.s1-sc[0])+Math.abs(p.s2-sc[1]);
+    return {p,diff,exact:diff===0,outMatch:sg(p.s1,p.s2)===fOut,pts:pointsOf(p.s1,p.s2,sc[0],sc[1]),isWinner:false};
+  });
+  if(!items.length) return items;
+  const ex=items.filter(x=>x.exact);
+  if(ex.length){ ex.forEach(x=>x.isWinner=true); }
+  else{
+    const op=items.filter(x=>x.outMatch), pool=op.length?op:items;
+    const minD=Math.min(...pool.map(x=>x.diff));
+    pool.filter(x=>x.diff===minD).forEach(x=>x.isWinner=true);
+  }
+  return items;
+}
 const MONTHS_GEN=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const WD_SHORT=['вс','пн','вт','ср','чт','пт','сб'];
 function fmtShort(ts){ const d=new Date(ts); if(!isFinite(ts))return '—'; return p2(d.getDate())+'.'+p2(d.getMonth()+1)+' '+p2(d.getHours())+':'+p2(d.getMinutes()); }
@@ -862,8 +878,9 @@ function rowHtml(m,idx,anim){
   const started=isFinite(t)&&appNow()>=t&&st!=='finished';
   let side='',mineLine='';
   if(st==='finished'){
-    const pts=my?pointsOf(my.s1,my.s2,sc[0],sc[1]):null;
-    side='<span class="row-score">'+sc[0]+':'+sc[1]+(pts===5?' <span class="win-cup">🏆</span>':'')+'</span>';
+    const ev=my?evaluateMatch(predsOf(m.id),sc).find(x=>normName(x.p.name)===normName(my.name)):null;
+    const pts=ev?ev.pts:(my?pointsOf(my.s1,my.s2,sc[0],sc[1]):null);
+    side='<span class="row-score">'+sc[0]+':'+sc[1]+(ev&&ev.isWinner?' <span class="win-cup">🏆</span>':'')+'</span>';
     if(my) mineLine='<div class="row-mine">'+icon('check')+'Ваш прогноз '+my.s1+':'+my.s2+' · <span class="pts">+'+pts+' '+plural(pts,['балл','балла','баллов'])+'</span></div>';
   } else if(st==='open'){
     side='<span class="bet-chip">Ставка</span><span class="row-cd">'+icon('clock')+'<span data-cd data-cd-mode="chip" data-cd-target="'+deadlineOf(m)+'">'+cdShort(deadlineOf(m)-appNow())+'</span></span>';
@@ -932,12 +949,12 @@ function renderStats(){
   const agg={}; let totalPreds=0,totalExact=0;
   finished.forEach(m=>{
     const sc=parseScore(m.final);
-    predsOf(m.id).forEach(p=>{
-      const key=normName(p.name); if(!key)return;
+    evaluateMatch(predsOf(m.id),sc).forEach(ev=>{
+      const p=ev.p, key=normName(p.name); if(!key)return;
       if(!agg[key]) agg[key]={name:p.name,parts:0,wins:0,pts:0};
       agg[key].name=p.name;
-      const v=pointsOf(p.s1,p.s2,sc[0],sc[1]);
-      agg[key].parts++; agg[key].pts+=v; if(v===5){agg[key].wins++;totalExact++;}
+      agg[key].parts++; agg[key].pts+=ev.pts;
+      if(ev.isWinner){agg[key].wins++;totalExact++;}
       totalPreds++;
     });
   });
@@ -976,23 +993,22 @@ function renderStats(){
 
 /* ================= BOTTOM SHEET ================= */
 function participantsHtml(m,st){
-  const list=predsOf(m.id);
-  const sc=parseScore(m.final);
+  const list=predsOf(m.id), sc=parseScore(m.final), evMap=new Map();
+  if(sc) evaluateMatch(list,sc).forEach(ev=>evMap.set(ev.p,ev));
   let rows=list.map(p=>{
     const mine=(state.mine[m.id]&&normName(p.name)===normName(state.mine[m.id].name))||(state.savedName&&normName(p.name)===normName(state.savedName));
-    const pts=sc?pointsOf(p.s1,p.s2,sc[0],sc[1]):null;
-    return {p,mine,pts};
+    const ev=evMap.get(p)||null;
+    return {p,mine,pts:ev?ev.pts:null,diff:ev?ev.diff:null,outMatch:ev?ev.outMatch:false,isWinner:ev?ev.isWinner:false};
   });
-  if(st==='finished') rows.sort((a,b)=>b.pts-a.pts||a.p.name.localeCompare(b.p.name,'ru'));
+  if(st==='finished') rows.sort((a,b)=>(b.isWinner-a.isWinner)||(b.outMatch-a.outMatch)||(a.diff-b.diff)||(b.pts-a.pts)||a.p.name.localeCompare(b.p.name,'ru'));
   else rows.sort((a,b)=>Date.parse(a.p.ts)-Date.parse(b.p.ts));
   if(!rows.length) return '<div class="empty" style="padding:26px 10px"><span class="em">🫥</span><h3>Прогнозов пока нет</h3><p>'+(st==='open'?'Станьте первым — отправьте свой прогноз!':'Никто не успел отправить прогноз на этот матч.')+'</p></div>';
   const head='<div class="parts-head">Прогнозы болельщиков <span class="count-badge">'+rows.length+'</span></div>';
   const html=rows.map(r=>{
-    const win=r.pts===5;
-    const sub=st==='finished'
-      ?'<span>'+TIER_LABEL[r.pts]+'</span>'
-      :'<span>'+fmtShort(Date.parse(r.p.ts))+'</span>';
-    const badge=win?'<div class="win-badge">Победитель 🏆'+(m.prize?' ('+escHtml(m.prize)+')':'')+'</div>':'';
+    const win=r.isWinner, diffTxt=r.diff===0?'точный счёт':'отклонение: '+r.diff;
+    const sub=st==='finished'?'<span>'+TIER_LABEL[r.pts]+' · '+diffTxt+'</span>':'<span>'+fmtShort(Date.parse(r.p.ts))+'</span>';
+    const wLbl=r.diff===0?'Победитель (точный счёт) 🏆':'Победитель (ближайший прогноз) 🏆';
+    const badge=win?'<div class="win-badge">'+wLbl+(m.prize?' ('+escHtml(m.prize)+')':'')+'</div>':'';
     return '<div class="prow'+(win?' win':'')+(r.mine?' me':'')+'">'
       +avatarHtml(r.p.name)
       +'<div class="p-info"><div class="p-name">'+escHtml(r.p.name)+(r.mine?'<span class="you">это вы</span>':'')+'</div><div class="p-sub">'+sub+'</div>'+badge+'</div>'
@@ -1098,7 +1114,8 @@ function sheetOpenMatch(id){
   openSheetRoot();
   renderSheetContent(true);
   const sc=parseScore(m.final), my=myPredFor(id);
-  if(sc&&my&&pointsOf(my.s1,my.s2,sc[0],sc[1])===5&&!state.celebrated[id]){
+  const myWon=sc&&my&&evaluateMatch(predsOf(id),sc).some(x=>x.isWinner&&normName(x.p.name)===normName(my.name));
+  if(myWon&&!state.celebrated[id]){
     state.celebrated[id]=true; setTimeout(fxConfetti,380);
   }
 }
